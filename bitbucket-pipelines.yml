@@ -1,0 +1,42 @@
+image: inoutput/laravel-bitbucket-pipelines
+
+pipelines:
+  branches:
+    master:
+      - step:
+          caches:
+          - composer
+          - node
+          script:
+            - apt-get install openssh-client
+            - composer install
+            - yarn install
+            - yarn run prod
+            - touch .env
+            - echo "APP_NAME=\"$APP_NAME\"" >> .env
+            - echo "APP_ENV=production" >> .env
+            - echo "APP_KEY=$(php artisan key:generate --show)" >> .env
+            - echo "APP_DEBUG=false" >> .env
+            - echo "APP_URL=$APP_URL" >> .env
+            - echo "DB_CONNECTION=mysql" >> .env
+            - echo "DB_HOST=$DB_HOST" >> .env
+            - echo "DB_PORT=3306" >> .env
+            - echo "DB_DATABASE=$DB_DATABASE" >> .env
+            - echo "DB_USERNAME=$DB_USERNAME" >> .env
+            - echo "DB_PASSWORD=$DB_PASSWORD" >> .env
+            - echo "BROADCAST_DRIVER=log" >> .env
+            - echo "CACHE_DRIVER=file" >> .env
+            - echo "SESSION_DRIVER=file" >> .env
+            - echo "SESSION_LIFETIME=120" >> .env
+            - echo "QUEUE_DRIVER=sync" >> .env
+            - echo "MAIL_DRIVER=smtp" >> .env
+            - echo "MAIL_HOST=$MAIL_HOST" >> .env
+            - echo "MAIL_PORT=$MAIL_PORT" >> .env
+            - echo "MAIL_USERNAME=$MAIL_USERNAME" >> .env
+            - echo "MAIL_PASSWORD=$MAIL_PASSWORD" >> .env
+            - echo "MAIL_ENCRYPTION=$MAIL_ENCRYPTION" >> .env
+            - touch release.tar.gz
+            - tar -czf release.tar.gz . --exclude=./release.tar.gz
+            - scp release.tar.gz $SSH_USER@$SSH_HOST:/home/$SSH_USER
+            - ssh $SSH_USER@$SSH_HOST "tar -xf release.tar.gz -C $APP_ROOT && rm -Rf release.tar.gz"
+            - ssh $SSH_USER@$SSH_HOST "php-7.2 /home/$SSH_USER/$APP_ROOT/artisan migrate --force"
