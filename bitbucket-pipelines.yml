@@ -20,7 +20,7 @@ pipelines:
             - echo "APP_URL=$APP_URL" >> .env
             - echo "DB_CONNECTION=mysql" >> .env
             - echo "DB_HOST=$DB_HOST" >> .env
-            - echo "DB_PORT=storage.attic.uno" >> .env
+            - echo "DB_PORT=3306" >> .env
             - echo "DB_DATABASE=$DB_DATABASE" >> .env
             - echo "DB_USERNAME=$DB_USERNAME" >> .env
             - echo "DB_PASSWORD=$DB_PASSWORD" >> .env
