@@ -20,6 +20,7 @@ Route::get('/welcome', 'WelcomeController@index')->name('welcome');
 
 Auth::routes();
 
+Route::get('logout','\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('/home', 'HomeController@index')->name('home');
 
 //Route::get('/auth0/callback','\Auth0\Login\Auth0Controller@callback')->name('auth0-callback');
@@ -38,5 +39,15 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 //Route::get('/testapi','HealthController@alluserinfo');
-Route::get('/getweightinfo','HealthController@index');
-Route::get('/getbpinfo','HealthController@bpinfo');
+
+/* Subject 1 Routes */
+Route::get('subject-1/getweightinfo','HealthController@index');
+Route::get('subject-1/getbpinfo','HealthController@bpinfo');
+Route::get('getuserinfo','HealthController@getuserinfo');
+Route::get('subject-1/getbginfo','HealthController@bginfo');
+
+/* Subject 2 Routes */
+Route::get('subject-2/getbpinfo','HealthController@bpinfo_user2');
+/* Subject 3 Routes */
+Route::get('/subject-3/getbpinfo','HealthController@bpinfo_user3');
+

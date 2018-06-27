@@ -40,6 +40,8 @@ for($i=0;$i<count($response->WeightDataList);$i++)
         echo '<br/>';
         print_r("DataID value is:\n")."\x20".print_r($response->WeightDataList[$i]->DataID);
         echo '<br/>';
+        print_r("DataSource value is:\n")."\x20".print_r($response->WeightDataList[$i]->DataSource);
+        echo '<br/>';
         print_r("FatValue value is:\n")."\x20".print_r($response->WeightDataList[$i]->FatValue);
         echo '<br/>';
         print_r("LastChangeTime value is:\n")."\x20".print_r($response->WeightDataList[$i]->LastChangeTime);
@@ -50,11 +52,19 @@ for($i=0;$i<count($response->WeightDataList);$i++)
         echo '<br/>';
         print_r("Note is:\n")."\x20".print_r($response->WeightDataList[$i]->Note);
         echo '<br/>';
+        print_r("Timezone is:\n")."\x20".print_r($response->WeightDataList[$i]->TimeZone);
+        echo '<br/>';
+        print_r("VFR is:\n")."\x20".print_r($response->WeightDataList[$i]->VFR);
+        echo '<br/>';
         print_r("WaterValue is:\n")."\x20".print_r($response->WeightDataList[$i]->WaterValue);
         echo '<br/>';
         print_r("WeightValue is:\n")."\x20".print_r($response->WeightDataList[$i]->WeightValue);
         echo '<br/>';
-        print_r("Weight Unit is:")."\x20".print_r($response->WeightUnit);
+        print_r("Measurement time is:")."\x20".print_r($response->WeightDataList[$i]->measurement_time);
+        echo '<br/>';
+        print_r("Time Zone is is:")."\x20".print_r($response->WeightDataList[$i]->time_zone);
+        echo '<br/>';
+        print_r("Current Record Count is:\n")."\x20".print_r($response->WeightUnit);
         echo '<br/>';
     }
 

@@ -69,15 +69,15 @@
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
-                    <a href="{{ route('welcome') }}">Welcome</a>
                     @auth
-                        <a href="{{ route('logout') }}">Logout</a>
+                        <a href="{{ url('/home') }}">Home</a>
                     @else
+                        <a href="{{ route('welcome') }}">Welcome</a>
                         <a href="{{ route('login') }}">Login</a>
                         <a href="{{ route('register') }}">Register</a>
                     @endauth
                 </div>
-            @endif
+                @endif
 
             <div class="content">
                 <div class="title m-b-md">
