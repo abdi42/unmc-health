@@ -13,11 +13,15 @@ $response;
 //print_r("The BMI value is:\n")."\x20".print_r($response->WeightDataList[0]->BMI ."\n");
 //print_r("The Weight value is:")."\x20".print_r($response->WeightDataList[0]->WeightValue."\n");
 
-
+$url = "***REMOVED***                                                                                                      // Enter the URL to fetch the User Profile of all users
+$json = file_get_contents($url);                                                                                // Read the details of the file in the form of a String
+$response_user = json_decode($json);
 //$output = "<ul>";
 for($i=0;$i<count($response->WeightDataList);$i++)
     {
         echo '<hr>';
+        print_r("User ID is:")."\x20".print_r($response_user->UserInfoList[2]->userid);
+        echo '<br/>';
         print_r("The details for Reading Number"."\x20".$i. "\x20". "are as follows:");
         echo '<br/>';
         print_r("Current Record Count is:\n")."\x20".print_r($response->CurrentRecordCount);
@@ -44,7 +48,8 @@ for($i=0;$i<count($response->WeightDataList);$i++)
         echo '<br/>';
         print_r("FatValue value is:\n")."\x20".print_r($response->WeightDataList[$i]->FatValue);
         echo '<br/>';
-        print_r("LastChangeTime value is:\n")."\x20".print_r($response->WeightDataList[$i]->LastChangeTime);
+        $latest_time = date("Y-m-d\TH:i:s\Z",$response->WeightDataList[$i]->LastChangeTime);
+        print_r("LastChangeTime value is:\n")."\x20".print_r($latest_time);
         echo '<br/>';
         print_r("MDate value is:\n")."\x20".print_r($response->WeightDataList[$i]->MDate);
         echo '<br/>';

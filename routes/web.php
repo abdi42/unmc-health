@@ -11,6 +11,10 @@
 |
 */
 
+$url = "***REMOVED***                                                                                                      // Enter the URL to fetch the User Profile of all users
+$json = file_get_contents($url);                                                                                // Read the details of the file in the form of a String
+$response_user = json_decode($json);
+
 Route::get('/', function () {
     return view('welcome');
 });
