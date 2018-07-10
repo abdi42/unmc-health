@@ -45,13 +45,28 @@ Route::get('/home', 'HomeController@index')->name('home');
 //Route::get('/testapi','HealthController@alluserinfo');
 
 /* Subject 1 Routes */
+//Route::get('subject-1/getweightinfo',['middleware' => 'auth', 'uses' => 'HealthController@index']);
 Route::get('subject-1/getweightinfo','HealthController@index');
 Route::get('subject-1/getbpinfo','HealthController@bpinfo');
-Route::get('getuserinfo','HealthController@getuserinfo');
+//Route::get('getuserinfo',['middleware' => 'auth', 'email' => 'tim@example.com','uses' => 'HealthController@getuserinfo']);
+Route::get('/pushpulseox', 'HealthController@pushpulseoxinfo');
+Route::get('getuserinfo', 'HealthController@getuserinfo');
 Route::get('subject-1/getbginfo','HealthController@bginfo');
+Route::get('subject-1/getpulseoxinfo','HealthController@pulseoxinfo');
+Route::get('/pushweight','HealthController@pushweight_db');
+Route::get('/pushbp','HealthController@pushbpinfo_db');
+Route::get('/pushbg','HealthController@pushbginfo_db');
+
 
 /* Subject 2 Routes */
 Route::get('subject-2/getbpinfo','HealthController@bpinfo_user2');
 /* Subject 3 Routes */
 Route::get('/subject-3/getbpinfo','HealthController@bpinfo_user3');
 
+//Route::get('send', 'mailController@send');
+Route::post('/send', 'mailController@send');
+Route::get('/email', 'mailController@email');
+Route::get('/sendall','mailController@sendAll');
+Route::post('/sending','mailController@sending');
+Route::get('/dailymessage','mailController@dailymessage');
+Route::get('/sends','mailController@sends');

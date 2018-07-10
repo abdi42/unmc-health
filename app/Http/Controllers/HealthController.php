@@ -1,103 +1,278 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
+use phpDocumentor\Reflection\Types\Null_;
 use Illuminate\Http\Request;
-//use App\Http\Requests;
-use GuzzleHttp\Client;
-//use GuzzleHttp\Message\Request;
-//use GuzzleHttp\Message\Response;
+
+use Illuminate\Support\Facades\Input;
 
 
+function unique_multidim_array($array,$key)
+{
+    $temp_array = array();
+    $i = 0;
+    $key_array = array();
+    foreach ($array as $val) {
+        if (!in_array(isset($val->$key), $key_array))
+        {
+            if(isset($val[$key]))
+            $key_array[$i] = $val[$key];
+            $temp_array[$i] = $val;
 
-//use Illuminate\Http\Request;
-
-use App\User;
+        }
+        $i++;
+    }
+    return $temp_array;
+}
 
 class HealthController extends Controller
 {
-    //
+
+
+
 
     public function index()
     {
-        $url = "https://api.ihealthlabs.com:8443/openapiv2/user/da81211bbfcc47ab93224d767947a115/weight.json/?client_id=5215a7f7153b4573ac733d4f9e81e78e&client_secret=2ae0a5fb1b34419bbfcd5e5340873b04&redirect_uri=https%3A%2F%2Fmhealth.dev.attic.uno%2F%3Fthis%3Dthat&access_token=vUBS4EQ5iSxztHDzB*td0*77kyO1QJMjfoExFF8RnqBcF0TDyfGZjthkQSfCvNEHP*YE6c8y8iig8g3yPuE2qRDfiA-*1Q8TQ1oUgFqKv6xAEPvQ6Sahm10GsdYOZ*HZrNBkuq5AA-qo*lABQdjjpDTUPPDhLzOVawpwKdKVb6iLa*GZDxd2dm1-JCIyTr-m0EuFvBkcYRBFr3zNK9Whew&sc=f1510e5e64454e3c9f1114c859349fc4&sv=1ee677093af84ca8a4548ae7ba701ddb";
+        $url = "***REMOVED***";
         $new_response = file_get_contents($url);
-        echo "<pre>";
         $response = json_decode($new_response);
-        echo "</pre>";
-        //dd($response);
-        return view('profile/list', compact('response'));
-    }
+        echo '<pre>';
+        var_dump($response);
+        echo '</pre>';
+       // $count = 0;
+
+        for ($i = 0; $i < count($response->WeightDataList); $i++) {
+
+            $ids = \App\Weight::all()->pluck('id');
+
+            $weight = new \App\Weight;
+            if($ids->count() >= $response->CurrentRecordCount)
+            {
+                break;
+            }
+            else {
+                $weight->CurrentRecordCount = $response->CurrentRecordCount;
+                $weight->NextPageUrl = $response->NextPageUrl;
+                $weight->PageLength = $response->PageLength;
+                $weight->PageNumber = $response->PageNumber;
+                $weight->PrevPageUrl = $response->PrevPageUrl;
+                $weight->RecordCount = $response->RecordCount;
+                $weight->BMI = $response->WeightDataList[$i]->BMI;
+                $weight->BoneValue = $response->WeightDataList[$i]->BoneValue;
+                $weight->DCI = $response->WeightDataList[$i]->DCI;
+                $weight->DataID = $response->WeightDataList[$i]->DataID;
+                $weight->DataSource = $response->WeightDataList[$i]->DataSource;
+                $weight->FatValue = $response->WeightDataList[$i]->FatValue;
+                $latest_time = date("Y-m-d", $response->WeightDataList[$i]->LastChangeTime);
+                $weight->LastChangeTime = $latest_time;
+                $mdate = date("Y-m-d", $response->WeightDataList[$i]->MDate);
+                $weight->MDate = $mdate;
+                $weight->MuscaleValue = $response->WeightDataList[$i]->MuscaleValue;
+                $weight->Note = $response->WeightDataList[$i]->Note;
+                $weight->TimeZone = $response->WeightDataList[$i]->TimeZone;
+                $weight->VFR = $response->WeightDataList[$i]->VFR;
+                $weight->WaterValue = $response->WeightDataList[$i]->WaterValue;
+                $weight->WeightValue = $response->WeightDataList[$i]->WeightValue;
+                $weight->measurement_time = $response->WeightDataList[$i]->measurement_time;
+                $weight->time_zone = $response->WeightDataList[$i]->time_zone;
+                $weight->userid = $response->WeightDataList[$i]->userid;
+                $weight->WeightUnit = $response->WeightUnit;
+                $weight->save();
+            }
+
+        }
+
+            return view('profile.weightlist', compact('response'));
+        }
+
+
 
 
     public function getuserinfo()
     {
        ***REMOVED***                                                                                                      // Enter the URL to fetch the User Profile of all users
         $json = file_get_contents($url);                                                                                // Read the details of the file in the form of a String
-        $response_user = json_decode($json);                                                                    // Take the JSON encoded string and convert into a PHP variable.
+        $response_user = json_decode($json);
+        echo count($response_user->UserInfoList);
+        echo '<pre>';
+        var_dump($response_user);
+        echo '</pre>';
 
-        return view('profile.users',compact('response_user'));
+        $existing_user = DB::table('musers')->get();
+        //var_dump($existing_user);
+        $result = (array)$existing_user;
+        // var_dump($result);
+        //$users = array();
+
+        echo count($existing_user);
+
+        $existing_user = DB::table('musers')->get();
+        for ($i = 0; $i < count($response_user->UserInfoList); $i++) {
+            $muser = new \App\Muser;
+            $muser->userid = $response_user->UserInfoList[$i]->userid;
+            $birthdate = date('Y-m-d', $response_user->UserInfoList[$i]->dateofbirth);
+            $muser->dateofbirth = $birthdate;
+            $muser->gender = $response_user->UserInfoList[$i]->gender;
+            $muser->height = $response_user->UserInfoList[$i]->height;
+            $muser->logo = $response_user->UserInfoList[$i]->logo;
+            $muser->nickname = $response_user->UserInfoList[$i]->nickname;
+            $muser->weight = $response_user->UserInfoList[$i]->weight;
+            $muser->save();
 
 
+        }
 
-
-        // After creating the user, I want to take the string converted from JSON and store into variables as per the User Table. So need to test $json_data before proceeding further.
     }
-
 
 
     public function bpinfo()
     {
-       ***REMOVED***                                                                                                      // Enter the URL to fetch the User Profile of all users
-        $json = file_get_contents($url);                                                                                // Read the details of the file in the form of a String
-        $response_user = json_decode($json);
-        $url_bp = "https://api.ihealthlabs.com:8443/api/OpenApi/downloadbpdata.ashx?client_id=5215a7f7153b4573ac733d4f9e81e78e&client_secret=2ae0a5fb1b34419bbfcd5e5340873b04&redirect_uri=https%3A%2F%2Fmhealth.dev.attic.uno%2F%3Fthis%3Dthat&access_token=vUBS4EQ5iSxztHDzB*td0*77kyO1QJMjfoExFF8RnqBcF0TDyfGZjthkQSfCvNEHP*YE6c8y8iig8g3yPuE2qUYOKLveCzcmEpMulY7U3PH5MvrwyNJ0Lo9PvQRVyt5kSXrGzS1vAW4yW9t0SPfWr1GsLOXcsmW*immI542*E1E";
+       ***REMOVED***
         $json_bp_details = file_get_contents($url_bp);
         $response_bp =  json_decode($json_bp_details);
+        echo '<pre>';
+        var_dump($response_bp);
+        echo '</pre>';
 
-        return view('profile/bplist', compact('response_bp','response_user'));
+        for ($i = 0; $i < count($response_bp->BPDataList); $i++) {
+
+            $ids = \App\bp::all()->pluck('id');
+
+            $bp = new \App\bp;
+
+            if ($ids->count() >= $response_bp->CurrentRecordCount) {
+                break;
+            }
+            else
+            {
+
+                $bp->BPL = $response_bp->BPDataList[$i]->BPL;
+                $bp->DataID = $response_bp->BPDataList[$i]->DataID;
+                $bp->DataSource = $response_bp->BPDataList[$i]->DataSource;
+                $bp->HP = $response_bp->BPDataList[$i]->HP;
+                $bp->HR = $response_bp->BPDataList[$i]->HR;
+                $bp->IsArr = $response_bp->BPDataList[$i]->IsArr;
+                $bp->LP = $response_bp->BPDataList[$i]->LP;
+                $latest_time = date("Y-m-d", $response_bp->BPDataList[$i]->LastChangeTime);
+                $bp->LastChangeTime = $latest_time;
+                $bp->Lat = $response_bp->BPDataList[$i]->Lat;
+                $bp->Lon = $response_bp->BPDataList[$i]->Lon;
+                $mdate = date("Y-m-d", $response_bp->BPDataList[$i]->MDate);
+                $bp->MDate = $mdate;
+                $bp->Note = $response_bp->BPDataList[$i]->Note;
+                $bp->TimeZone = $response_bp->BPDataList[$i]->TimeZone;
+                $bp->userid = $response_bp->BPDataList[$i]->userid;
+                $bp->BPUnit = $response_bp->BPUnit;
+                $bp->CurrentRecordCount = $response_bp->CurrentRecordCount;
+                $bp->NextPageUrl = $response_bp->NextPageUrl;
+                $bp->PageLength = $response_bp->PageLength;
+                $bp->PageNumber = $response_bp->PageNumber;
+                $bp->PrevPageUrl = $response_bp->PrevPageUrl;
+                $bp->RecordCount = $response_bp->RecordCount;
+                $bp->save();
+            }
+
+        }
+
+
+        return view('profile.bplist', compact('response_bp'));
 
     }
 
-
-
-    public function bpinfo_user2()
-    {
-       ***REMOVED***                                                                                                      // Enter the URL to fetch the User Profile of all users
-        $json = file_get_contents($url);                                                                                // Read the details of the file in the form of a String
-        $response_user = json_decode($json);
-        $url_bp = "https://api.ihealthlabs.com:8443/openapiv2/user/51aea3fcf491499db7e4193b8d4e1c8c/bp.json/?client_id=5215a7f7153b4573ac733d4f9e81e78e&client_secret=2ae0a5fb1b34419bbfcd5e5340873b04&redirect_uri=&access_token=vUBS4EQ5iSxztHDzB*td0*77kyO1QJMjfoExFF8RnqBcF0TDyfGZjthkQSfCvNEHP*YE6c8y8iig8g3yPuE2qTFGD5lM8R0yV1y4qsZdq-eVR-v7*mcIDsWFPAQ6eugD0gYrl1BpunAW*gAv6DOw1T6l6J471D*2akqgjZdX8*C1XBo6HJcALkANC*HNrA*IPyRjEy8fhtN73mJz9enK5Q&sc=f1510e5e64454e3c9f1114c859349fc4&sv=1c12d773ba5e41a49a29edc459d1b424";
-        $json_bp_details = file_get_contents($url_bp);
-        $response_bp_user2 = json_decode($json_bp_details);
-
-        return view('subject2.bplist', compact('response_bp_user2','response_user'));
-
-
-    }
-
-    public function bpinfo_user3()
-    {
-       ***REMOVED***                                                                                                      // Enter the URL to fetch the User Profile of all users
-        $json = file_get_contents($url);                                                                                // Read the details of the file in the form of a String
-        $response_user = json_decode($json);
-        $url_bp = "https://api.ihealthlabs.com:8443/openapiv2/user/7bc20629260e4602b2bfbc00172471e4/bp.json/?client_id=5215a7f7153b4573ac733d4f9e81e78e&client_secret=2ae0a5fb1b34419bbfcd5e5340873b04&redirect_uri=https%3A%2F%2Fmhealth.dev.attic.uno%2F%3Fthis%3Dthat&access_token=vUBS4EQ5iSxztHDzB*td0*77kyO1QJMjfoExFF8RnqBcF0TDyfGZjthkQSfCvNEHP*YE6c8y8iig8g3yPuE2qTz5SMXAQBueagv2X7Enz4iDw1gegCpU0slR1zgIuDuM1UtmMMSApGGrpMOt1jLq6pRnW4HoI4C-9SHL6OlOYzX*qRzX--e*XiH-87ADjp0TrQO6EjjkEXDZVZHSl5UB*w&sc=f1510e5e64454e3c9f1114c859349fc4&sv=1c12d773ba5e41a49a29edc459d1b424";
-        $json_bp_details = file_get_contents($url_bp);
-        $response_bp_user3 = json_decode($json_bp_details);
-
-        return view('subject3.bplist', compact('response_bp_user3','response_user'));
-
-
-    }
 
     public function bginfo()
     {
        ***REMOVED***
         $json_bg_details = file_get_contents($url);
         $response_bg = json_decode($json_bg_details);
+        echo '<pre>';
+        var_dump($response_bg);
+        echo '</pre>';
+
+        for($i=0;$i<count($response_bg->BGDataList);$i++) {
+            $ids = \App\bg::all()->pluck('id');
+
+            $bg = new \App\bg();
+
+            if ($ids->count() >= $response_bg->CurrentRecordCount) {
+                break;
+            }
+
+            $bg->BG = $response_bg->BGDataList[$i]->BG;
+            $bg->DataID = $response_bg->BGDataList[$i]->DataID;
+            $bg->DataSource = $response_bg->BGDataList[$i]->DataSource;
+            $bg->DinnerSituation = $response_bg->BGDataList[$i]->DinnerSituation;
+            $bg->DrugSituation = $response_bg->BGDataList[$i]->DrugSituation;
+            $latest_time = date("Y-m-d", $response_bg->BGDataList[$i]->LastChangeTime);
+            $bg->LastChangeTime = $latest_time;
+            $bg->Lat = $response_bg->BGDataList[$i]->Lat;
+            $bg->Lon = $response_bg->BGDataList[$i]->Lon;
+            $mdate = date("Y-m-d", $response_bg->BGDataList[$i]->MDate);
+            $bg->MDate = $mdate;
+            $bg->Note = $response_bg->BGDataList[$i]->Note;
+            $bg->TimeZone = $response_bg->BGDataList[$i]->TimeZone;
+            $bg->userid = $response_bg->BGDataList[$i]->userid;
+            $bg->BGUnit = $response_bg->BGUnit;
+            $bg->CurrentRecordCount = $response_bg->CurrentRecordCount;
+            $bg->NextPageUrl = $response_bg->NextPageUrl;
+            $bg->PageLength = $response_bg->PageLength;
+            $bg->PageNumber = $response_bg->PageNumber;
+            $bg->PrevPageUrl = $response_bg->PrevPageUrl;
+            $bg->RecordCount = $response_bg->RecordCount;
+            $bg->save();
+        }
 
         return view('profile.bglist',compact('response_bg'));
 
 
     }
+
+
+
+    public function pulseoxinfo()
+    {
+      ***REMOVED***
+        $json_pulseox_details = file_get_contents($url);
+        $response_pulseox = json_decode($json_pulseox_details);
+
+        for($i=0;$i<count($response_pulseox->BODataList);$i++)
+        {
+            $ids = \App\Pulseoxe::all()->pluck('id');
+
+            $pulse = new \App\Pulseoxe();
+
+            if ($ids->count() >= $response_pulseox->CurrentRecordCount) {
+                break;
+            }
+            else
+            {
+                $pulse->BO = $response_pulseox->BODataList[$i]->BO;
+                $pulse->DataID = $response_pulseox->BODataList[$i]->DataID;
+                $pulse->DataSource = $response_pulseox->BODataList[$i]->DataSource;
+                $pulse->HR = $response_pulseox->BODataList[$i]->HR;
+                $latest_time = date("Y-m-d", $response_pulseox->BODataList[$i]->LastChangeTime);
+                $pulse->LastChangeTime = $latest_time;
+                $pulse->Lat = $response_pulseox->BODataList[$i]->Lat;
+                $pulse->Lon = $response_pulseox->BODataList[$i]->Lon;
+                $mdate = date("Y-m-d", $response_pulseox->BODataList[$i]->MDate);
+                $pulse->MDate = $mdate;
+                $pulse->TimeZone = $response_pulseox->BODataList[$i]->TimeZone;
+                $pulse->userid = $response_pulseox->BODataList[$i]->userid;
+                $pulse->CurrentRecordCount = $response_pulseox->CurrentRecordCount;
+                $pulse->NextPageUrl = $response_pulseox->NextPageUrl;
+                $pulse->PageLength = $response_pulseox->PageLength;
+                $pulse->PageNumber = $response_pulseox->PageNumber;
+                $pulse->PrevPageUrl = $response_pulseox->PrevPageUrl;
+                $pulse->RecordCount = $response_pulseox->RecordCount;
+                $pulse->save();
+            }
+        }
+
+        return view('profile.pulselist', compact('response_pulseox'));
+
+    }
+
 
 
     }

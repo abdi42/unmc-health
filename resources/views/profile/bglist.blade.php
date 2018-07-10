@@ -21,13 +21,12 @@ for($i=0;$i<count($response_bg->BGDataList);$i++)
     $latest_time = date("Y-m-d\TH:i:s\Z",$response_bg->BGDataList[$i]->LastChangeTime);
     print_r("LastChangeTime is:")."\x20".print_r($latest_time);
     echo '<br>';
-    print_r("DrugSituation is:")."\x20".print_r($response_bg->BGDataList[$i]->DrugSituation);
-    echo '<br>';
     print_r("Lat is:")."\x20".print_r($response_bg->BGDataList[$i]->Lat);
     echo '<br>';
     print_r("Lon is:")."\x20".print_r($response_bg->BGDataList[$i]->Lon);
     echo '<br>';
-    print_r("MDate is:")."\x20".print_r($response_bg->BGDataList[$i]->MDate);
+    $mdate = date("Y-m-d\TH:i:s\Z",$response_bg->BGDataList[$i]->MDate);
+    print_r("MDate is:")."\x20".print_r($mdate);
     echo '<br>';
     print_r("Note:")."\x20".print_r($response_bg->BGDataList[$i]->Note);
     echo '<br>';
@@ -42,6 +41,8 @@ for($i=0;$i<count($response_bg->BGDataList);$i++)
     print_r("NextPageUrl is:")."\x20".print_r($response_bg->NextPageUrl);
     echo '<br>';
     print_r("PageLength is:")."\x20".print_r($response_bg->PageLength);
+    echo '<br>';
+    print_r("PageNumber is:")."\x20".print_r($response_bg->PageNumber);
     echo '<br>';
     print_r("PrevPageUrl is:")."\x20".print_r($response_bg->PrevPageUrl);
     echo '<br>';

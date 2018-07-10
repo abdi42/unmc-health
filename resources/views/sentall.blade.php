@@ -1,0 +1,1 @@
+Email sent to all the users successfully!

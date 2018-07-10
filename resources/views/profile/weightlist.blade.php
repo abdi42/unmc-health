@@ -20,8 +20,6 @@ $response_user = json_decode($json);
 for($i=0;$i<count($response->WeightDataList);$i++)
     {
         echo '<hr>';
-        print_r("User ID is:")."\x20".print_r($response_user->UserInfoList[2]->userid);
-        echo '<br/>';
         print_r("The details for Reading Number"."\x20".$i. "\x20". "are as follows:");
         echo '<br/>';
         print_r("Current Record Count is:\n")."\x20".print_r($response->CurrentRecordCount);
@@ -51,7 +49,8 @@ for($i=0;$i<count($response->WeightDataList);$i++)
         $latest_time = date("Y-m-d\TH:i:s\Z",$response->WeightDataList[$i]->LastChangeTime);
         print_r("LastChangeTime value is:\n")."\x20".print_r($latest_time);
         echo '<br/>';
-        print_r("MDate value is:\n")."\x20".print_r($response->WeightDataList[$i]->MDate);
+        $mdate = date("Y-m-d\TH:i:s\Z",$response->WeightDataList[$i]->MDate);
+        print_r("MDate value is:\n")."\x20".print_r($mdate);
         echo '<br/>';
         print_r("MuscaleValue is:\n")."\x20".print_r($response->WeightDataList[$i]->MuscaleValue);
         echo '<br/>';
@@ -67,9 +66,11 @@ for($i=0;$i<count($response->WeightDataList);$i++)
         echo '<br/>';
         print_r("Measurement time is:")."\x20".print_r($response->WeightDataList[$i]->measurement_time);
         echo '<br/>';
-        print_r("Time Zone is is:")."\x20".print_r($response->WeightDataList[$i]->time_zone);
+        print_r("Time Zone is:")."\x20".print_r($response->WeightDataList[$i]->time_zone);
         echo '<br/>';
-        print_r("Current Record Count is:\n")."\x20".print_r($response->WeightUnit);
+        print_r("User ID:")."\x20".print_r($response->WeightDataList[$i]->userid);
+        echo '<br/>';
+        print_r("Weight Unit is:\n")."\x20".print_r($response->WeightUnit);
         echo '<br/>';
     }
 

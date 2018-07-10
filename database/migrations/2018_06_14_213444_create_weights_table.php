@@ -15,21 +15,31 @@ class CreateWeightsTable extends Migration
     {
         Schema::create('weights', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('BMI');
+            $table->integer('CurrentRecordCount');
+            $table->string('NextPageUrl');
+            $table->integer('PageLength');
+            $table->integer('PageNumber');
+            $table->string('PrevPageUrl');
+            $table->integer('RecordCount');
+            $table->float('BMI');
             $table->integer('BoneValue');
+            $table->integer('DCI');
             $table->string('DataID');
+            $table->string('DataSource');
+            $table->integer('FatValue');
+            $table->dateTime('LastChangeTime');
+            $table->dateTime('MDate');
             $table->integer('MuscaleValue');
-            $table->integer('Note');
+            $table->string('Note');
+            $table->string('TimeZone');
+            $table->integer('VFR');
             $table->integer('WaterValue');
-            $table->integer('WeightValue');
-            $table->string('NEXTPAGEURL');
-            $table->integer('CURRENTRECORDCOUNT');
-            $table->integer('PAGELENGTH');
-            $table->integer('PAGENUMBER');
-            $table->integer('PREVPAGEURL');
-            $table->integer('RECORDCOUNT');
-            $table->string('WEIGHTUNIT');
-            //$table->timestamps();
+            $table->float('WeightValue');
+            $table->dateTime('measurement_time')->nullable();
+            $table->time('time_zone')->nullable();
+            $table->string('userid');
+            $table->integer('WeightUnit');
+            $table->timestamps();
         });
     }
 

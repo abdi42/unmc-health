@@ -37,4 +37,5 @@ for($i=0;$i<count($response_user->UserInfoList);$i++)
     print_r("Weight Unit is:")."\x20".print_r($response_user->WeightUnit);
     echo '<br/>';
 }
+
 ?>
