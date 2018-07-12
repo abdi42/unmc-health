@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -46,27 +46,90 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 /* Subject 1 Routes */
 //Route::get('subject-1/getweightinfo',['middleware' => 'auth', 'uses' => 'HealthController@index']);
-Route::get('subject-1/getweightinfo','HealthController@index');
-Route::get('subject-1/getbpinfo','HealthController@bpinfo');
+
 //Route::get('getuserinfo',['middleware' => 'auth', 'email' => 'tim@example.com','uses' => 'HealthController@getuserinfo']);
-Route::get('/pushpulseox', 'HealthController@pushpulseoxinfo');
+
 Route::get('getuserinfo', 'HealthController@getuserinfo');
-Route::get('subject-1/getbginfo','HealthController@bginfo');
-Route::get('subject-1/getpulseoxinfo','HealthController@pulseoxinfo');
-Route::get('/pushweight','HealthController@pushweight_db');
-Route::get('/pushbp','HealthController@pushbpinfo_db');
-Route::get('/pushbg','HealthController@pushbginfo_db');
 
 
-/* Subject 2 Routes */
-Route::get('subject-2/getbpinfo','HealthController@bpinfo_user2');
-/* Subject 3 Routes */
-Route::get('/subject-3/getbpinfo','HealthController@bpinfo_user3');
+//Route::get('/displayuser','HealthController@displayuser');
 
-//Route::get('send', 'mailController@send');
-Route::post('/send', 'mailController@send');
-Route::get('/email', 'mailController@email');
-Route::get('/sendall','mailController@sendAll');
-Route::post('/sending','mailController@sending');
-Route::get('/dailymessage','mailController@dailymessage');
-Route::get('/sends','mailController@sends');
+
+Route::get('/musers/weight', function(){
+    //dd($userid);
+    //$musers = DB::table('musers')get();
+    $musers = DB::table('musers')->get();
+    $userid = DB::table('musers')->get();
+
+    return view('displayuser',compact('musers','userid'));
+});
+
+Route::get('/musers/bp', function(){
+    //dd($userid);
+    //$musers = DB::table('musers')get();
+    $musers = DB::table('musers')->get();
+    $userid = DB::table('musers')->get();
+
+    return view('bpshow',compact('musers','userid'));
+});
+
+Route::get('/musers/bg', function(){
+    //dd($userid);
+    //$musers = DB::table('musers')get();
+    $musers = DB::table('musers')->get();
+    $userid = DB::table('musers')->get();
+
+    return view('bgshow',compact('musers','userid'));
+});
+
+
+Route::get('/musers/pulseox', function(){
+    //dd($userid);
+    //$musers = DB::table('musers')get();
+    $musers = DB::table('musers')->get();
+    $userid = DB::table('musers')->get();
+
+    return view('pulseoxshow',compact('musers','userid'));
+});
+
+
+/*
+Route::get('/musers/{userid}', function($userid){
+    //dd($userid);
+    //$musers = DB::table('musers')get();
+    $musers = DB::table('musers')->get();
+
+    return view('displayuser',compact('musers','userid'));
+});
+*/
+Route::get('/weights/{userid}',function($userid)
+{
+    $weights = DB::table('weights')->get();
+
+    return view('/displayweight',compact('weights','userid'));
+});
+
+Route::get('/bps/{userid}',function($userid)
+{
+    $bps = DB::table('bps')->get();
+
+    return view('/displaybp',compact('bps','userid'));
+});
+
+Route::get('/bgs/{userid}',function($userid)
+{
+    $bgs = DB::table('bgs')->get();
+
+    return view('/displaybg',compact('bgs','userid'));
+});
+
+Route::get('/pulseox/{userid}',function($userid)
+{
+    $pulse = DB::table('pulseoxes')->get();
+
+    return view('/displaypulseox',compact('pulse','userid'));
+});
+
+
+
+

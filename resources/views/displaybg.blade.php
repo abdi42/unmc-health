@@ -2,18 +2,24 @@
 /**
  * Created by PhpStorm.
  * User: smakandar
- * Date: 6/28/2018
- * Time: 12:00 PM
+ * Date: 7/11/2018
+ * Time: 3:21 PM
  */
-use \App\User;
 
-//$users = DB::table('users')->where('email','=','szm.makandar@gmail.com')->toArray();
-$users = User::all()->first();
-//{{Auth::user()->email}}
-echo $users->email;
-var_dump($users);
+use App\Http\Controllers\HealthController;
+
+\App\Http\Controllers\HealthController::bginfo();
+
+
+$url = "***REMOVED***";
+$json_bg_details = file_get_contents($url);
+$response_bg = json_decode($json_bg_details);
+
+
 for($i=0;$i<count($response_bg->BGDataList);$i++)
 {
+    if($response_bg->BGDataList[$i]->userid == $userid)
+        {
     echo '<hr>';
     print_r("BG is:")."\x20".print_r($response_bg->BGDataList[$i]->BG);
     echo '<br>';
@@ -55,6 +61,7 @@ for($i=0;$i<count($response_bg->BGDataList);$i++)
     echo '<br>';
     print_r("RecordCount is:")."\x20".print_r($response_bg->RecordCount);
     echo '<br>';
+}
 }
 
 ?>

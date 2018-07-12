@@ -33,7 +33,9 @@ class SendMail extends Mailable
     {
 
 
-        return $this->view('singlemail',['msg'=>$request->message])->to($request->to);
+        return $this->view('singlemail',['msg'=>$request->message])
+            ->to($request->to)
+            ->subject($request->subject);
     }
 
 

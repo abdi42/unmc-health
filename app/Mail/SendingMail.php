@@ -31,6 +31,7 @@ class SendingMail extends Mailable
     public function build(request $request)
     {
         $users = User::all()->pluck('email')->toArray();
-        return $this->view('mail',['msg'=>$request->message])->to($users);
+        return $this->view('mail',['msg'=>$request->message])->to($users)
+            ->subject('Daily Health Update');
     }
 }

@@ -2,45 +2,22 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
-use phpDocumentor\Reflection\Types\Null_;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Input;
 
 
-function unique_multidim_array($array,$key)
-{
-    $temp_array = array();
-    $i = 0;
-    $key_array = array();
-    foreach ($array as $val) {
-        if (!in_array(isset($val->$key), $key_array))
-        {
-            if(isset($val[$key]))
-            $key_array[$i] = $val[$key];
-            $temp_array[$i] = $val;
-
-        }
-        $i++;
-    }
-    return $temp_array;
-}
 
 class HealthController extends Controller
 {
 
 
-
-
-    public function index()
+    public static function index()
     {
         $url = "***REMOVED***";
         $new_response = file_get_contents($url);
         $response = json_decode($new_response);
-        echo '<pre>';
-        var_dump($response);
-        echo '</pre>';
-       // $count = 0;
+
 
         for ($i = 0; $i < count($response->WeightDataList); $i++) {
 
@@ -52,6 +29,7 @@ class HealthController extends Controller
                 break;
             }
             else {
+
                 $weight->CurrentRecordCount = $response->CurrentRecordCount;
                 $weight->NextPageUrl = $response->NextPageUrl;
                 $weight->PageLength = $response->PageLength;
@@ -83,57 +61,45 @@ class HealthController extends Controller
 
         }
 
-            return view('profile.weightlist', compact('response'));
+            return view('/displayweight', compact('response'));
         }
 
 
 
 
-    public function getuserinfo()
+    public static function getuserinfo()
     {
        ***REMOVED***                                                                                                      // Enter the URL to fetch the User Profile of all users
         $json = file_get_contents($url);                                                                                // Read the details of the file in the form of a String
         $response_user = json_decode($json);
-        echo count($response_user->UserInfoList);
-        echo '<pre>';
-        var_dump($response_user);
-        echo '</pre>';
 
-        $existing_user = DB::table('musers')->get();
-        //var_dump($existing_user);
-        $result = (array)$existing_user;
-        // var_dump($result);
-        //$users = array();
-
-        echo count($existing_user);
-
-        $existing_user = DB::table('musers')->get();
         for ($i = 0; $i < count($response_user->UserInfoList); $i++) {
             $muser = new \App\Muser;
             $muser->userid = $response_user->UserInfoList[$i]->userid;
-            $birthdate = date('Y-m-d', $response_user->UserInfoList[$i]->dateofbirth);
-            $muser->dateofbirth = $birthdate;
-            $muser->gender = $response_user->UserInfoList[$i]->gender;
-            $muser->height = $response_user->UserInfoList[$i]->height;
-            $muser->logo = $response_user->UserInfoList[$i]->logo;
-            $muser->nickname = $response_user->UserInfoList[$i]->nickname;
-            $muser->weight = $response_user->UserInfoList[$i]->weight;
+
             $muser->save();
 
 
         }
+        return view('/userlist',compact('response_user'));
+    }
 
+    public function displayuser()
+    {
+        $users = DB::table('musers')->get();
+
+        return view('displayuser', compact('users'));
     }
 
 
-    public function bpinfo()
+
+
+    public static function bpinfo()
     {
        ***REMOVED***
         $json_bp_details = file_get_contents($url_bp);
         $response_bp =  json_decode($json_bp_details);
-        echo '<pre>';
-        var_dump($response_bp);
-        echo '</pre>';
+
 
         for ($i = 0; $i < count($response_bp->BPDataList); $i++) {
 
@@ -181,14 +147,12 @@ class HealthController extends Controller
     }
 
 
-    public function bginfo()
+    public static function bginfo()
     {
        ***REMOVED***
         $json_bg_details = file_get_contents($url);
         $response_bg = json_decode($json_bg_details);
-        echo '<pre>';
-        var_dump($response_bg);
-        echo '</pre>';
+
 
         for($i=0;$i<count($response_bg->BGDataList);$i++) {
             $ids = \App\bg::all()->pluck('id');
@@ -230,7 +194,7 @@ class HealthController extends Controller
 
 
 
-    public function pulseoxinfo()
+    public static function pulseoxinfo()
     {
       ***REMOVED***
         $json_pulseox_details = file_get_contents($url);

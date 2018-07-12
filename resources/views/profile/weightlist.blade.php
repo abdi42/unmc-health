@@ -3,7 +3,7 @@
 
 <?php
 //echo "<pre>";
-$response;
+
 //$i=0;
 //$values = $response->WeightDataList[count($response)];
 //var_dump($response);
@@ -13,10 +13,10 @@ $response;
 //print_r("The BMI value is:\n")."\x20".print_r($response->WeightDataList[0]->BMI ."\n");
 //print_r("The Weight value is:")."\x20".print_r($response->WeightDataList[0]->WeightValue."\n");
 
-$url = "***REMOVED***                                                                                                      // Enter the URL to fetch the User Profile of all users
-$json = file_get_contents($url);                                                                                // Read the details of the file in the form of a String
-$response_user = json_decode($json);
-//$output = "<ul>";
+$url = "***REMOVED***";
+$new_response = file_get_contents($url);
+$response = json_decode($new_response);
+
 for($i=0;$i<count($response->WeightDataList);$i++)
     {
         echo '<hr>';

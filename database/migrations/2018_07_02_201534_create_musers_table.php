@@ -15,12 +15,6 @@ class CreateMusersTable extends Migration
     {
         Schema::create('musers', function (Blueprint $table) {
             $table->string('userid')->unique();
-            $table->date('dateofbirth');
-            $table->string('gender');
-            $table->float('height');
-            $table->string('logo');
-            $table->string('nickname');
-            $table->float('weight');
             $table->timestamps();
         });
     }
