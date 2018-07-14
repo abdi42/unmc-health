@@ -28,7 +28,7 @@
         <div class="container">
             <h1 class="display-3">Welcome to the UNMC Application</h1>
             <p></p>
-            <p></a></p>
+            <p></p>
         </div>
     </div>
 

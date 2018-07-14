@@ -130,6 +130,37 @@ Route::get('/pulseox/{userid}',function($userid)
     return view('/displaypulseox',compact('pulse','userid'));
 });
 
+/*
+Route::get('/content/{id}', function($id)
+{
+    //$content = DB::table('educationalcontents')->get();
+
+    $content = \App\Educationalcontent::all()->find($id);
+
+    return view('contents',compact('content','id'));
+});
 
 
+Route::get('/category/{id}',function($id)
+{
+    //$category = DB::table('educationalcontentcategories')->get();
 
+    $category = \App\Educationalcontentcategory::all()->find($id);
+
+    return view('categories',compact('category','id'));
+});
+
+*/
+
+Route::get('/contentcreate','EducationController@contentcreate');
+
+
+Route::get('/showcontent','EducationController@showcontent');
+
+Route::post('/contentstore', 'EducationController@contentstore');
+
+Route::get('/educationalcontents/{id}/edit','EducationController@editcontent');
+
+Route::get('/contentdelete','EducationController@contentdelete');
+
+Route::get('/contentdeleted', 'EducationController@contentdeleted');

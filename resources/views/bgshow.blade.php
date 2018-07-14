@@ -17,8 +17,5 @@
 @endforeach
 
 
-
-
-
 </body>
 </html>
