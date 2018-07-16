@@ -1,4 +1,4 @@
-
+@extends('layouts.layout')
 
 
 @foreach($contents as $content)
@@ -10,11 +10,11 @@
 
 <p><b>Educational Category: </b></p>   {{$content->category }}<br><br>
 
-    <a href="{{'/educationalcontent/'.$content->id.'/edit'}}">Edit</a>
+    <a href="{{'/educationalcontent/'.$content->id.'/edit'}}"><button class="btn btn-primary">Edit</button></a><br><br>
 <form action="{{'/educationalcontent/'. $content->id}}" method="post">
     {{csrf_field()}}
     {{method_field('DELETE')}}
-<a href="{{'/educationalcontent/'.$content->id}}">Delete</a>
+    <a href="{{'/educationalcontent/'.$content->id}}"><button class="btn btn-primary">Delete</button></a>
 </form>
     <hr>
 

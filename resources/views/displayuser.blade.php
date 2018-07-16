@@ -1,5 +1,5 @@
 
-
+@extends('layouts.layout')
 <!DOCTYPE html>
 <html>
 <head>

@@ -1,3 +1,4 @@
+@extends('layouts.layout')
 <!DOCTYPE html>
 <html>
 <title>Edit Educational Categories</title>
@@ -14,17 +15,18 @@
 
     {{method_field('PUT')}}
 
-    <label>Select Educational Content ID</label>
+    <label>Select Educational Content ID</label><br><br>
     <label>  <select name="educationalcontent_id">
             @foreach($contents as $content)
                 <option value="{{ $content->id }}">{{ $content->title }}</option>
             @endforeach
-        </select></label>
+        </select></label><br><br>
 
-    <label>    Edit the Category here: </label>
+    <label>    Edit the Category here: </label><br><br>
     <label>   <input type="text" name="category" required><br><br></label>
 
-    <input type="submit" value="Update">
+
+    <button type="submit" class="btn btn-primary">Update</button>
 
 </form>
 
