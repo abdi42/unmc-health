@@ -39,4 +39,3 @@ pipelines:
             - tar -czf release.tar.gz . --exclude=./release.tar.gz
             - scp release.tar.gz $SSH_USER@$SSH_HOST:/home/$SSH_USER
             - ssh $SSH_USER@$SSH_HOST "tar -xf release.tar.gz -C $APP_ROOT && rm -Rf release.tar.gz"
-            - ssh $SSH_USER@$SSH_HOST "php-7.2 /home/$SSH_USER/$APP_ROOT/artisan migrate --force"
