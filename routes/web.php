@@ -159,8 +159,29 @@ Route::get('/showcontent','EducationController@showcontent');
 
 Route::post('/contentstore', 'EducationController@contentstore');
 
-Route::get('/educationalcontents/{id}/edit','EducationController@editcontent');
 
-Route::get('/contentdelete','EducationController@contentdelete');
+
+
+Route::get('/educationalcontent/{id}/edit','EducationController@editcontent');
+
+Route::put('/educationalcontent/{id}','EducationController@contentedited');
+
+Route::get('/educationalcontent/{id}','EducationController@contentdelete');
+
+Route::get('/categorycreate','EducationController@categorycreate');
+
+Route::post('/categorystore','EducationController@categorystore');
+
+Route::get('/showcategory','EducationController@showcategory');
+
+Route::get('/educationalcontentcategories/{id}/edit','EducationController@categoryedit');
+
+Route::put('/educationalcontentcategories/{id}','EducationController@categoryedited');
+
+Route::get('/educationalcontentcategories/{id}','EducationController@categorydelete');
+
+//Route::post('/contentedited','EducationController@contentedited');
+
+//Route::get('/contentdelete','EducationController@contentdelete');
 
 Route::get('/contentdeleted', 'EducationController@contentdeleted');

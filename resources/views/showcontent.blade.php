@@ -1,19 +1,26 @@
 
 
-<?php
-foreach($contents as $content)
-{
-    echo '<hr>';
-    print_r('Title: ')."\x20".print_r($content->title);
-    echo '<br>';
-    print_r('Content is: ')."\x20".print_r($content->content);
-    echo '<br>';
 
-}
+@foreach($contents as $content)
 
 
+<p><b>Title: </b></p>    {{$content->title }}<br><br>
 
-?>
+<p><b>Educational Content: </b></p>    {{$content->content}}<br><br>
+
+<p><b>Educational Category: </b></p>   {{$content->category }}<br><br>
+
+    <a href="{{'/educationalcontent/'.$content->id.'/edit'}}">Edit</a>
+<form action="{{'/educationalcontent/'. $content->id}}" method="post">
+    {{csrf_field()}}
+    {{method_field('DELETE')}}
+<a href="{{'/educationalcontent/'.$content->id}}">Delete</a>
+</form>
+    <hr>
+
+@endforeach
+
+
 
 
 

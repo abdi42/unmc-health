@@ -11,8 +11,10 @@
 <form action="/contentstore" method="post">
 
     {{ csrf_field() }}
-<label>Title:</label>
-    <label><input type="text" name="title" placeholder="title" required></label><br><br>
+    @section('editMethod')
+    @show
+    <label>Title:</label>
+    <label><input type="text" name="title" placeholder="title" value="@yield('editTitle')" required></label><br><br>
 
 
     <label>Select Category:</label>
@@ -22,8 +24,8 @@
             @endforeach
         </select></label>
 
-<label>    Enter the Content here: </label>
-<label>   <textarea name="content" placeholder="content" cols="30" rows="10" required></textarea><br><br></label>
+    <label>    Enter the Content here: </label>
+    <label>   <textarea name="content" placeholder="content" cols="30" rows="10" required>@yield('editBody')</textarea><br><br></label>
 
     <input type="submit" value="Save">
 
