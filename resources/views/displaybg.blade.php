@@ -1,5 +1,10 @@
 @extends('layouts.layout')
 
+<!doctype html>
+<html>
+<title>Blood Glucose List</title>
+</html>
+
 <?php
 /**
  * Created by PhpStorm.
