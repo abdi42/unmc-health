@@ -20,7 +20,7 @@
     <label><input type="text" name="title" placeholder="title" value="@yield('editTitle')" required></label><br><br>
 
 
-    <label>Select Category:</label>
+    <label>Select Category:</label><br><br>
     <label>  <select name="category">
             @foreach($categories as $category)
                 <option value="{{ $category }}">{{ $category }}</option>

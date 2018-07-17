@@ -1,7 +1,9 @@
+@extends('layouts.layout')
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>Blood Pressure Information</title>
 </head>
 
 <body>

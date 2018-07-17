@@ -1,5 +1,9 @@
 @extends('layouts.layout')
 
+        <!DOCTYPE html>
+<html>
+<title>Weight List</title>
+<body>
 
 <?php
 /**

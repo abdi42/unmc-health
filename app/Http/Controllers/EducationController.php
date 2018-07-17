@@ -104,12 +104,12 @@ class EducationController extends Controller
     {
         $this->validate($request,
         [
-            'educationalcontent_id' => 'required',
-            'category' => 'required'
+
+            'category' => 'required',
         ]);
 
         $categories = new \App\Educationalcontentcategory();
-        $categories->educationalcontent_id = $request->input('educationalcontent_id');
+        //$categories->educationalcontent_id = $request->input('educationalcontent_id');
         $categories->category = $request->input('category');
         $categories->save();
 
@@ -141,11 +141,11 @@ class EducationController extends Controller
         $categories = Educationalcontentcategory::all()->find($id);
         $this->validate($request,
             [
-                'educationalcontent_id' => 'required',
-                'category' => 'required'
+                //'educationalcontent_id' => 'required',
+                'category' => 'required',
             ]);
 
-        $categories->educationalcontent_id = $request->input('educationalcontent_id');
+       // $categories->educationalcontent_id = $request->input('educationalcontent_id');
         $categories->category = $request->input('category');
         $categories->save();
 

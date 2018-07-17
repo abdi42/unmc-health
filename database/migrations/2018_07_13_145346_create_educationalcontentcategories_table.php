@@ -15,7 +15,7 @@ class CreateEducationalcontentcategoriesTable extends Migration
     {
         Schema::create('educationalcontentcategories', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('educationalcontent_id');
+            $table->integer('educationalcontent_id')->nullable();
             $table->foreign('educationalcontent_id')->references('id')->on('educationalcontents')->onDelete('cascade');
             $table->string('category');
             $table->timestamps();

@@ -166,7 +166,7 @@ Route::get('/educationalcontent/{id}/edit','EducationController@editcontent');
 
 Route::put('/educationalcontent/{id}','EducationController@contentedited');
 
-Route::get('/educationalcontent/{id}','EducationController@contentdelete');
+Route::delete('/educationalcontent/{id}','EducationController@contentdelete');
 
 Route::get('/categorycreate','EducationController@categorycreate');
 
@@ -178,7 +178,7 @@ Route::get('/educationalcontentcategories/{id}/edit','EducationController@catego
 
 Route::put('/educationalcontentcategories/{id}','EducationController@categoryedited');
 
-Route::get('/educationalcontentcategories/{id}','EducationController@categorydelete');
+Route::delete('/educationalcontentcategories/{id}','EducationController@categorydelete');
 
 //Route::post('/contentedited','EducationController@contentedited');
 

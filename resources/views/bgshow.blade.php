@@ -1,7 +1,8 @@
+@extends('layouts.layout')
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>Blood Glucose Information</title>
 </head>
 
 <body>

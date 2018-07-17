@@ -25,7 +25,7 @@
 @yield('content')
 </div>
 
-@include('layouts.footer')
+
 
 <!-- Bootstrap core JavaScript
 ================================================== -->

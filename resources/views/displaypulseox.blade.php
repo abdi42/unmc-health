@@ -1,3 +1,10 @@
+@extends('layouts.layout')
+
+        <!DOCTYPE html>
+<html>
+<title>Pulse Oxygen List</title>
+<body>
+
 <?php
 /**
  * Created by PhpStorm.
@@ -57,3 +64,4 @@ for($i=0;$i<count($response_pulseox->BODataList);$i++)
     echo '<br>';
 }
 }
+?>

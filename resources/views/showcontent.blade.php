@@ -1,5 +1,9 @@
 @extends('layouts.layout')
 
+        <!doctype html>
+<html>
+<title>Content List</title>
+</html>
 
 @foreach($contents as $content)
 
