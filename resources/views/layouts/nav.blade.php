@@ -13,17 +13,29 @@
             <li class="nav-item">
                 <a class="nav-link" href="http://127.0.0.1:8000/welcome">Welcome</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="http://127.0.0.1:8000/contentcreate">Create Educational Content</a>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Education Content</a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="http://127.0.0.1:8000/contentcreate">Create Education Content</a></li>
+                    <li><a href="http://127.0.0.1:8000/showcontent">Show Education Content</a></li>
+                </ul>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="http://127.0.0.1:8000/showcontent">Educational Content</a>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Education Category</a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="http://127.0.0.1:8000/categorycreate">Create Education Category</a></li>
+                    <li><a href="http://127.0.0.1:8000/showcategory">Show Education Category</a></li>
+                </ul>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="http://127.0.0.1:8000/categorycreate">Create Education Category</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="http://127.0.0.1:8000/showcategory">Education Category</a>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Motivational Tips</a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="http://127.0.0.1:8000/tipcreate">Create Motivational Tip</a></li>
+                    <li><a href="http://127.0.0.1:8000/tipshow">Show Motivational Tip</a></li>
+                </ul>
             </li>
 
             <li class="nav-item dropdown">

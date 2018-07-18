@@ -168,6 +168,8 @@ Route::put('/educationalcontent/{id}','EducationController@contentedited');
 
 Route::delete('/educationalcontent/{id}','EducationController@contentdelete');
 
+
+
 Route::get('/categorycreate','EducationController@categorycreate');
 
 Route::post('/categorystore','EducationController@categorystore');
@@ -179,6 +181,20 @@ Route::get('/educationalcontentcategories/{id}/edit','EducationController@catego
 Route::put('/educationalcontentcategories/{id}','EducationController@categoryedited');
 
 Route::delete('/educationalcontentcategories/{id}','EducationController@categorydelete');
+
+
+
+Route::get('/tipcreate','TipController@tipcreate');
+
+Route::post('/tipstore','TipController@tipstore');
+
+Route::get('/tipshow','TipController@showtip');
+
+Route::get('/tip/{id}/edit','TipController@edittip');
+
+Route::put('/tip/{id}','TipController@tipedited');
+
+Route::delete('/tip/{id}','TipController@tipdelete');
 
 //Route::post('/contentedited','EducationController@contentedited');
 
