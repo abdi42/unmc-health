@@ -13,8 +13,9 @@
 
     {{ csrf_field() }}
     {{method_field('PUT')}}
-    <label>Motivational Tip:</label><br><br>
-    <label>   <textarea name="content" placeholder="Enter your content here" cols="30" rows="10" required></textarea><br><br></label>
+    <div>
+    <label>Motivational Tip:</label><br>
+    <label>   <textarea name="content" placeholder="Enter your content here" cols="30" rows="10" required></textarea><br></label>
 
  <br>   <label>Edit Creation Date:</label><br>
     <label><input type="date" placeholder="Enter the date here" name="creation_date" required></label><br>
@@ -24,6 +25,7 @@
 
     <br> <button type="Submit" class="btn btn-primary" value="Update">Update</button>
 
+    </div>
 </form>
 
 

@@ -13,8 +13,8 @@
 <form action="/tipstore" method="post">
 
     {{ csrf_field() }}
-
-<br>    <label><b>Tip Content:</b></label><br><br>
+<div>
+<br>    <label><b>Tip Content:</b></label><br>
     <label><textarea name="content" placeholder="Enter the Tip Content here" cols="30" rows="10" required></textarea></label><br><br>
 
     <label>Enter Creation Date:</label><br>
@@ -25,7 +25,7 @@
 
 
     <br>  <button type="submit" class="btn btn-primary">Save</button>
-
+</div>
 </form>
 
 

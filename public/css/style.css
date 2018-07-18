@@ -1,7 +1,11 @@
-label, input {
+label, input, div {
     display: block;
 }
 
 label {
     margin-bottom: 20px;
+}
+
+div{
+    margin-left: 30px;
 }

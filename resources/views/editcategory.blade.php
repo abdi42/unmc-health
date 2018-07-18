@@ -11,18 +11,19 @@
 
 <form action="/educationalcontentcategories/{{$categories->id}}" method="post">
 
+
     {{ csrf_field() }}
 
     {{method_field('PUT')}}
 
 
-
-    <label>    Edit the Category here: </label><br><br>
-    <label>   <input type="text" name="category" required><br><br></label>
+    <div>
+    <label>Edit the Category here: </label><br>
+    <label>   <input type="text" name="category" required><br></label>
 
 
    <br> <button type="submit" class="btn btn-primary">Update</button>
-
+    </div>
 </form>
 
 
