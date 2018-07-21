@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTipsTable extends Migration
+class CreateSubjectsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateTipsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tips', function (Blueprint $table) {
-            $table->increments('id');
-            $table->longText('content');
+        Schema::create('subjects', function (Blueprint $table) {
+            $table->string('userid')->unique();
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ class CreateTipsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tips');
+        Schema::dropIfExists('subjects');
     }
 }

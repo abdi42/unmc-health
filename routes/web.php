@@ -1,5 +1,5 @@
 <?php
-use Illuminate\Support\Facades\DB;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,193 +11,97 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
-$url = "***REMOVED***                                                                                                      // Enter the URL to fetch the User Profile of all users
-$json = file_get_contents($url);                                                                                // Read the details of the file in the form of a String
-$response_user = json_decode($json);
-
+/*Home Page*/
 Route::get('/', function () {
     return view('welcome');
 });
 
+/* Welcome Page*/
+Route::get('/welcome', 'WelcomeController@welcome')->name('welcome');
 
-Route::get('/welcome', 'WelcomeController@index')->name('welcome');
-
+/* Authentication Routes */
 Auth::routes();
 
+/* Logout Route */
 Route::get('logout','\App\Http\Controllers\Auth\LoginController@logout');
+
+/* Page after the authenticated user is signed in (Dashboard Page)*/
 Route::get('/home', 'HomeController@index')->name('home');
 
-//Route::get('/auth0/callback','\Auth0\Login\Auth0Controller@callback')->name('auth0-callback');
-//Route::get('/login','Auth\Auth0IndexController@login')->name('login');
-//Route::get('/logout','Auth\Auth0IndexController@logout')->name('logout')->middleware('auth');
-//Route::get('/profile', 'Auth\Auth0IndexController@profile' )->name( 'profile' )->middleware('auth');
+Route::get('subjects', 'SubjectsController@index');
 
-//Route::get('/auth0/callback',function(){
-//    dd(Auth0::getUser());
-//});
+/* Page showing list of users to get the weight details */
+Route::get('/subjects/weight','SubjectsController@index_weight');
 
-/*
- *
- * Routes for the APIs
- */
+/* Page showing list of users to get the Blood Pressure details */
+Route::get('/subjects/bloodpressure', 'SubjectsController@index_bloodpressure');
 
+/* Page showing list of users to get the Blood Glucose details */
+Route::get('/subjects/bloodglucose','SubjectsController@index_bloodglucose');
 
-//Route::get('/testapi','HealthController@alluserinfo');
+/* Page showing list of users to get the Pulse Oxygen details */
+Route::get('/subjects/pulseoxygen','SubjectsController@index_pulseoxygen');
 
-/* Subject 1 Routes */
-//Route::get('subject-1/getweightinfo',['middleware' => 'auth', 'uses' => 'HealthController@index']);
+Route::get('/weights/{userid}','SubjectsController@show_weight');
 
-//Route::get('getuserinfo',['middleware' => 'auth', 'email' => 'tim@example.com','uses' => 'HealthController@getuserinfo']);
+Route::get('/bloodpressures/{userid}','SubjectsController@show_bloodpressure');
 
-Route::get('getuserinfo', 'HealthController@getuserinfo');
+Route::get('/bloodglucoses/{userid}','SubjectsController@show_bloodglucose');
 
+Route::get('/pulseoxygens/{userid}','SubjectsController@show_pulseoxygen');
 
-//Route::get('/displayuser','HealthController@displayuser');
 
 
-Route::get('/musers/weight', function(){
-    //dd($userid);
-    //$musers = DB::table('musers')get();
-    $musers = DB::table('musers')->get();
-    $userid = DB::table('musers')->get();
 
-    return view('displayuser',compact('musers','userid'));
-});
+Route::get('/contents','ContentsController@index');
 
-Route::get('/musers/bp', function(){
-    //dd($userid);
-    //$musers = DB::table('musers')get();
-    $musers = DB::table('musers')->get();
-    $userid = DB::table('musers')->get();
+Route::get('/contents/create','ContentsController@create');
 
-    return view('bpshow',compact('musers','userid'));
-});
+Route::post('/contents', 'ContentsController@store');
 
-Route::get('/musers/bg', function(){
-    //dd($userid);
-    //$musers = DB::table('musers')get();
-    $musers = DB::table('musers')->get();
-    $userid = DB::table('musers')->get();
+Route::get('/contents/{id}','ContentsController@show');
 
-    return view('bgshow',compact('musers','userid'));
-});
+Route::get('/contents/{id}/edit','ContentsController@edit');
 
+Route::put('/contents/{id}','ContentsController@update');
 
-Route::get('/musers/pulseox', function(){
-    //dd($userid);
-    //$musers = DB::table('musers')get();
-    $musers = DB::table('musers')->get();
-    $userid = DB::table('musers')->get();
+Route::delete('/contents/{id}','ContentsController@destroy');
 
-    return view('pulseoxshow',compact('musers','userid'));
-});
 
 
-/*
-Route::get('/musers/{userid}', function($userid){
-    //dd($userid);
-    //$musers = DB::table('musers')get();
-    $musers = DB::table('musers')->get();
 
-    return view('displayuser',compact('musers','userid'));
-});
-*/
-Route::get('/weights/{userid}',function($userid)
-{
-    $weights = DB::table('weights')->get();
+Route::get('/categories','CategoriesController@index');
 
-    return view('/displayweight',compact('weights','userid'));
-});
+Route::get('/categories/create','CategoriesController@create');
 
-Route::get('/bps/{userid}',function($userid)
-{
-    $bps = DB::table('bps')->get();
+Route::post('/categories','CategoriesController@store');
 
-    return view('/displaybp',compact('bps','userid'));
-});
+Route::get('/categories/{id}','CategoriesController@show');
 
-Route::get('/bgs/{userid}',function($userid)
-{
-    $bgs = DB::table('bgs')->get();
+Route::get('/categories/{id}/edit','CategoriesController@edit');
 
-    return view('/displaybg',compact('bgs','userid'));
-});
+Route::put('/categories/{id}','CategoriesController@update');
 
-Route::get('/pulseox/{userid}',function($userid)
-{
-    $pulse = DB::table('pulseoxes')->get();
+Route::delete('/categories/{id}','CategoriesController@destroy');
 
-    return view('/displaypulseox',compact('pulse','userid'));
-});
 
-/*
-Route::get('/content/{id}', function($id)
-{
-    //$content = DB::table('educationalcontents')->get();
 
-    $content = \App\Educationalcontent::all()->find($id);
 
-    return view('contents',compact('content','id'));
-});
+Route::get('/tips','TipsController@index');
 
+Route::get('/tips/create','TipsController@create');
 
-Route::get('/category/{id}',function($id)
-{
-    //$category = DB::table('educationalcontentcategories')->get();
+Route::post('/tips','TipsController@store');
 
-    $category = \App\Educationalcontentcategory::all()->find($id);
+Route::get('/tips/{id}','TipsController@show');
 
-    return view('categories',compact('category','id'));
-});
+Route::get('/tip/{id}/edit','TipsController@edit');
 
-*/
+Route::put('/tip/{id}','TipsController@update');
 
-Route::get('/contentcreate','EducationController@contentcreate');
+Route::delete('/tip/{id}','TipsController@destroy');
 
 
-Route::get('/showcontent','EducationController@showcontent');
 
-Route::post('/contentstore', 'EducationController@contentstore');
 
-
-
-
-Route::get('/educationalcontent/{id}/edit','EducationController@editcontent');
-
-Route::put('/educationalcontent/{id}','EducationController@contentedited');
-
-Route::delete('/educationalcontent/{id}','EducationController@contentdelete');
-
-
-
-Route::get('/categorycreate','EducationController@categorycreate');
-
-Route::post('/categorystore','EducationController@categorystore');
-
-Route::get('/showcategory','EducationController@showcategory');
-
-Route::get('/educationalcontentcategories/{id}/edit','EducationController@categoryedit');
-
-Route::put('/educationalcontentcategories/{id}','EducationController@categoryedited');
-
-Route::delete('/educationalcontentcategories/{id}','EducationController@categorydelete');
-
-
-
-Route::get('/tipcreate','TipController@tipcreate');
-
-Route::post('/tipstore','TipController@tipstore');
-
-Route::get('/tipshow','TipController@showtip');
-
-Route::get('/tip/{id}/edit','TipController@edittip');
-
-Route::put('/tip/{id}','TipController@tipedited');
-
-Route::delete('/tip/{id}','TipController@tipdelete');
-
-//Route::post('/contentedited','EducationController@contentedited');
-
-//Route::get('/contentdelete','EducationController@contentdelete');
-
-Route::get('/contentdeleted', 'EducationController@contentdeleted');
+?>
