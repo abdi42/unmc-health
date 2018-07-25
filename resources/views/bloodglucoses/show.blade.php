@@ -18,7 +18,7 @@ use App\Http\Controllers\BloodglucosesController;
 BloodglucosesController::bginfo();
 
 
-$url = "***REMOVED***";
+$url = "https://api.ihealthlabs.com:8443/openapiv2/application/glucose.json/?client_id=5215a7f7153b4573ac733d4f9e81e78e&client_secret=2ae0a5fb1b34419bbfcd5e5340873b04&redirect_uri=https%3A%2F%2Fmhealth.dev.attic.uno%2F%3Fthis%3Dthat&access_token=vUBS4EQ5iSxztHDzB*td0*77kyO1QJMjfoExFF8RnqBcF0TDyfGZjthkQSfCvNEHP*YE6c8y8iig8g3yPuE2qRDfiA-*1Q8TQ1oUgFqKv6xAEPvQ6Sahm10GsdYOZ*HZrNBkuq5AA-qo*lABQdjjpDTUPPDhLzOVawpwKdKVb6iLa*GZDxd2dm1-JCIyTr-m0EuFvBkcYRBFr3zNK9Whew&sc=f1510e5e64454e3c9f1114c859349fc4&sv=8acbec2826cd457a882415ea2b39ea93";
 $json_bg_details = file_get_contents($url);
 $response_bg = json_decode($json_bg_details);
 

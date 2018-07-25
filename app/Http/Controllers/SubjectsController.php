@@ -14,7 +14,7 @@ class SubjectsController extends Controller
 
     public static function index()
     {
-        $url = "https://api.ihealthlabs.com:8443/openapiv2/application/userinfo.json/?client_id=5215a7f7153b4573ac733d4f9e81e78e&client_secret=2ae0a5fb1b34419bbfcd5e5340873b04&redirect_uri=https%3A%2F%2Fmhealth.dev.attic.uno%2F%3Fthis%3Dthat&access_token=vUBS4EQ5iSxztHDzB*td0*77kyO1QJMjfoExFF8RnqBcF0TDyfGZjthkQSfCvNEHP*YE6c8y8iig8g3yPuE2qRDfiA-*1Q8TQ1oUgFqKv6xAEPvQ6Sahm10GsdYOZ*HZrNBkuq5AA-qo*lABQdjjpDTUPPDhLzOVawpwKdKVb6iLa*GZDxd2dm1-JCIyTr-m0EuFvBkcYRBFr3zNK9Whew&sc=f1510e5e64454e3c9f1114c859349fc4&sv=fa258cbecd5e426e96de78ba55e2cfa6&locale=en_US";                                                                                                      // Enter the URL to fetch the User Profile of all users
+        $url = "";                                                                                                      // Enter the URL to fetch the User Profile of all users
         $json = file_get_contents($url);                                                                                // Read the details of the file in the form of a String
         $response_user = json_decode($json);
 
