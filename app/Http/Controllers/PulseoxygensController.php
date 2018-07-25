@@ -9,7 +9,15 @@ class PulseoxygensController extends Controller
 {
     public static function pulseoxinfo()
     {
-        $url = "";
+        $client_id = getenv('CLIENT_ID');
+        $client_secret = getenv('CLIENT_SECRET');
+        $redirect_uri = getenv('REDIRECT_URI');
+        $access_token = getenv('ACCESS_TOKEN');
+        $sc_spo2 = getenv('SC_SPO2');
+        $sv_spo2 = getenv('SV_SPO2');
+
+
+        $url = "https://api.ihealthlabs.com:8443/openapiv2/application/spo2.json/?client_id=".$client_id."&client_secret=".$client_secret."&redirect_uri=".$redirect_uri."&access_token=".$access_token."&sc=".$sc_spo2."&sv=".$sv_spo2;
         $json_pulseox_details = file_get_contents($url);
         $response_pulseox = json_decode($json_pulseox_details);
 

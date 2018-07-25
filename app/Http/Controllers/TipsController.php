@@ -80,4 +80,13 @@ class TipsController extends Controller
         session()->flash('message', 'Deleted Successfully');
         return redirect('/tips');
     }
+
+
+    public function test()
+    {
+        $test = getenv('client_id');
+
+        echo $test;
+    }
+
 }

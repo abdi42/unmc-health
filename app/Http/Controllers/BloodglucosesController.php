@@ -9,7 +9,14 @@ class BloodglucosesController extends Controller
 {
     public static function bginfo()
     {
-        $url = "";
+        $client_id = getenv('CLIENT_ID');
+        $client_secret = getenv('CLIENT_SECRET');
+        $redirect_uri = getenv('REDIRECT_URI');
+        $access_token = getenv('ACCESS_TOKEN');
+        $sc_bg = getenv('SC_BG');
+        $sv_bg = getenv('SV_BG');
+
+        $url = "https://api.ihealthlabs.com:8443/openapiv2/application/glucose.json/?client_id=".$client_id."&client_secret=".$client_secret."&redirect_uri=".$redirect_uri."&access_token=".$access_token."&sc=".$sc_bg."&sv=".$sv_bg;
         $json_bg_details = file_get_contents($url);
         $response_bg = json_decode($json_bg_details);
 

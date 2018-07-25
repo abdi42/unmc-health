@@ -17,7 +17,15 @@ use App\Http\Controllers\PulseoxygensController;
 
 PulseoxygensController::pulseoxinfo();
 
-$url = "https://api.ihealthlabs.com:8443/openapiv2/application/spo2.json/?client_id=5215a7f7153b4573ac733d4f9e81e78e&client_secret=2ae0a5fb1b34419bbfcd5e5340873b04&redirect_uri=https%3A%2F%2Fmhealth.dev.attic.uno%2F%3Fthis%3Dthat&access_token=vUBS4EQ5iSxztHDzB*td0*77kyO1QJMjfoExFF8RnqBcF0TDyfGZjthkQSfCvNEHP*YE6c8y8iig8g3yPuE2qRDfiA-*1Q8TQ1oUgFqKv6xAEPvQ6Sahm10GsdYOZ*HZrNBkuq5AA-qo*lABQdjjpDTUPPDhLzOVawpwKdKVb6iLa*GZDxd2dm1-JCIyTr-m0EuFvBkcYRBFr3zNK9Whew&sc=f1510e5e64454e3c9f1114c859349fc4&sv=ed973c5d280d4f07a81d07de424bf738";
+$client_id = getenv('CLIENT_ID');
+$client_secret = getenv('CLIENT_SECRET');
+$redirect_uri = getenv('REDIRECT_URI');
+$access_token = getenv('ACCESS_TOKEN');
+$sc_spo2 = getenv('SC_SPO2');
+$sv_spo2 = getenv('SV_SPO2');
+
+
+$url = "https://api.ihealthlabs.com:8443/openapiv2/application/spo2.json/?client_id=".$client_id."&client_secret=".$client_secret."&redirect_uri=".$redirect_uri."&access_token=".$access_token."&sc=".$sc_spo2."&sv=".$sv_spo2;
 $json_pulseox_details = file_get_contents($url);
 $response_pulseox = json_decode($json_pulseox_details);
 

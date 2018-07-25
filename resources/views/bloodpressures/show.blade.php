@@ -16,7 +16,15 @@ use App\Http\Controllers\BloodpressuresController;
 
 BloodpressuresController::bpinfo();
 
-$url_bp = "https://api.ihealthlabs.com:8443/openapiv2/application/bp.json/?client_id=5215a7f7153b4573ac733d4f9e81e78e&client_secret=2ae0a5fb1b34419bbfcd5e5340873b04&redirect_uri=https%3A%2F%2Fmhealth.dev.attic.uno%2F%3Fthis%3Dthat&access_token=vUBS4EQ5iSxztHDzB*td0*77kyO1QJMjfoExFF8RnqBcF0TDyfGZjthkQSfCvNEHP*YE6c8y8iig8g3yPuE2qRDfiA-*1Q8TQ1oUgFqKv6xAEPvQ6Sahm10GsdYOZ*HZrNBkuq5AA-qo*lABQdjjpDTUPPDhLzOVawpwKdKVb6iLa*GZDxd2dm1-JCIyTr-m0EuFvBkcYRBFr3zNK9Whew&sc=f1510e5e64454e3c9f1114c859349fc4&sv=1c12d773ba5e41a49a29edc459d1b424";
+$client_id = getenv('CLIENT_ID');
+$client_secret = getenv('CLIENT_SECRET');
+$redirect_uri = getenv('REDIRECT_URI');
+$access_token = getenv('ACCESS_TOKEN');
+$sc_bp = getenv('SC_BP');
+$sv_bp = getenv('SV_BP');
+
+
+$url_bp = "https://api.ihealthlabs.com:8443/openapiv2/application/bp.json/?client_id=".$client_id."&client_secret=".$client_secret."&redirect_uri=".$redirect_uri."&access_token=".$access_token."&sc=".$sc_bp."&sv=".$sv_bp;
 $json_bp_details = file_get_contents($url_bp);
 $response_bp =  json_decode($json_bp_details);
 

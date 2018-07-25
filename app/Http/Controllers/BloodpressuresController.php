@@ -9,7 +9,15 @@ class BloodpressuresController extends Controller
 {
     public static function bpinfo()
     {
-        $url_bp = "";
+        $client_id = getenv('CLIENT_ID');
+        $client_secret = getenv('CLIENT_SECRET');
+        $redirect_uri = getenv('REDIRECT_URI');
+        $access_token = getenv('ACCESS_TOKEN');
+        $sc_bp = getenv('SC_BP');
+        $sv_bp = getenv('SV_BP');
+
+
+        $url_bp = "https://api.ihealthlabs.com:8443/openapiv2/application/bp.json/?client_id=".$client_id."&client_secret=".$client_secret."&redirect_uri=".$redirect_uri."&access_token=".$access_token."&sc=".$sc_bp."&sv=".$sv_bp;
         $json_bp_details = file_get_contents($url_bp);
         $response_bp =  json_decode($json_bp_details);
 
@@ -54,7 +62,7 @@ class BloodpressuresController extends Controller
 
         }
 
-
+    return view('bloodpressures.show',compact('response_bp'));
 
     }
 

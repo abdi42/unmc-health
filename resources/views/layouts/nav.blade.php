@@ -8,47 +8,51 @@
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{ url("/") }}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="http://127.0.0.1:8000/welcome">Welcome</a>
+                <a class="nav-link" href="{{ url("/subjects") }}">Subjects</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url("/welcome") }}">Welcome</a>
             </li>
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Education Content</a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="http://127.0.0.1:8000/contentcreate">Create Education Content</a></li>
-                    <li><a href="http://127.0.0.1:8000/showcontent">Show Education Content</a></li>
+                    <li><a href="{{ url("/contents/create") }}">Create Education Content</a></li>
+                    <li><a href="{{ url("/contents") }}">Show Education Content</a></li>
                 </ul>
             </li>
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Education Category</a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="http://127.0.0.1:8000/categorycreate">Create Education Category</a></li>
-                    <li><a href="http://127.0.0.1:8000/showcategory">Show Education Category</a></li>
+                    <li><a href="{{ url("/categories/create") }}">Create Education Category</a></li>
+                    <li><a href="{{ url("/categories")}} ">Show Education Category</a></li>
                 </ul>
             </li>
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Motivational Tips</a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="http://127.0.0.1:8000/tipcreate">Create Motivational Tip</a></li>
-                    <li><a href="http://127.0.0.1:8000/tipshow">Show Motivational Tip</a></li>
+                    <li><a href="{{ url("/tips/create") }}">Create Motivational Tip</a></li>
+                    <li><a href="{{ url("/tips") }}">Show Motivational Tip</a></li>
                 </ul>
             </li>
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">iHealth Data</a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="http://127.0.0.1:8000/musers/weight">Weight</a></li>
-                    <li><a href="http://127.0.0.1:8000/musers/bp">Blood Pressure</a></li>
-                    <li><a href="http://127.0.0.1:8000/musers/bg">Blood Glucose</a></li>
-                    <li><a href="http://127.0.0.1:8000/musers/pulseox">Pulse Oxygen</a></li>
+                    <li><a href="{{ url("/subjects/weight") }}">Weight</a></li>
+                    <li><a href="{{ url("/subjects/bloodpressure") }}">Blood Pressure</a></li>
+                    <li><a href="{{ url("/subjects/bloodglucose") }}">Blood Glucose</a></li>
+                    <li><a href="{{ url("/subjects/pulseoxygen") }}">Pulse Oxygen</a></li>
                 </ul>
 
 
             </li>
+
 
 
 

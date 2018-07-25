@@ -26,4 +26,5 @@ class Subject extends Model
     {
         return $this->hasMany(Pulseoxygen::class);
     }
+
 }

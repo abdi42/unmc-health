@@ -55,7 +55,15 @@ Route::get('/pulseoxygens/{userid}','SubjectsController@show_pulseoxygen');
 
 Route::get('/contents','ContentsController@index');
 
-Route::get('/contents/create','ContentsController@create');
+/*
+Route::get('/contents/create',
+[
+    'name' => 'contentcreate',
+    'uses'=> 'ContentsController@create'
+]
+    );
+*/
+Route::get('/contents/create', 'ContentsController@create');
 
 Route::post('/contents', 'ContentsController@store');
 
@@ -102,6 +110,7 @@ Route::put('/tip/{id}','TipsController@update');
 Route::delete('/tip/{id}','TipsController@destroy');
 
 
+Route::get('test','TipsController@test');
 
 
 ?>

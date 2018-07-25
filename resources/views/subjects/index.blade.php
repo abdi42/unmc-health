@@ -1,3 +1,6 @@
+@extends('layouts.master')
+
+
 <?php
 /**
  * Created by PhpStorm.
@@ -14,3 +17,5 @@ for ($i = 0; $i < count($response_user->UserInfoList); $i++) {
 
 
 }
+
+?>

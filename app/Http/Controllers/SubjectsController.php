@@ -14,16 +14,25 @@ class SubjectsController extends Controller
 
     public static function index()
     {
-        $url = "";                                                                                                      // Enter the URL to fetch the User Profile of all users
+        $client_id = getenv('CLIENT_ID');
+        $client_secret = getenv('CLIENT_SECRET');
+        $redirect_uri = getenv('REDIRECT_URI');
+        $access_token = getenv('ACCESS_TOKEN');
+        $sc_subject = getenv('SC_SUBJECT');
+        $sv_subject = getenv('SV_SUBJECT');
+
+
+        $url = "https://api.ihealthlabs.com:8443/openapiv2/application/userinfo.json/?client_id=".$client_id."&client_secret=".$client_secret."&redirect_uri=".$redirect_uri."&access_token=".$access_token."&sc=".$sc_subject."&sv=".$sv_subject."&locale=en_US";                                                                                                      // Enter the URL to fetch the User Profile of all users
         $json = file_get_contents($url);                                                                                // Read the details of the file in the form of a String
         $response_user = json_decode($json);
 
         for ($i = 0; $i < count($response_user->UserInfoList); $i++) {
-            $subject = new Subject();
-            $subject->userid = $response_user->UserInfoList[$i]->userid;
-
-            $subject->save();
-
+            if(!Subject::where('userid','=',$response_user->UserInfoList[$i]->userid)->first())
+            {
+                $subject = new Subject();
+                $subject->userid = $response_user->UserInfoList[$i]->userid;
+                $subject->save();
+            }
 
         }
         return view('subjects.index',compact('response_user'));
@@ -34,6 +43,7 @@ class SubjectsController extends Controller
 
     public function index_weight()
     {
+        SubjectsController::index();
         $subjects = Subject::all();
         $userid = Subject::all();
 
@@ -54,6 +64,7 @@ class SubjectsController extends Controller
 
     public function index_bloodpressure()
     {
+        SubjectsController::index();
         $subjects = Subject::all();
         $userid = Subject::all();
 
@@ -73,6 +84,7 @@ class SubjectsController extends Controller
 
     public function index_bloodglucose()
     {
+        SubjectsController::index();
         $subjects = Subject::all();
         $userid = Subject::all();
 
@@ -91,6 +103,7 @@ class SubjectsController extends Controller
 
     public function index_pulseoxygen()
     {
+        SubjectsController::index();
         $subjects = Subject::all();
         $userid = Subject::all();
 
