@@ -25,7 +25,7 @@ class CreatePulseoxygensTable extends Migration
             $table->dateTime('MDate');
             $table->integer('TimeZone');
             $table->string('userid');
-            $table->foreign('userid')->references('userid')->on('subjects')->onDelete('cascade');
+            //$table->foreign('userid')->references('userid')->on('subjects')->onDelete('cascade');
             $table->integer('CurrentRecordCount');
             $table->string('NextPageUrl');
             $table->integer('PageLength');
