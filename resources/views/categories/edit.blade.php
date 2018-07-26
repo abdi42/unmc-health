@@ -22,7 +22,8 @@
     <input type="text" name="category" class="form-control" value="{{ $categories->category }}"required><br>
 
 
-   <br> <button type="submit" class="btn btn-primary">Update</button>
+   <br> <button type="submit" class="btn btn-primary">Update</button> &nbsp;
+    <input type="button" name="cancel" value="Cancel" class="btn btn-primary"onclick="window.location='{{ url("/categories") }}'" />
 
 </form>
 

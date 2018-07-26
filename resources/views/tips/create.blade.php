@@ -22,7 +22,8 @@
 
 
 
-    <br>  <button type="submit" class="btn btn-primary">Save</button>
+    <br>  <button type="submit" class="btn btn-primary">Save</button>&nbsp;
+    <input type="button" name="cancel" value="Cancel" class="btn btn-primary"onclick="window.location='{{ url("/tips") }}'" />
 </div>
 </form>
 </div>

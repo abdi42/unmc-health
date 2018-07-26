@@ -27,7 +27,8 @@
        <textarea name="content" placeholder="content" class="form-control" cols="30" rows="10" required>{{$content->content}}</textarea><br><br></label>
 
 
-<br> <button type="Submit" class="btn btn-primary" value="Update">Update</button>
+<br> <button type="Submit" class="btn btn-primary" value="Update">Update</button> &nbsp;
+    <input type="button" name="cancel" value="Cancel" class="btn btn-primary"onclick="window.location='{{ url("/contents") }}'" />
 
 </form>
 

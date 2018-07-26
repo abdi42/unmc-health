@@ -3,8 +3,8 @@
 
 @section('content')
 
-    <title>Create Category</title>
-<h1>Add Category</h1>
+    <title>Create Category</title><br>
+<h1>Add Category</h1><br>
 
 
 <form action="/categories" method="post">

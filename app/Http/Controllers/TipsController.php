@@ -82,11 +82,11 @@ class TipsController extends Controller
     }
 
 
-    public function test()
+    public function confirm($id)
     {
-        $test = getenv('client_id');
+        $tips = Tip::all()->find($id);
 
-        echo $test;
+        return view('tips.delete',compact('tips'));
     }
 
 }
