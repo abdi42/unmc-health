@@ -22,11 +22,11 @@ class CreateContentsTable extends Migration
             $table->timestamps();
         });
 
-    Schema::table('contents',function(Blueprint $table)
-    {
-        $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-    }
-    );
+        Schema::table('contents',function(Blueprint $table)
+        {
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+        }
+        );
 
 
     }

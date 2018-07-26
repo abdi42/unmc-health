@@ -30,3 +30,6 @@ class CreateTipsTable extends Migration
         Schema::dropIfExists('tips');
     }
 }
+
+
+
