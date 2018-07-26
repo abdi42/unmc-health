@@ -38,7 +38,7 @@ class CreateWeightsTable extends Migration
             $table->dateTime('measurement_time')->nullable();
             $table->time('time_zone')->nullable();
             $table->string('userid');
-            $table->foreign('userid')->references('userid')->on('musers')->onDelete('cascade');
+            $table->foreign('userid')->references('userid')->on('subjects')->onDelete('cascade');
             $table->integer('WeightUnit');
             $table->timestamps();
         });
