@@ -21,6 +21,14 @@ class CreateContentsTable extends Migration
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
+
+    Schema::table('contents',function(Blueprint $table)
+    {
+        $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+    }
+    );
+
+
     }
 
     /**
