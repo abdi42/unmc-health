@@ -8,8 +8,8 @@ class Weight extends Model
 {
     //
 
-    public function muser()
+    public function subjects()
     {
-        return $this->belongsTo(Muser::class);
+        return $this->belongsTo(Subject::class);
     }
 }

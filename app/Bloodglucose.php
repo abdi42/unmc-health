@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class bloodglucose extends Model
+class Bloodglucose extends Model
 {
     //
-    public function muser()
+    public function subjects()
     {
-        return $this->belongsTo(Muser::class);
+        return $this->belongsTo(Subject::class);
     }
 }

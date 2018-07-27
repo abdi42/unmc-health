@@ -12,17 +12,17 @@ class Subject extends Model
         return $this->hasMany(Weight::class);
     }
 
-    public function bps()
+    public function bloodpressures()
     {
-        return $this->hasMany(bloodpressure::class);
+        return $this->hasMany(Bloodpressure::class);
     }
 
-    public function bgs()
+    public function bloodglucoses()
     {
-        return $this->hasMany(bloodglucose::class);
+        return $this->hasMany(Bloodglucose::class);
     }
 
-    public function pulseoxes()
+    public function pulseoxygens()
     {
         return $this->hasMany(Pulseoxygen::class);
     }

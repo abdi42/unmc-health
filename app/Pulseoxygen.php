@@ -9,6 +9,6 @@ class Pulseoxygen extends Model
     //
     public function muser()
     {
-        return $this->belongsTo(Muser::class);
+        return $this->belongsTo(Subject::class);
     }
 }
