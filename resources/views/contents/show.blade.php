@@ -10,7 +10,7 @@
 
 <p><b>Educational Content: </b></p>    {{$content->content}}<br><br>
 
-<p><b>Educational Category: </b></p>   <br><br>
+<p><b>Educational Category: </b></p> {{$content->category->category}}  <br><br>
 
     <a href="{{'/contents/'.$content->id.'/edit'}}"><button class="btn btn-primary">Edit</button></a><br><br>
 

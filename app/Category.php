@@ -11,7 +11,7 @@ class Category extends Model
     // $educationalcontentcategory->educationalcontent;
 
 
-    public function content()
+    public function contents()
     {
         return $this->hasMany(Content::class);
     }

@@ -95,6 +95,7 @@ class CategoriesController extends Controller
         // DELETE /categories/id
 
         $categories = Category::all()->find($id);
+        $categories->contents()->delete();
         $categories->delete();
         session()->flash('message', 'Deleted Successfully');
         return redirect('/categories');
