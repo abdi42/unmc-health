@@ -87,6 +87,13 @@ class ContentsController extends Controller
 
     }
 
+    public function delete($id)
+    {
+        $content = Content::all()->find($id);
+
+        return view('contents.delete',compact('content'));
+    }
+
     public function destroy($id)
     {
         $content = Content::all()->find($id);

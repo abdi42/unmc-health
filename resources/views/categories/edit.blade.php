@@ -6,7 +6,7 @@
 
 
 
-<h1>Edit the Category</h1><br><br>
+<br><h1>Edit the Category</h1><br>
 
 
 <form action="/categories/{{$categories->id}}" method="post">
@@ -18,7 +18,7 @@
 
 
 
-   Edit the Category here: <br>
+ <p>Edit the Category here:</p>
     <input type="text" name="category" class="form-control" value="{{ $categories->category }}"required><br>
 
 

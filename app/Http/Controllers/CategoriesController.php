@@ -20,10 +20,10 @@ class CategoriesController extends Controller
     public function create()
     {
         // /categories/create
-        $contents = Content::all();
+        $categories = Category::all();
 
 
-        return view('categories.create',compact('contents'));
+        return view('categories.create',compact('categories'));
 
     }
 
@@ -60,10 +60,8 @@ class CategoriesController extends Controller
 
         $categories = Category::all()->find($id);
 
-        $contents = Content::all();
 
-
-        return view('categories.edit',compact('categories','contents'));
+        return view('categories.edit',compact('categories'));
 
     }
 
@@ -83,6 +81,13 @@ class CategoriesController extends Controller
 
         return redirect('/categories');
 
+    }
+
+    public function delete($id)
+    {
+        $categories = Category::all()->find($id);
+
+        return view('categories.delete', compact('categories'));
     }
 
     public function destroy($id)

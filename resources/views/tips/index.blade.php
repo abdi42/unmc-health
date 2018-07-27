@@ -3,9 +3,9 @@
 @section('content')
 
     @foreach($tips as $tip)
-        <p><b>Motivational Tip</b></p>
+        <br><p><b>Motivational Tip</b></p>
         <a href="/tips/{{$tip->id}}">{{ $tip->content }}</a>
-
+        <hr>
     @endforeach
 
     @endsection

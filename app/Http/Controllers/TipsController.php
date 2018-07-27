@@ -73,6 +73,13 @@ class TipsController extends Controller
 
     }
 
+    public function delete($id)
+    {
+       $tips = Tip::all()->find($id);
+
+       return view('tips.delete',compact('tips'));
+    }
+
     public function destroy($id)
     {
         $tips = Tip::all()->find($id);
@@ -81,12 +88,12 @@ class TipsController extends Controller
         return redirect('/tips');
     }
 
-
-    public function confirm($id)
+    public function restore($id)
     {
-        $tips = Tip::all()->find($id);
+        $tip = Tip::all()->find($id);
 
-        return view('tips.delete',compact('tips'));
+        return view('tips.show',compact('tip'));
+
     }
 
 }

@@ -17,6 +17,7 @@ class CreateTipsTable extends Migration
             $table->increments('id');
             $table->longText('content');
             $table->timestamps();
+
         });
     }
 

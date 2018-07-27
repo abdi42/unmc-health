@@ -73,6 +73,8 @@ Route::get('/contents/{id}/edit','ContentsController@edit');
 
 Route::put('/contents/{id}','ContentsController@update');
 
+Route::get('/contents/{id}/delete','ContentsController@delete');
+
 Route::delete('/contents/{id}','ContentsController@destroy');
 
 
@@ -89,6 +91,8 @@ Route::get('/categories/{id}','CategoriesController@show');
 Route::get('/categories/{id}/edit','CategoriesController@edit');
 
 Route::put('/categories/{id}','CategoriesController@update');
+
+Route::get('/categories/{id}/delete','CategoriesController@delete');
 
 Route::delete('/categories/{id}','CategoriesController@destroy');
 
@@ -107,7 +111,11 @@ Route::get('/tip/{id}/edit','TipsController@edit');
 
 Route::put('/tip/{id}','TipsController@update');
 
+Route::get('/tip/{id}/delete','TipsController@delete');
+
 Route::delete('/tip/{id}','TipsController@destroy');
+
+
 
 
 Route::get('test','TipsController@test');
