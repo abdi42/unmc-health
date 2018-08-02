@@ -21,13 +21,13 @@
         <input type="text" name="id" placeholder="Enter your subject ID here" class="form-control" value="{{ $subject->subject }}" required><br>
 
         <p>Enter your PIN </p>
-        <input type="text" name="pin" placeholder="Enter your PIN here" class="form-control" value="{{ $subject->pin }}"required>
+        <input type="password" name="pin" placeholder="Enter your PIN here" class="form-control" value="{{ $subject->pin }}"required>
 
         <br>    <p>Enter the iHealth User ID </p>
         <input type="text" name="userid" placeholder="Enter your iHealth userid here" class="form-control">
 
         <br><p>Search iHealth User ID here</p>
-        <input type="button" name="iHealth ID" value="Search iHealth ID" class="btn btn-primary"onclick="window.location='{{ url("/subjects_ihealth") }}'" /><br>
+        <input type="button" name="iHealth ID" value="Search iHealth ID" class="btn btn-primary"onclick="window.location='{{ url("/subjects/ihealth") }}'" /><br>
 
         <br>  <p>Select Disease(s) that apply</p>
         <input type="checkbox" name="disease[]"  value="HeartFailure"> Heart Failure &nbsp;
@@ -49,7 +49,7 @@
 
 
         <br> <button type="submit" class="btn btn-primary">Update</button> &nbsp;
-        <input type="button" name="cancel" value="Cancel" class="btn btn-primary"onclick="window.location='{{ url("/categories") }}'" />
+        <input type="button" name="cancel" value="Cancel" class="btn btn-primary"onclick="window.location='{{ url("/subjects") }}'" />
 
     </form>
 

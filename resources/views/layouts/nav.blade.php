@@ -20,6 +20,10 @@
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="{{ url("/subjects/create") }}">Add Subject</a></li>
                     <li><a href="{{ url("/subjects") }}">Show Subjects</a></li>
+                    <li><a href="{{ url("/actionplans/create") }}">Create Action Plan</a></li>
+                    <li><a href="{{ url("/actionplans") }}">Show Action Plans</a></li>
+                    <li><a href="{{ url("/goals/create") }}">Create Goals</a></li>
+                    <li><a href="{{ url("/goals") }}">Show Goals</a></li>
                 </ul>
             </li>
 
@@ -52,6 +56,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">iHealth Data</a>
                 <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ url("/subjects/ihealth") }}">iHealth IDs</a></li>
                     <li><a href="{{ url("/subjects/weight") }}">Weight</a></li>
                     <li><a href="{{ url("/subjects/bloodpressure") }}">Blood Pressure</a></li>
                     <li><a href="{{ url("/subjects/bloodglucose") }}">Blood Glucose</a></li>

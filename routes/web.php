@@ -108,7 +108,7 @@ Route::get('/tip/{id}/delete','TipsController@delete');
 Route::delete('/tip/{id}','TipsController@destroy');
 
 
-Route::get('/subjects_ihealth','SubjectsController@index');
+Route::get('/subjects/ihealth','SubjectsController@index');
 
 Route::get('/subjects/create','SubjectsController@create');
 
@@ -132,6 +132,18 @@ Route::get('/actionplans/create','ActionplansController@create');
 
 Route::post('/actionplans','ActionplansController@store');
 
+Route::get('/actionplans/{subject}','ActionplansController@show');
+
+Route::get('/actionplans/{id}/edit','ActionplansController@edit');
+
+Route::put('/actionplans/{id}','ActionplansController@update');
+
+Route::get('/actionplans/{id}/delete','ActionplansController@delete');
+
+Route::delete('/actionplans/{id}','ActionplansController@destroy');
+
+
+
 
 Route::get('/goals','GoalsController@index');
 
@@ -139,6 +151,14 @@ Route::get('/goals/create','GoalsController@create');
 
 Route::post('/goals','GoalsController@store');
 
+Route::get('/goals/{subject}','GoalsController@show');
 
+Route::get('/goals/{id}/edit','GoalsController@edit');
+
+Route::put('/goals/{id}','GoalsController@update');
+
+Route::get('goals/{id}/delete','GoalsController@delete');
+
+Route::delete('/goals/{id}','GoalsController@destroy');
 
 ?>

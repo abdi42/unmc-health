@@ -2,19 +2,13 @@
 
 @section('content')
 
+    @foreach($subjects as $subject)
 
-    @foreach($goals as $goal)
-
-        <p><b>Subject ID: </b>{{ $goal->subject }}</p>
-
-        <p><b>Goal:</b></p>
-        <a href="/goals/{{ $goal->id }}">{{ $goal->goal }}</a><br>
+        <a href="/goals/{{ $subject->subject }}">{{ $subject->subject }}</a>
 
 
 
-
-        <br><p style="align-r:right">   {{ $goal->created_at->toFormattedDateString() }}</p>
         <hr>
     @endforeach
 
-    @endsection
+@endsection

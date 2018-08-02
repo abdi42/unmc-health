@@ -12,7 +12,7 @@
 
 
         <br>    <p>Enter your PIN </p>
-        <input type="text" name="pin" placeholder="Enter your PIN here" class="form-control" required>
+        <input type="password" name="pin" placeholder="Enter your PIN here" class="form-control" required>
 
         <br>  <p>Select Disease(s) that apply</p>
         <input type="checkbox" name="disease[]"  value="HeartFailure"> Heart Failure &nbsp;

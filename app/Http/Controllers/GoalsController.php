@@ -44,4 +44,54 @@ class GoalsController extends Controller
         return redirect('/goals');
     }
 
+
+    public function show($subject)
+    {
+
+        $goals = Subject::find($subject)->goals;
+
+
+        return view('goals.show', compact('goals'));
+
+    }
+
+
+    public function edit($id)
+    {
+        $goals = Goal::all()->find($id);
+
+        return view('goals.edit', compact('goals'));
+    }
+
+
+    public function update(Request $request,$id)
+    {
+        $this->validate($request, [
+
+            'goal' => 'required',
+
+        ]);
+
+        $goal = Goal::all()->find($id);
+        $goal->goal = $request->input('goal');
+        $goal->save();
+
+        return redirect('/goals');
+    }
+
+    public function delete($id)
+    {
+        $goals = Goal::all()->find($id);
+
+        return view('goals.delete', compact('goals'));
+    }
+
+    public function destroy($id)
+    {
+        $goals = Goal::all()->find($id);
+        $goals->delete();
+        session()->flash('message', 'Deleted Successfully');
+        return redirect('/goals');
+    }
+
 }
