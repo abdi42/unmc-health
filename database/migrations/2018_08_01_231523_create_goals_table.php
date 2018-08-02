@@ -17,7 +17,7 @@ class CreateGoalsTable extends Migration
             $table->increments('id');
             $table->longText('goal');
             $table->string('subject');
-            $table->foreign('subject')->references('subject')->on('subject')->onDelete('cascade');
+            $table->foreign('subject')->references('subject')->on('subjects')->onDelete('cascade');
             $table->timestamps();
         });
     }
