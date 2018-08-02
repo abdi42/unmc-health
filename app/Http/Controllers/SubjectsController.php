@@ -26,19 +26,90 @@ class SubjectsController extends Controller
         $json = file_get_contents($url);                                                                                // Read the details of the file in the form of a String
         $response_user = json_decode($json);
 
-        for ($i = 0; $i < count($response_user->UserInfoList); $i++) {
-            if(!Subject::where('userid','=',$response_user->UserInfoList[$i]->userid)->first())
-            {
-                $subject = new Subject();
-                $subject->userid = $response_user->UserInfoList[$i]->userid;
-                $subject->save();
-            }
-
-        }
         return view('subjects.index',compact('response_user'));
     }
 
+    public function display()
+    {
+        $subjects = Subject::all();
 
+        return view('subjects.display', compact('subjects'));
+    }
+
+
+    public function create()
+    {
+        $subject = Subject::all();
+
+        return view('subjects.create',compact('subject'));
+    }
+
+
+    public function store(Request $request)
+    {
+        $this->validate($request,
+            [
+
+                'id' => 'required',
+                'pin' => 'required'
+
+
+            ]);
+
+        $subject = new Subject();
+        $subject->subject = $request->input('id');
+        $subject->pin = $request->input('pin');
+        $subject->disease_state = implode(",",$request->input('disease'));
+        $subject->virtualvisit = $request->input('virtualvisit');
+        $subject->enrollmentdate = $request->input('enrollmentdate');
+
+        $subject->save();
+
+        return redirect('/actionplans/create');
+    }
+
+    public function show($subject)
+    {
+        $subject = Subject::find($subject);
+
+
+        return view('subjects.show', compact('subject'));
+
+    }
+
+
+    public function edit($subject)
+    {
+        $subject = Subject::all()->find($subject);
+
+
+        return view('subjects.edit', compact('subject'));
+
+    }
+
+    public function update(Request $request,$subject)
+    {
+        $this->validate($request,
+            [
+
+
+                'pin' => 'required',
+
+
+            ]);
+
+        $subject = Subject::all()->find($subject);
+        $subject->subject = $request->input('id');
+        $subject->userid = $request->input('userid');
+        $subject->pin = $request->input('pin');
+        $subject->disease_state = implode(",",$request->input('disease'));
+        $subject->virtualvisit = $request->input('virtualvisit');
+        $subject->enrollmentdate = $request->input('enrollmentdate');
+
+        $subject->save();
+
+        return redirect('/subjects');
+    }
 
 
     public function index_weight()

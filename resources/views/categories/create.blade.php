@@ -14,7 +14,7 @@
 
 <div class="form-group">
         Enter the Category here: <br><br>
-      <input type="text" name="category" class="form-control"required><br>
+      <input type="text" name="category" class="form-control" required><br>
 </div>
 
 <br>    <button type="submit" class="btn btn-primary">Save</button>&nbsp;

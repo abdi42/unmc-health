@@ -55,14 +55,6 @@ Route::get('/pulseoxygens/{userid}','SubjectsController@show_pulseoxygen');
 
 Route::get('/contents','ContentsController@index');
 
-/*
-Route::get('/contents/create',
-[
-    'name' => 'contentcreate',
-    'uses'=> 'ContentsController@create'
-]
-    );
-*/
 Route::get('/contents/create', 'ContentsController@create');
 
 Route::post('/contents', 'ContentsController@store');
@@ -116,9 +108,37 @@ Route::get('/tip/{id}/delete','TipsController@delete');
 Route::delete('/tip/{id}','TipsController@destroy');
 
 
+Route::get('/subjects_ihealth','SubjectsController@index');
+
+Route::get('/subjects/create','SubjectsController@create');
+
+Route:: post('/subjects','SubjectsController@store');
+
+Route::get('/subjects/{subject}','SubjectsController@show');
+
+Route::get('/subject/{subject}/edit','SubjectsController@edit');
+
+Route::put('/subject/{subject}','SubjectsController@update');
+
+Route::get('/subject/{subject}/delete','SubjectsController@delete');
+
+Route::get('/subjects','SubjectsController@display');
 
 
-Route::get('test','TipsController@test');
+
+Route::get('/actionplans','ActionplansController@index');
+
+Route::get('/actionplans/create','ActionplansController@create');
+
+Route::post('/actionplans','ActionplansController@store');
+
+
+Route::get('/goals','GoalsController@index');
+
+Route::get('/goals/create','GoalsController@create');
+
+Route::post('/goals','GoalsController@store');
+
 
 
 ?>

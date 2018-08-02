@@ -10,12 +10,20 @@
             <li class="nav-item active">
                 <a class="nav-link" href="{{ url("/") }}">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url("/subjects") }}">Subjects</a>
-            </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="{{ url("/welcome") }}">Welcome</a>
             </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Subjects</a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ url("/subjects/create") }}">Add Subject</a></li>
+                    <li><a href="{{ url("/subjects") }}">Show Subjects</a></li>
+                </ul>
+            </li>
+
+
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Education Content</a>
