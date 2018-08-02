@@ -56,17 +56,43 @@ class SubjectsController extends Controller
 
             ]);
 
-        $subject = new Subject();
-        $subject->subject = $request->input('id');
-        $subject->pin = $request->input('pin');
-        $subject->disease_state = implode(",",$request->input('disease'));
-        $subject->virtualvisit = $request->input('virtualvisit');
-        $subject->enrollmentdate = $request->input('enrollmentdate');
 
-        $subject->save();
+        try{
+            $subject = new Subject();
+            $subject->subject = $request->input('id');
+            $subject->pin = bcrypt($request->input('pin'));
+            $subject->disease_state = implode(",",$request->input('disease'));
+            $subject->virtualvisit = $request->input('virtualvisit');
+            $subject->enrollmentdate = $request->input('enrollmentdate');
 
-        return redirect('/actionplans/create');
+            $subject->save();
+
+            return redirect('/actionplans/create');
+        }
+
+        catch(\Illuminate\Database\QueryException $e)
+        {
+            $sqlState = $e->errorInfo[0];
+            $errorCode = $e->errorInfo[1];
+            if($sqlState == "23000" && $errorCode == 1062)
+            {
+                return redirect('/subjects/create');
+            }
+
+        }
+
+
+
     }
+
+
+
+    public function message()
+    {
+        return view('subjects.message');
+    }
+
+
 
     public function show($subject)
     {
@@ -101,7 +127,7 @@ class SubjectsController extends Controller
         $subject = Subject::all()->find($subject);
         $subject->subject = $request->input('id');
         $subject->userid = $request->input('userid');
-        $subject->pin = $request->input('pin');
+        $subject->pin = bcrypt($request->input('pin'));
         $subject->disease_state = implode(",",$request->input('disease'));
         $subject->virtualvisit = $request->input('virtualvisit');
         $subject->enrollmentdate = $request->input('enrollmentdate');

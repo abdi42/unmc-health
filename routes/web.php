@@ -124,6 +124,7 @@ Route::get('/subject/{subject}/delete','SubjectsController@delete');
 
 Route::get('/subjects','SubjectsController@display');
 
+Route::get('/subjects/userexists','SubjectsController@message');
 
 
 Route::get('/actionplans','ActionplansController@index');
@@ -160,5 +161,20 @@ Route::put('/goals/{id}','GoalsController@update');
 Route::get('goals/{id}/delete','GoalsController@delete');
 
 Route::delete('/goals/{id}','GoalsController@destroy');
+
+
+
+Route::get('/medications','MedicationsController@index');
+
+Route::get('/medications/create','MedicationsController@create');
+
+Route::post('/medications','MedicationsController@store');
+
+Route::get('/medications/{subject}','MedicationsController@show');
+
+Route::get('/medications/{id}/edit','MedicationsController@edit');
+
+Route::put('/medications/{id}','MedicationsController@update');
+
 
 ?>
