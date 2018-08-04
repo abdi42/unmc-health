@@ -7,23 +7,45 @@
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ url("/") }}">Home <span class="sr-only">(current)</span></a>
-            </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url("/welcome") }}">Welcome</a>
-            </li>
+
+
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Subjects</a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="{{ url("/subjects/create") }}">Add Subject</a></li>
                     <li><a href="{{ url("/subjects") }}">Show Subjects</a></li>
+
+                </ul>
+            </li>
+
+
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Action Plan</a>
+                <ul class="dropdown-menu" role="menu">
                     <li><a href="{{ url("/actionplans/create") }}">Create Action Plan</a></li>
-                    <li><a href="{{ url("/actionplans") }}">Show Action Plans</a></li>
+                    <li><a href="{{ url("/actionplans") }}">Show Action Plan</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Goals</a>
+                <ul class="dropdown-menu" role="menu">
                     <li><a href="{{ url("/goals/create") }}">Create Goals</a></li>
                     <li><a href="{{ url("/goals") }}">Show Goals</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Medications</a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ url("/medicationslots/create") }}">Create Medication Time</a></li>
+                    <li><a href="{{ url("/medicationslots") }}">Show Medication Times</a></li>
+                    <li><a href="{{ url("/medicationnames/create") }}">Create Medication Name</a></li>
+                    <li><a href="{{ url("/medicationnames") }}">Show Medication Names</a></li>
+
                 </ul>
             </li>
 

@@ -19,10 +19,11 @@ class Subject extends Model
         return $this->hasMany(Goal::class,'subject','subject');
     }
 
-    public function medications()
+    public function medicationslots()
     {
-        return $this->hasMany(Medication::class,'subject','subject');
+        return $this->hasMany(Medicationslot::class,'subject','subject');
     }
+
 
     public function weights()
     {

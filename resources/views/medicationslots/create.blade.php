@@ -3,12 +3,12 @@
 
 @section('content')
 
-    <title>Medication Schedule</title>
+    <title>Medication Time</title>
 
-    <br><h1>Add Medication Schedule</h1>
+    <br><h1>Add Medication Time</h1><br>
 
 
-    <form action="/medications" method="post">
+    <form action="/medicationslots" method="post">
         <div>
             {{ csrf_field() }}
 
@@ -20,29 +20,24 @@
             </select><br><br>
 
 
-            <p>Enter the Medication name and time here: </p>
+            <p>Enter the Medication time here: </p>
 
-            <input type="text" name="medication_name1" placeholder="Enter your Medication"  required> &nbsp;
-            <input type="time" name="medication_time" placeholder="Enter your Medication time here"  required> <br> <br>
+            <input type="time" name="medication_time" placeholder="Enter your Medication time here"  required> <br>
 
 
-            <input type="text" name="medication_name2" placeholder="Enter your Medication" > <br><br>
-
-            <input type="text" name="medication_name3" placeholder="Enter your Medication"> <br><br>
-            &nbsp;<br>
 
             <br>  <p>Select Day(s) to take medication</p>
-            <input type="checkbox" name="day[]"  value="Sunday"> Sunday &nbsp;&nbsp;
+            <input type="checkbox" name="day[]"  value="Sunday" checked="checked"> Sunday &nbsp;&nbsp;
             <input type="checkbox" name="day[]"  value="Monday"> Monday&nbsp;&nbsp;&nbsp;
             <input type="checkbox" name="day[]"  value="Tuesday"> Tuesday &nbsp;&nbsp;
             <input type="checkbox" name="day[]"  value="Wednesday"> Wednesday &nbsp;&nbsp;&nbsp;
             <input type="checkbox" name="day[]"  value="Thursday"> Thursday &nbsp;&nbsp;
             <input type="checkbox" name="day[]"  value="Friday"> Friday &nbsp;&nbsp;
-            <input type="checkbox" name="day[]"  value="Saturday"> Saturday &nbsp;&nbsp; <br>
+            <input type="checkbox" name="day[]"  value="Saturday"> Saturday &nbsp;&nbsp; <br><br>
 
 
             <br>  <button type="submit" class="btn btn-primary">Save</button>&nbsp;
-            <input type="button" name="cancel" value="Cancel" class="btn btn-primary"onclick="window.location='{{ url("/medications") }}'" />
+            <input type="button" name="cancel" value="Cancel" class="btn btn-primary"onclick="window.location='{{ url("/medicationslots") }}'" />
         </div>
     </form>
 

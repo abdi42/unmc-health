@@ -4,7 +4,7 @@
 
     @foreach($subjects as $subject)
 
-        <a href="/medications/{{ $subject->subject }}">{{ $subject->subject }}</a>
+        <a href="/medicationslots/{{ $subject->subject }}">{{ $subject->subject }}</a>
 
 
 

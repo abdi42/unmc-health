@@ -163,18 +163,31 @@ Route::get('goals/{id}/delete','GoalsController@delete');
 Route::delete('/goals/{id}','GoalsController@destroy');
 
 
+Route::get('/medicationslots','MedicationslotsController@index');
 
-Route::get('/medications','MedicationsController@index');
+Route::get('/medicationslots/create','MedicationslotsController@create');
 
-Route::get('/medications/create','MedicationsController@create');
+Route::post('/medicationslots','MedicationslotsController@store');
 
-Route::post('/medications','MedicationsController@store');
+Route::get('/medicationslots/{subject}','MedicationslotsController@show');
 
-Route::get('/medications/{subject}','MedicationsController@show');
+Route::get('/medicationslots/{id}/edit','MedicationslotsController@edit');
 
-Route::get('/medications/{id}/edit','MedicationsController@edit');
+Route::put('/medicationslots/{id}','MedicationslotsController@update');
 
-Route::put('/medications/{id}','MedicationsController@update');
+Route::get('/medicationslots/{id}/delete','MedicationslotsController@delete');
+
+Route::delete('/medicationslots/{id}','MedicationslotsController@destroy');
+
+
+Route::get('/medicationnames','MedicationnamesController@index');
+
+Route::get('/medicationnames/create','MedicationnamesController@create');
+
+Route::post('/medicationnames','MedicationnamesController@store');
+
+Route::get('/medicationnames/{id}','MedicationnamesController@show');
+
 
 
 ?>
