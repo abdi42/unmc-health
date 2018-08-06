@@ -44,7 +44,7 @@ class ActionplansController extends Controller
         $actionplan->actionplan = $request->input('actionplan');
         $actionplan->save();
 
-        return redirect('/goals/create');
+        return redirect('/actionplans');
     }
 
 

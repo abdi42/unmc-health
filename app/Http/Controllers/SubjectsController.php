@@ -67,7 +67,7 @@ class SubjectsController extends Controller
 
             $subject->save();
 
-            return redirect('/actionplans/create');
+            return redirect('/subjects');
         }
 
         catch(\Illuminate\Database\QueryException $e)

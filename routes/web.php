@@ -189,5 +189,16 @@ Route::post('/medicationnames','MedicationnamesController@store');
 Route::get('/medicationnames/{id}','MedicationnamesController@show');
 
 
+Route::get('/questions','QuestionsController@index');
+
+Route::get('/questions/create','QuestionsController@create');
+
+Route::post('/questions','QuestionsController@store');
+
+Route::get('/questions/{id}','QuestionsController@show');
+
+Route::get('/questions/{id}/edit','QuestionsController@edit');
+
+
 
 ?>
