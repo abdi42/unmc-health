@@ -27,7 +27,6 @@ class CreateBloodglucosesTable extends Migration
             $table->string('Note');
             $table->string('TimeZone');
             $table->string('userid');
-            $table->foreign('userid')->references('userid')->on('subjects')->onDelete('cascade');
             $table->integer('BGUnit');
             $table->integer('CurrentRecordCount');
             $table->string('NextPageUrl');
