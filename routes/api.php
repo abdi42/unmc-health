@@ -27,7 +27,7 @@ Route::get('api/subjects/{subject}',function($code){
     {
         return response()->json(['error'=> 'Could not find module '.$code],404);
     }
-    
+
 
 
     return response()->json($subject);

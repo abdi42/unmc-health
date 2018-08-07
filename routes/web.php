@@ -214,5 +214,16 @@ Route::get('/answers/create','AnswersController@create');
 
 Route::post('/answers','AnswersController@store');
 
+Route::get('/answers/{id}','AnswersController@show');
+
+Route::get('/answers/{id}/edit','AnswersController@edit');
+
+Route::put('/answers/{id}','AnswersController@update');
+
+Route::get('/answers/{id}/delete','AnswersController@delete');
+
+Route::delete('/answers/{id}','AnswersController@destroy');
+
+
 
 ?>
