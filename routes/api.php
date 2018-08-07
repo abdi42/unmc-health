@@ -1,5 +1,7 @@
 <?php
 
+
+use App\Subject;
 use Illuminate\Http\Request;
 
 /*
@@ -19,15 +21,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::get('api/subjects/{subject}',function($code){
-    $subject = Subject::where('subject','=', $code)->first();
+    $subject = Subject::where("subject","=", $code)->first();
+
     if($subject == null)
     {
         return response()->json(['error'=> 'Could not find module '.$code],404);
     }
-    $subject->subject = convertHtml($subject->subject);
-    $subject->userid = convertHtml($subject->userid);
+    
+
 
     return response()->json($subject);
-}
+    }
 
-);
+    );
+
+
+

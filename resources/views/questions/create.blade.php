@@ -22,7 +22,7 @@
             </select><br><br>
 
             <p>Enter the Question</p>
-            <input type="text" name="question" placeholder="Enter the question here" class="form-control"><br><br>
+            <input type="text" name="question" placeholder="Enter the question here" class="form-control" required><br><br>
 
             <p>Enter the Question type</p>
             <input type="radio" name="question_type" value="Multiple Choice" checked="checked"> Multiple Choice  &nbsp;

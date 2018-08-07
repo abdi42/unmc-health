@@ -137,6 +137,22 @@ class SubjectsController extends Controller
         return redirect('/subjects');
     }
 
+    public function delete($id)
+    {
+       $subject = Subject::all()->find($id);
+
+       return view('subjects.delete',compact('subject'));
+    }
+
+    public function destroy($id)
+    {
+        $subject = Subject::all()->find($id);
+        $subject->delete();
+        session()->flash('message', 'Deleted Successfully');
+        return redirect('/subjects');
+    }
+
+
 
     public function index_weight()
     {

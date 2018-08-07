@@ -126,7 +126,7 @@ Route::get('/subjects','SubjectsController@display');
 
 Route::get('/subjects/userexists','SubjectsController@message');
 
-
+Route::delete('/subjects/{subject}','SubjectsController@destroy');
 
 
 Route::get('/actionplans','ActionplansController@index');
@@ -207,6 +207,12 @@ Route::get('/questions/{id}/delete','QuestionsController@delete');
 
 Route::delete('/questions/{id}','QuestionsController@destroy');
 
+
+Route:: get('/answers','AnswersController@index');
+
+Route::get('/answers/create','AnswersController@create');
+
+Route::post('/answers','AnswersController@store');
 
 
 ?>
