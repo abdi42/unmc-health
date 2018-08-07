@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <title>Edit Question</title>
+    <title>Questions</title>
     <div class="col-sm-8">
         <p>Question:</p>
         {{ $question->question }}

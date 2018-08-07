@@ -24,6 +24,11 @@ class Subject extends Model
         return $this->hasMany(Medicationslot::class,'subject','subject');
     }
 
+    public function reminders()
+    {
+        return $this->hasMany(Reminder::class,'subject','subject');
+    }
+
 
     public function weights()
     {
@@ -49,5 +54,7 @@ class Subject extends Model
     {
         return $this->hasOne(Enrollsubject::class,'userid','userid');
     }
+
+
 
 }

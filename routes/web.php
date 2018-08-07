@@ -225,5 +225,18 @@ Route::get('/answers/{id}/delete','AnswersController@delete');
 Route::delete('/answers/{id}','AnswersController@destroy');
 
 
+Route::get('/reminders','RemindersController@index');
+
+Route::get('/reminders/create','RemindersController@create');
+
+Route::post('/reminders','RemindersController@store');
+
+Route::get('/reminders/{id}','RemindersController@show');
+
+Route::get('/reminders/{id}/edit','RemindersController@edit');
+
+Route::put('/reminders/{id}','RemindersController@update');
+
+
 
 ?>
