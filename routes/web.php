@@ -127,6 +127,8 @@ Route::get('/subjects','SubjectsController@display');
 Route::get('/subjects/userexists','SubjectsController@message');
 
 
+
+
 Route::get('/actionplans','ActionplansController@index');
 
 Route::get('/actionplans/create','ActionplansController@create');
@@ -198,6 +200,12 @@ Route::post('/questions','QuestionsController@store');
 Route::get('/questions/{id}','QuestionsController@show');
 
 Route::get('/questions/{id}/edit','QuestionsController@edit');
+
+Route::put('/questions/{id}','QuestionsController@update');
+
+Route::get('/questions/{id}/delete','QuestionsController@delete');
+
+Route::delete('/questions/{id}','QuestionsController@destroy');
 
 
 

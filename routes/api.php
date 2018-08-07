@@ -24,7 +24,10 @@ Route::get('subjects/{subject}',function($code){
     {
         return response()->json(['error'=> 'Could not find module '.$code],404);
     }
+    $subject->subject = convertHtml($subject->subject);
+    $subject->userid = convertHtml($subject->userid);
 
+    return response()->json($subject);
 }
 
 );

@@ -68,5 +68,38 @@ class QuestionsController extends Controller
 
     }
 
+    public function update(Request $request, $id)
+    {
+       $question = Question::all()->find($id);
+       $this->validate($request, [
+           'question' => 'required',
+               'question_type' => 'required'
+           ]
+
+       );
+
+       $question->content_id = $request->input('content_id');
+       $question->question = $request->input('question');
+       $question->question_type = $request->input('question_type');
+       $question->save();
+
+       return redirect('/questions');
+
+    }
+
+    public function delete($id)
+    {
+        $question = Question::all()->find($id);
+
+        return view('questions.delete',compact('question'));
+    }
+
+    public function destroy($id)
+    {
+        $question = Question::all()->find($id);
+        $question->delete();
+        session()->flash('message', 'Deleted Successfully');
+        return redirect('/questions');
+    }
 
 }

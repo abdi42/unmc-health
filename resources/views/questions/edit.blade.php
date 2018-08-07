@@ -25,9 +25,9 @@
 
 
         <p>Select the Question type:</p>
-        <input type="radio" value="Multiple Choice" checked="checked">Multiple Choice
-        <input type="radio" value="True or False">True or False
-        <input type="radio" value="Fill in the blanks">Fill in the blanks <br>
+        <input type="radio" name="question_type" value="Multiple Choice" checked="checked">Multiple Choice
+        <input type="radio" name="question_type" value="True or False">True or False
+        <input type="radio" name="question_type" value="Fill in the blanks">Fill in the blanks <br>
 
         <br> <button type="submit" class="btn btn-primary">Update</button> &nbsp;
         <input type="button" name="cancel" value="Cancel" class="btn btn-primary"onclick="window.location='{{ url("medicationslots") }}'" />
