@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('subjects/{subject}',function($code){
+Route::get('api/subjects/{subject}',function($code){
     $subject = Subject::where('subject','=', $code)->first();
     if($subject == null)
     {
