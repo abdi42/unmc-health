@@ -1,8 +1,12 @@
 @extends('layouts.master')
 
+<title>Create Goals</title>
+
+
 @section('content')
     <form action="/goals" method="post">
         <div>
+          <br>  <h1>Create a Goal</h1>
             {{ csrf_field() }}
 
             <br><p>Select Subject ID</p>

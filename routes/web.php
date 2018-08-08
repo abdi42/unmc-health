@@ -237,6 +237,8 @@ Route::get('/reminders/{id}/edit','RemindersController@edit');
 
 Route::put('/reminders/{id}','RemindersController@update');
 
+Route::get('/reminders/{id}/delete','RemindersController@delete');
 
+Route::delete('/reminders/{id}','RemindersController@destroy');
 
 ?>

@@ -30,7 +30,7 @@
         <input type="radio" name="question_type" value="Fill in the blanks">Fill in the blanks <br>
 
         <br> <button type="submit" class="btn btn-primary">Update</button> &nbsp;
-        <input type="button" name="cancel" value="Cancel" class="btn btn-primary"onclick="window.location='{{ url("medicationslots") }}'" />
+        <input type="button" name="cancel" value="Cancel" class="btn btn-primary"onclick="window.location='{{ url("/questions") }}'" />
 
     </form>
 @endsection

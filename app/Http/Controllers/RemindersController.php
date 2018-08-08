@@ -36,6 +36,8 @@ class RemindersController extends Controller
         $reminder->title = $request->input('title');
         $reminder->body = $request->input('body');
         $reminder->save();
+
+        return redirect('/reminders');
     }
 
     public function edit($id)
@@ -70,13 +72,21 @@ class RemindersController extends Controller
         return redirect('/reminders');
     }
 
-    public function delete()
+    public function delete($id)
     {
+
+        $reminder = Reminder::all()->find($id);
+
+        return view('reminders.delete',compact('reminder'));
+
 
     }
 
-    public function destroy()
+    public function destroy($id)
     {
-
+        $reminder = Reminder::all()->find($id);
+        $reminder->delete();
+        session()->flash('message', 'Deleted Successfully');
+        return redirect('/reminders');
     }
 }
