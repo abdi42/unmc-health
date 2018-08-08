@@ -2,6 +2,7 @@
 
 
 use App\Subject;
+use App\Reminder;
 use Illuminate\Http\Request;
 
 /*
