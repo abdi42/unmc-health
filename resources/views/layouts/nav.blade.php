@@ -68,10 +68,10 @@
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Motivational Tips</a>
+                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reminders</a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="{{ url("/tips/create") }}">Create Motivational Tip</a></li>
-                    <li><a href="{{ url("/tips") }}">Show Motivational Tip</a></li>
+                    <li><a href="{{ url("/reminders/create") }}">Create Reminder</a></li>
+                    <li><a href="{{ url("/reminders") }}">Show Reminders</a></li>
                 </ul>
             </li>
 

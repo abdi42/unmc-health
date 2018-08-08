@@ -36,4 +36,15 @@ Route::get('api/subjects/{subject}',function($code){
     );
 
 
+Route::get('api/reminders/{subject}', function($code){
+    $subject = Reminder::where("subject","=",$code)->first();
+
+    if($subject == null)
+    {
+        return response()->json(['error'=> 'Could not find module'.$code],404);
+    }
+    return response()->json($subject);
+}
+
+);
 
