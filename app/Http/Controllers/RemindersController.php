@@ -29,12 +29,16 @@ class RemindersController extends Controller
         $this->validate($request,
             [
             'title' => 'required',
-                'body' => 'required'
+                'body' => 'required',
+                'reminder_time1' => 'required'
         ]);
         $reminder = new Reminder();
         $reminder->subject = $request->input('subject');
         $reminder->title = $request->input('title');
         $reminder->body = $request->input('body');
+        $reminder->reminder_time1 = $request->input('reminder_time1');
+        $reminder->reminder_time2 = $request->input('reminder_time2');
+        $reminder->reminder_time3 = $request->input('reminder_time3');
         $reminder->save();
 
         return redirect('/reminders');
@@ -61,12 +65,16 @@ class RemindersController extends Controller
         $this->validate($request,
             [
                 'title' => 'required',
-                'body' => 'required'
+                'body' => 'required',
+                'reminder_time1' => 'required'
             ]);
         $reminder = Reminder::find($id);
         $reminder->subject = $request->input('subject');
         $reminder->title = $request->input('title');
         $reminder->body = $request->input('body');
+        $reminder->reminder_time1 = $request->input('reminder_time1');
+        $reminder->reminder_time2 = $request->input('reminder_time2');
+        $reminder->reminder_time3 = $request->input('reminder_time3');
         $reminder->save();
 
         return redirect('/reminders');

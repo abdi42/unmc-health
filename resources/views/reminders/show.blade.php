@@ -7,6 +7,7 @@
 
         <p><b>Reminder Title</b></p> {{ $reminders[$i]['title'] }} <br><br>
         <p><b>Reminder Message:</b></p> {{ $reminders[$i]['body'] }} <br><br>
+        <p><b>Reminder Time(s)</b></p>  {{ $reminders[$i]['reminder_time1'] }} , {{ $reminders[$i]['reminder_time2'] }}, {{ $reminders[$i]['reminder_time3'] }}<br><br>
 
         <a href="{{'/reminders/'.$reminders[$i]['id'].'/edit'}}"><button class="btn btn-primary">Edit</button></a><br><br>
 

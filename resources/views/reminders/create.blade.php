@@ -26,6 +26,10 @@
             <p>Reminder Message:</p>
             <textarea name="body" placeholder="Enter your reminder message here" class="form-control" cols="30" rows="10" required></textarea><br><br>
 
+            <p>Set Reminder Times</p>
+            <input type="time" name="reminder_time1"> &nbsp;
+            <input type="time" name="reminder_time2"> &nbsp;
+            <input type="time" name="reminder_time3"><br>
 
             <br>  <button type="submit" class="btn btn-primary">Save</button>&nbsp;
             <input type="button" name="cancel" value="Cancel" class="btn btn-primary"onclick="window.location='{{ url("/reminders") }}'" />

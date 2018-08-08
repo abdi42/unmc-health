@@ -19,6 +19,9 @@ class CreateRemindersTable extends Migration
             $table->foreign('subject')->references('subject')->on('subjects')->onDelete('cascade');
             $table->string('title');
             $table->string('body');
+            $table->time('reminder_time1');
+            $table->time('reminder_time2')->nullable();
+            $table->time('reminder_time3')->nullable();
             $table->timestamps();
         });
     }
