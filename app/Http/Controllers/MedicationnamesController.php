@@ -59,4 +59,46 @@ class MedicationnamesController extends Controller
 
     }
 
+    public function edit($id)
+    {
+        $medicationslots = Medicationslot::all();
+
+        $medicationnames = Medicationname::all()->find($id);
+
+
+
+        return view('medicationnames.edit', compact('medicationslots','medicationnames'));
+    }
+
+    public function update(Request $request,$id)
+    {
+        $this->validate($request, [
+            'medicationslot_id' => 'required',
+            'medication_name' => 'required'
+
+        ]);
+
+        $medicationname = Medicationname::all()->find($id);
+        $medicationname->medicationslot_id = $request->input('medicationslot_id');
+        $medicationname->medication_name = $request->input('medication_name');
+        $medicationname->save();
+
+        return redirect('/medicationnames');
+    }
+
+    public function delete($id)
+    {
+        $medicationname = Medicationname::all()->find($id);
+
+        return view('medicationnames.delete',compact('medicationname'));
+    }
+
+    public function destroy($id)
+    {
+        $medicationname = Medicationname::all()->find($id);
+        $medicationname->delete();
+        session()->flash('message', 'Deleted Successfully');
+        return redirect('/medicationnames');
+    }
+
 }

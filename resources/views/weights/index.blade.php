@@ -1,26 +1,15 @@
-
 @extends('layouts.master')
-<!DOCTYPE html>
-<html>
-<head>
+
+@section('content')
+
     <title>Weight Information</title>
-</head>
 
-<body>
+<h1>Weight Information</h1>
 
-<p>Weight Information</p>
-@foreach($subjects as $subject)
+    @foreach($subjects as $subject)
 
+    <li><a href="/weights/{{$subject->userid}}">{{$subject->userid}}</a></li>
 
-    <li>
+    @endforeach
 
-        <a href="/weights/{{$subject->userid}}">{{$subject->userid}}</a></li>
-
-@endforeach
-
-
-
-
-
-</body>
-</html>
+@endsection

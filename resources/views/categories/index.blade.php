@@ -2,6 +2,8 @@
 
 @section('content')
 
+    <title>Categories</title>
+    <h1>Educational Categories</h1>
     @foreach($categories as $category)
        <br> <p><b>Category Name:</b></p>
         <a href="/categories/{{ $category->id }}">{{ $category->category }}</a>

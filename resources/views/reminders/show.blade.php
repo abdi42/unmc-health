@@ -1,6 +1,8 @@
 @extends('layouts.master')
 
 @section('content')
+    <title>Reminder</title>
+    <h1>Reminder</h1>
 
     @for($i=0;$i<count($reminders);$i++)
         <p><b>Reminder ID:</b></p> {{ $reminders[$i]['id'] }}

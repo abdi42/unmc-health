@@ -1,9 +1,15 @@
 @extends('layouts.master')
 
 @section('content')
+       <title>Answer</title>
+       <h1>Answer</h1>
 
 @for($i=0;$i<count($answers);$i++)
        <p><b>Answer ID:</b></p> {{ $answers['id'] }}
+
+      <p><b>Question</b></p> {{ $answers['question']['question'] }}<br><br>
+
+
 
        <p><b>Answer</b></p> {{ $answers['answer'] }} <br><br>
 

@@ -11,7 +11,7 @@
 
         {{ method_field('PUT') }}
 
-        <p>Edit the Action Plan:</p>
+        <p>Edit the Goal:</p>
         <textarea name="goal" class="form-control" cols="30" rows="10" required>{{ $goals->goal }}</textarea>
 
         <br> <button type="submit" class="btn btn-primary">Update</button> &nbsp;

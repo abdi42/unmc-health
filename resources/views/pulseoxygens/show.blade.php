@@ -1,9 +1,9 @@
 @extends('layouts.master')
 
-        <!DOCTYPE html>
-<html>
+@section('content')
+
 <title>Pulse Oxygen List</title>
-<body>
+<h1>Pulse Oxygen List</h1>
 
 <?php
 /**
@@ -73,3 +73,5 @@ for($i=0;$i<count($response_pulseox->BODataList);$i++)
 }
 }
 ?>
+
+@endsection

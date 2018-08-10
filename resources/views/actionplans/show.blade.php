@@ -1,6 +1,9 @@
 @extends('layouts.master')
 
 @section('content')
+    <title>Action Plan</title>
+
+    <h1>Action Plan</h1>
 
     @for($i=0;$i<count($actionplans);$i++)
 

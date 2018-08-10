@@ -4,6 +4,7 @@
 @section('content')
 
 <title>Content List</title>
+<h1>Educational Contents</h1>
 
 
 <br><p><b>Title: </b></p>    {{$content->title }}<br><br>

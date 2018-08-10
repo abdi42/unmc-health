@@ -1,10 +1,10 @@
 @extends('layouts.master')
 
-<!doctype html>
-<html>
-<title>Blood Pressure List</title>
-</html>
+@section('content')
 
+<title>Blood Pressure List</title>
+
+<h1>Blood Pressure List</h1>
 <?php
 /**
  * Created by PhpStorm.
@@ -77,3 +77,5 @@ for($i=0;$i<count($response_bp->BPDataList);$i++)
 }
 }
 ?>
+
+    @endsection

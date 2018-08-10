@@ -4,7 +4,7 @@
 
  <title>Edit Action Plans</title>
 
- <br><h1>Edit Action Plan</h1>
+ <br><h1>Edit Action Plan</h1><br>
 
  <form action="/actionplans/{{ $actionplans->id }}" method="post">
     {{ csrf_field() }}

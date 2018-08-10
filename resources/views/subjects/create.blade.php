@@ -5,10 +5,11 @@
 
     <br><title>Add Subject</title>
     <h1>Add a Subject</h1><br>
+
     <form action="/subjects" method="post">
         {{ csrf_field() }}
-        <p>Enter Subject ID</p>
-        <input type="text" name="id" placeholder="Enter your subject ID here" class="form-control" required>
+        <p>Enter Subject Code</p>
+        <input type="text" name="id" placeholder="Enter your subject code here" class="form-control" required>
 
 
         <br>    <p>Enter your PIN </p>

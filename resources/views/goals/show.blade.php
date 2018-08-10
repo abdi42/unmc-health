@@ -1,6 +1,8 @@
 @extends('layouts.master')
 
 @section('content')
+    <title>Goal</title>
+    <h1>Goal</h1>
 
     @for($i=0;$i<count($goals);$i++)
 

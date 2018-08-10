@@ -1,6 +1,8 @@
 @extends('layouts.master')
 
-
+@section('content')
+    <title>iHealth Subjects</title>
+    <h1>iHealth Subject ID</h1>
 <?php
 /**
  * Created by PhpStorm.
@@ -10,13 +12,17 @@
  */
 echo "The Subjects are:";
 echo '<br>';
+echo '<br>';
 for ($i = 0; $i < count($response_user->UserInfoList); $i++) {
 
     print_r($response_user->UserInfoList[$i]->userid);
     echo '<br>';
+    echo '<hr>';
 
 
 
 }
 
 ?>
+
+    @endsection

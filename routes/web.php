@@ -190,6 +190,14 @@ Route::post('/medicationnames','MedicationnamesController@store');
 
 Route::get('/medicationnames/{id}','MedicationnamesController@show');
 
+Route::get('/medicationnames/{id}/edit','MedicationnamesController@edit');
+
+Route::put('/medicationnames/{id}','MedicationnamesController@update');
+
+Route::get('/medicationnames/{id}/delete','MedicationnamesController@delete');
+
+Route::delete('/medicationnames/{id}','MedicationnamesController@destroy');
+
 
 Route::get('/questions','QuestionsController@index');
 

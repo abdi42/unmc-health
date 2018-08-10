@@ -25,7 +25,7 @@
 
 
             <br>  <button type="submit" class="btn btn-primary">Save</button>&nbsp;
-            <input type="button" name="cancel" value="Cancel" class="btn btn-primary"onclick="window.location='{{ url("/goals") }}'" />
+            <input type="button" name="cancel" value="Cancel" class="btn btn-primary"onclick="window.location='{{ url("/actionplans") }}'" />
         </div>
     </form>
 

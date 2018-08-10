@@ -4,7 +4,7 @@
 @section('content')
 <title>Educational Contents</title>
 
-<br><h1>Edit Contents</h1>
+<br><h1>Edit Educational Contents</h1>
 
 
 <form action="/contents/{{$content->id}}" method="post">

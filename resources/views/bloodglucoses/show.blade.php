@@ -1,10 +1,10 @@
 @extends('layouts.master')
 
-<!doctype html>
-<html>
-<title>Blood Glucose List</title>
-</html>
+@section('content')
 
+<title>Blood Glucose List</title>
+
+<h1>Blood Glucose List</h1>
 <?php
 /**
  * Created by PhpStorm.
@@ -79,3 +79,5 @@ for($i=0;$i<count($response_bg->BGDataList);$i++)
 }
 
 ?>
+
+    @endsection

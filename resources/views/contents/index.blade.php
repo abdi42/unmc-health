@@ -1,7 +1,8 @@
 @extends('layouts.master')
 
 @section('content')
-
+<title>Contents</title>
+<h1>Educational Contents</h1>
     @foreach($contents as $content)
         <p><b>Content:</b></p>
         <a href="/contents/{{ $content->id }}">{{ $content->title }}</a>

@@ -1,9 +1,10 @@
 @extends('layouts.master')
 
-        <!DOCTYPE html>
-<html>
+@section('content')
+
 <title>Weight List</title>
-<body>
+
+<h1>Weight List</h1>
 
 <?php
 /**
@@ -93,3 +94,4 @@ for($i=0;$i<count($response->WeightDataList);$i++)
 
 ?>
 
+@endsection

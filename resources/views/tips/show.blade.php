@@ -2,8 +2,8 @@
 
 
 @section('content')
-<title>Tip List</title>
-
+<title>Motivational Tip</title>
+<h1>Motivational Tip</h1>
 
     <p><b>Motivational Tip: </b></p>    {{$tip->content }}<br><br>
 

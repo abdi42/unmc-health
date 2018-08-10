@@ -1,23 +1,16 @@
 @extends('layouts.master')
 
-<!DOCTYPE html>
-<html>
-<head>
+
+@section('content')
+
     <title>Pulse Oxygen Information</title>
-</head>
 
-<body>
+    <h1>Pulse Oxygen Information</h1>
 
-<p>Pulseox Information</p>
-@foreach($subjects as $subject)
+    @foreach($subjects as $subject)
 
+    <li><a href="/pulseoxygens/{{$subject->userid}}">{{$subject->userid}}</a></li>
 
-    <li>
+    @endforeach
 
-        <a href="/pulseoxygens/{{$subject->userid}}">{{$subject->userid}}</a></li>
-
-@endforeach
-
-
-</body>
-</html>
+@endsection

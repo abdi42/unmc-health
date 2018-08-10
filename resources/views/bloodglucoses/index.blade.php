@@ -1,11 +1,11 @@
 @extends('layouts.master')
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Blood Glucose Information</title>
-</head>
 
-<body>
+@section('content')
+
+    <title>Blood Glucose Information</title>
+
+<h1>Blood Glucose Information</h1>
+
 
 <p>BG Information</p>
 @foreach($subjects as $subject)
@@ -18,5 +18,4 @@
 @endforeach
 
 
-</body>
-</html>
+@endsection

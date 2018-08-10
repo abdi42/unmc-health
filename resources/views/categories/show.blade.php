@@ -2,6 +2,7 @@
 
 @section('content')
     <title>Category List</title>
+    <h1>Educational Categories</h1>
     <div class="col-sm-8">
    <br> <p>{{ $category->category }}</p>
 

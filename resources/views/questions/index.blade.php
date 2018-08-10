@@ -1,7 +1,8 @@
 @extends('layouts.master')
 
 @section('content')
-
+<title>Questions</title>
+<h1>Questions</h1>
 @foreach($questions as $question)
 
      <p>Question :</p>

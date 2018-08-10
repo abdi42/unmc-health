@@ -76,6 +76,16 @@
             </li>
 
             <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Q&A</a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ url("/questions/create") }}">Create Question</a></li>
+                    <li><a href="{{ url("/questions") }}">Show Questions</a></li>
+                    <li><a href="{{ url("/answers/create") }}">Create Answer</a></li>
+                    <li><a href="{{ url("/answers") }}">Show Answers</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">iHealth Data</a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="{{ url("/subjects/ihealth") }}">iHealth IDs</a></li>

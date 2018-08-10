@@ -23,7 +23,7 @@
             </select><br><br>
 
             <p>Enter Medication Name</p>
-            <input type="text" name="medication_name" placeholder="Enter medication name here" class="form-control"><br><br>
+            <input type="text" name="medication_name" placeholder="Enter medication name here" class="form-control" required><br><br>
 
 
             <br>  <button type="submit" class="btn btn-primary">Save</button>&nbsp;

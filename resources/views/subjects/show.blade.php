@@ -2,8 +2,8 @@
 
 
 @section('content')
-    <title>Subject List</title>
-
+    <title>Subject</title>
+    <h1>Subject</h1>
 
     <p><b>Subject: </b></p>    {{$subject->subject }}<br><br>
 

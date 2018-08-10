@@ -2,6 +2,8 @@
 
 @section('content')
     <title>Questions</title>
+    <h1>Question</h1>
+
     <div class="col-sm-8">
         <p>Question:</p>
         {{ $question->question }}
