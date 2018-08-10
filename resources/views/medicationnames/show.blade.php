@@ -3,7 +3,7 @@
 @section('content')
     <title>Medication</title>
     <h1>Medication</h1>
- @for($i=0;$i<count($medicationnames);$i++)
+
      <br><p>Subject ID:</p> {{ $medicationnames['medicationslot']['subject'] }}<br>
 
 
@@ -16,6 +16,6 @@
      <a href="{{'/medicationnames/'.$medicationnames['id'].'/delete'}}"><button class="btn btn-primary">Delete</button></a>
      <hr>
 
-    @endfor
+   
 
 @endsection
