@@ -30,13 +30,6 @@
                 </ul>
             </li>
 
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Goals</a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="{{ url("/goals/create") }}">Create Goals</a></li>
-                    <li><a href="{{ url("/goals") }}">Show Goals</a></li>
-                </ul>
-            </li>
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Medications</a>

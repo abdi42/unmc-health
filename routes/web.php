@@ -148,22 +148,6 @@ Route::delete('/actionplans/{id}','ActionplansController@destroy');
 
 
 
-Route::get('/goals','GoalsController@index');
-
-Route::get('/goals/create','GoalsController@create');
-
-Route::post('/goals','GoalsController@store');
-
-Route::get('/goals/{subject}','GoalsController@show');
-
-Route::get('/goals/{id}/edit','GoalsController@edit');
-
-Route::put('/goals/{id}','GoalsController@update');
-
-Route::get('goals/{id}/delete','GoalsController@delete');
-
-Route::delete('/goals/{id}','GoalsController@destroy');
-
 
 Route::get('/medicationslots','MedicationslotsController@index');
 

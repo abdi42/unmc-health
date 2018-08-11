@@ -35,13 +35,35 @@ class ActionplansController extends Controller
     {
         $this->validate($request, [
             'subject' => 'required',
-            'actionplan' => 'required'
+            'physically_active' => 'required',
+            'medications' => 'required',
+            'food_choices' => 'required',
+            'stress' => 'required',
+            'health_problems' => 'required',
+            'how_much' => 'required',
+            'when' => 'required',
+            'how_often' => 'required',
+            'action_sureness' => 'required',
+            'barriers' => 'required',
+            'avoid_barriers' => 'required',
+            'goal' => 'required'
 
         ]);
 
         $actionplan = new Actionplan();
         $actionplan->subject = $request->input('subject');
-        $actionplan->actionplan = $request->input('actionplan');
+        $actionplan->physically_active = $request->input('physically_active');
+        $actionplan->medications = $request->input('medications');
+        $actionplan->food_choices = $request->input('food_choices');
+        $actionplan->stress = $request->input('stress');
+        $actionplan->health_problems = $request->input('health_problems');
+        $actionplan->how_much = $request->input('how_much');
+        $actionplan->when = $request->input('when');
+        $actionplan->how_often = $request->input('how_often');
+        $actionplan->action_sureness = $request->input('action_sureness');
+        $actionplan->barriers = $request->input('barriers');
+        $actionplan->avoid_barriers = $request->input('avoid_barriers');
+        $actionplan->goal = $request->input('goal');
         $actionplan->save();
 
         return redirect('/actionplans');
@@ -67,14 +89,36 @@ class ActionplansController extends Controller
     public function update(Request $request,$id)
     {
         $this->validate($request, [
+            'physically_active' => 'required',
+            'medications' => 'required',
+            'stress' => 'required',
+            'food_choices' => 'required',
+            'health_problems' => 'required',
+            'how_much' => 'required',
+            'when' => 'required',
+            'how_often' => 'required',
+            'action_sureness' => 'required',
+            'barriers' => 'required',
+            'avoid_barriers' => 'required',
+            'goal' => 'required'
 
-            'actionplan' => 'required',
 
         ]);
 
         $actionplan = Actionplan::all()->find($id);
-        $actionplan->actionplan = $request->input('actionplan');
+        $actionplan->physically_active = $request->input('physically_active');
+        $actionplan->medications = $request->input('medications');
+        $actionplan->food_choices = $request->input('stress');
+        $actionplan->health_problems = $request->input('health_problems');
+        $actionplan->how_much = $request->input('how_much');
+        $actionplan->when = $request->input('when');
+        $actionplan->how_often = $request->input('how_often');
+        $actionplan->action_sureness = $request->input('action_sureness');
+        $actionplan->barriers = $request->input('barriers');
+        $actionplan->avoid_barriers = $request->input('avoid_barriers');
+        $actionplan->goal = $request->input('goal');
         $actionplan->save();
+
 
         return redirect('/actionplans');
     }

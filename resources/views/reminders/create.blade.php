@@ -3,7 +3,7 @@
 
 @section('content')
 
-    <title>Create Reminder</title>
+    <title>Add Reminder</title>
 
     <br><h1>Add Reminder</h1>
 

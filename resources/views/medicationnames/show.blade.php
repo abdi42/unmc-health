@@ -16,6 +16,6 @@
      <a href="{{'/medicationnames/'.$medicationnames['id'].'/delete'}}"><button class="btn btn-primary">Delete</button></a>
      <hr>
 
-   
+
 
 @endsection

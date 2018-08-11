@@ -3,7 +3,7 @@
 
 @section('content')
 
-<title>Educational Contents</title>
+<title>Add Educational Content</title>
 
 <br><h1>Add Educational Content</h1>
 
