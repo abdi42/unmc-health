@@ -43,6 +43,7 @@ class PulseoxygensController extends Controller
                 $mdate = date("Y-m-d", $response_pulseox->BODataList[$i]->MDate);
                 $pulse->MDate = $mdate;
                 $pulse->TimeZone = $response_pulseox->BODataList[$i]->TimeZone;
+                $pulse->Note = $response_pulseox->BODataList[$i]->Note;
                 $pulse->userid = $response_pulseox->BODataList[$i]->userid;
                 $pulse->CurrentRecordCount = $response_pulseox->CurrentRecordCount;
                 $pulse->NextPageUrl = $response_pulseox->NextPageUrl;

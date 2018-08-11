@@ -24,6 +24,7 @@ class CreatePulseoxygensTable extends Migration
             $table->integer('Lon');
             $table->dateTime('MDate');
             $table->integer('TimeZone');
+            $table->string('Note');
             $table->string('userid');
             $table->integer('CurrentRecordCount');
             $table->string('NextPageUrl');

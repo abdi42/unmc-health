@@ -53,6 +53,8 @@ for($i=0;$i<count($response_pulseox->BODataList);$i++)
     $mdate = date("Y-m-d\TH:i:s\Z",$response_pulseox->BODataList[$i]->MDate);
     print_r("MDate is:")."\x20".print_r($mdate);
     echo '<br>';
+    print_r("Note is:")."\x20".print_r($response_pulseox->BODataList[$i]->Note);
+    echo '<br>';
     print_r("TimeZone is:")."\x20".print_r($response_pulseox->BODataList[$i]->TimeZone);
     echo '<br>';
     print_r("User ID is:")."\x20".print_r($response_pulseox->BODataList[$i]->userid);

@@ -50,7 +50,7 @@
         @if($actionplans[$i]['action_sureness'] == 0)
             <p>Not sure at all</p>
             @endif
-        
+
         <p><br><b>Possible barriers to my goal</b></p>
         {{ $actionplans[$i]['barriers'] }}
 
