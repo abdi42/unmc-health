@@ -8,25 +8,18 @@ use App\Subject;
 use App\Pulseoxygen;
 use App\Weight;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
 
 class SubjectsController extends Controller
 {
 
     public static function index()
     {
-        $client_id = getenv('CLIENT_ID');
-        $client_secret = getenv('CLIENT_SECRET');
-        $redirect_uri = getenv('REDIRECT_URI');
-        $access_token = getenv('ACCESS_TOKEN');
-        $sc_subject = getenv('SC_SUBJECT');
-        $sv_subject = getenv('SV_SUBJECT');
+      $users = getHealthData('application/userinfo.json',getenv('SC_SUBJECT'),getenv('SV_SUBJECT'));
+      dd($users);
 
-
-        $url = "https://api.ihealthlabs.com:8443/openapiv2/application/userinfo.json/?client_id=".$client_id."&client_secret=".$client_secret."&redirect_uri=".$redirect_uri."&access_token=".$access_token."&sc=".$sc_subject."&sv=".$sv_subject."&locale=en_US";                                                                                                      // Enter the URL to fetch the User Profile of all users
-        $json = file_get_contents($url);                                                                                // Read the details of the file in the form of a String
-        $response_user = json_decode($json);
-
-        return view('subjects.index',compact('response_user'));
+      return view('subjects.index',compact('users'));
     }
 
     public function display()
@@ -97,10 +90,9 @@ class SubjectsController extends Controller
     public function show($subject)
     {
         $subject = Subject::find($subject);
-
+        $subject->subject = strtoupper($subject->subject);
 
         return view('subjects.show', compact('subject'));
-
     }
 
 
@@ -156,20 +148,20 @@ class SubjectsController extends Controller
 
     public function index_weight()
     {
-        SubjectsController::index();
         $subjects = Subject::all();
-        $userid = Subject::all();
 
-        return view('weights.index',compact('subjects','userid'));
+        return view('weights.index',compact('subjects'));
     }
 
 
 
-    public function show_weight($userid)
+    public function show_weight(Request $request,$userid)
     {
-        $weights = Weight::all();
+        $subject = Subject::where('userid','=',$userid)->first();
+        $subjectId = strtoupper($subject->subject);
+        $weights = getHealthData('user/'. $subject->userid .'/weight.json',getenv('SC_WEIGHT'),getenv('SV_WEIGHT'),$subject->access_token);
 
-        return view('weights.show',compact('weights','userid'));
+        return view('weights.show',compact('weights','subjectId','userid'));
     }
 
 
@@ -231,6 +223,54 @@ class SubjectsController extends Controller
 
         return view('pulseoxygens.show',compact('pulse','userid'));
     }
+
+    public function handleOAuthRedirect(Request $request){
+      $subject = Subject::findorFail($request->query('subject_code'));
+      $subject->registration_token = $request->query('code');
+
+      $subject->save();
+    }
+
+    public function authorize_subject(Request $request) {
+
+
+      $subject = Subject::findOrFail($request->query('subject_code'));
+      $code = $request->query('code');
+
+
+      $url = "https://api.ihealthlabs.com:8443/OpenApiV2/OAuthv2/userauthorization/";
+
+      $client = new Client();
+
+      $response = $client->request('GET',$url,[
+        'query' => [
+          'client_id' => getenv('CLIENT_ID'),
+          'client_secret' => getenv('CLIENT_SECRET'),
+          'redirect_uri' => getenv('REDIRECT_URI'),
+          'grant_type' => 'authorization_code',
+          'code' => $code
+        ]
+      ]);
+
+      $body = json_decode($response->getBody());
+
+      $subject->access_token = $body->AccessToken;
+      $subject->refresh_token = $body->RefreshToken;
+      $subject->expires = $body->RefreshTokenExpires;
+      $subject->userid = $body->UserID;
+
+      $subject->save();
+
+      return view('auth.oauth');
+
+    }
+
+    public function webhook(Request $request) {
+      Log::debug('An informational message.');
+      Log::debug(json_encode($request->json()));
+      return response()->json(['success' => 'success'], 200);
+    }
+
 
 
 }
