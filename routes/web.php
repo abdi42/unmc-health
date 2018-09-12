@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -51,8 +50,6 @@ Route::get('/bloodglucoses/{userid}','SubjectsController@show_bloodglucose');
 Route::get('/pulseoxygens/{userid}','SubjectsController@show_pulseoxygen');
 
 
-
-
 Route::get('/contents','ContentsController@index');
 
 Route::get('/contents/create', 'ContentsController@create');
@@ -89,8 +86,6 @@ Route::get('/categories/{id}/delete','CategoriesController@delete');
 Route::delete('/categories/{id}','CategoriesController@destroy');
 
 
-
-
 Route::get('/tips','TipsController@index');
 
 Route::get('/tips/create','TipsController@create');
@@ -107,8 +102,9 @@ Route::get('/tip/{id}/delete','TipsController@delete');
 
 Route::delete('/tip/{id}','TipsController@destroy');
 
+Route::get('/subjects','SubjectsController@display');
 
-Route::get('/subjects/ihealth','SubjectsController@index');
+//Route::get('/subjects/ihealth','SubjectsController@index');
 
 Route::get('/subjects/create','SubjectsController@create');
 
@@ -121,8 +117,6 @@ Route::get('/subject/{subject}/edit','SubjectsController@edit');
 Route::put('/subject/{subject}','SubjectsController@update');
 
 Route::get('/subject/{subject}/delete','SubjectsController@delete');
-
-Route::get('/subjects','SubjectsController@display');
 
 Route::get('/subjects/userexists','SubjectsController@message');
 
@@ -144,9 +138,6 @@ Route::put('/actionplans/{id}','ActionplansController@update');
 Route::get('/actionplans/{id}/delete','ActionplansController@delete');
 
 Route::delete('/actionplans/{id}','ActionplansController@destroy');
-
-
-
 
 
 Route::get('/medicationslots','MedicationslotsController@index');
@@ -233,4 +224,6 @@ Route::get('/reminders/{id}/delete','RemindersController@delete');
 
 Route::delete('/reminders/{id}','RemindersController@destroy');
 
+Route::get('/ihealth/callback','SubjectsController@authorize_subject');
+Route::get('/webhook','SubjectsController@webhook');
 ?>

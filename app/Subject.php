@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Subject extends Model
 {
     protected $primaryKey='subject';
+    protected $hidden = ['registration_token','access_token','refresh_token','expires','pin'];
+    
     public $incrementing = false;
 
     public function actionplans()

@@ -4,6 +4,7 @@
 use App\Subject;
 use App\Reminder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,20 +22,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('api/subjects/{subject}',function($code){
-    $subject = Subject::where("subject","=", $code)->first();
-
+Route::post('api/subjects/authenticate',function(Request $request){
+    $subject = Subject::findOrFail($request->subjectID);
+    
     if($subject == null)
     {
-        return response()->json(['error'=> 'Could not find module '.$code],404);
+      return response()->json(['error'=> 'Could not find subject '.$subjectID],404);
+    } else if(Hash::check($request->pin,$subject->pin) == false) {
+      return response()->json(['error'=> 'Incorrect pin'],401);
     }
-
 
 
     return response()->json($subject);
-    }
-
-    );
+});
 
 
 Route::get('api/reminders/{subject}', function($code){
@@ -49,5 +49,3 @@ Route::get('api/reminders/{subject}', function($code){
 }
 
 );
-
-
