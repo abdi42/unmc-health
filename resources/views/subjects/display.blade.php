@@ -43,7 +43,7 @@
                 </td>
                 <td>{{$subject->disease_state}}</td>
                 <td>
-                  <a href="#" class="btn btn-primary btn-sm">
+                  <a href="/subject/{{$subject->subject}}/edit" class="btn btn-primary btn-sm">
                       <i class="fas fa-pen"></i>
                       Edit
                   </a>
