@@ -16,7 +16,7 @@
             <p>Select Content: </p>
             <select name="content_id">
                 @foreach($contents as $content)
-                    <option value="{{ $content->id }} ">{{ $content->content }}</option>
+                    <option value="{{ $content->id }} ">{{ $content->title }}</option>
                 @endforeach
 
             </select><br><br>

@@ -19,18 +19,15 @@
 </head>
 
 <body>
-
-
-
- @include('layouts.nav')
-<div class="container">
-        @yield('content')
-</div>
-
-
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
+    <div class="container d-flex h-100 mt-5">
+        <div class="text-center row justify-content-center align-self-center">
+            <div class='w-75'>
+                <img src="/img/confirmed.png" class="img-fluid" alt="Responsive image">
+            </div>
+            <h3 class='mt-5 mx-3 text-secondary'>
+                Authorization Successful! You are all done.
+            </h3>
+        </div>
+    </div>
 </body>
 </html>
