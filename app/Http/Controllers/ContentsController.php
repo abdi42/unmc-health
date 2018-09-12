@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 use App\Category;
 use \App\Content;
-
-
+use App\Question;
+use App\Answer;
 use Illuminate\Http\Request;
 
 class ContentsController extends Controller
@@ -33,6 +33,7 @@ class ContentsController extends Controller
 
     public function store(Request $request)
     {
+
         $this->validate($request, [
             'title' => 'required',
             'category_id' => 'required',
@@ -44,6 +45,27 @@ class ContentsController extends Controller
         $content->content = $request->input('content');
         $content->category_id = $request->input('category_id');
         $content->save();
+        
+        $questions = collect($request->input('questions'));
+        
+        $questions->map(function($newQuestion) use($content) {
+          $question = new Question();
+          $question->content_id = $content->id;
+          $question->question = $newQuestion['text'];
+          $question->question_type = 'multiple choice';
+          $question->save();
+          
+          $options = collect($newQuestion['options']);
+          
+          $options->map(function($option) use ($question) {
+            $answer = new Answer();
+            $answer->question_id = $question->id;
+            $answer->answer = $option['name'];
+            $answer->save();
+          });
+          
+        });
+        
 
         return redirect('/contents');
     }
@@ -51,7 +73,6 @@ class ContentsController extends Controller
     public function show($id)
     {
         $content = Content::find($id);
-
         $category = Category::find($id);
 
         return view('contents.show', compact('content','category'));
