@@ -1,28 +1,29 @@
 @extends('layouts.master')
 
 @section('content')
-    <title>iHealth Subjects</title>
-    <h1>iHealth Subject ID</h1>
-<?php
-/**
- * Created by PhpStorm.
- * User: smakandar
- * Date: 7/11/2018
- * Time: 12:31 PM
- */
-echo "The Subjects are:";
-echo '<br>';
-echo '<br>';
-for ($i = 0; $i < count($response_user->UserInfoList); $i++) {
-
-    print_r($response_user->UserInfoList[$i]->userid);
-    echo '<br>';
-    echo '<hr>';
-
-
-
-}
-
-?>
-
-    @endsection
+  <br>
+  <br>
+  <title>iHealth Subjects</title>
+  <h1>iHealth Subject ID</h1>
+  <br>
+  <br>
+  <div class="card" >
+    <div class="card-header">
+      The Subjects are:
+    </div>
+    <ul class="list-group list-group-flush">
+      @foreach ($users as $key => $user)
+        <li class="list-group-item">
+          <ul>
+            @foreach ($user as $key => $value)
+              @if ($key !== 'logo')
+                <li>{{$key}} : {{$value}}</li>
+              @endif
+            @endforeach
+          </ul>
+        </li>
+      @endforeach
+    </ul>
+  </div>
+@endsection
+    
