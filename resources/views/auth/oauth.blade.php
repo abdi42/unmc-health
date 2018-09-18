@@ -25,7 +25,7 @@
                 <img src="/img/confirmed.png" class="img-fluid" alt="Responsive image">
             </div>
             <h3 class='mt-5 mx-3 text-secondary'>
-                Authorization Successful! You are all done.
+                mHealth Authorization Successful! You are all done.
             </h3>
         </div>
     </div>
