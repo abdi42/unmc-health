@@ -11,7 +11,7 @@ class Medicationslot extends Model
         return $this->belongsTo(Subject::class,'subject','subject');
     }
 
-    public function medicationnames()
+    public function medicines()
     {
         return $this->hasMany(Medicationname::class);
     }

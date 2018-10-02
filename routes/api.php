@@ -3,6 +3,7 @@
 
 use App\Subject;
 use App\Reminder;
+use App\Medicationslot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -46,6 +47,27 @@ Route::get('api/reminders/{subject}', function($code){
         return response()->json(['error'=> 'Could not find module'.$code],404);
     }
     return response()->json($subject);
-}
+});
 
-);
+Route::get('api/medications/{subject}',function($code) {
+    $subject = Subject::find($code);
+    
+    if($subject){
+        $slots = Medicationslot::where("subject","=",$code)->with('medicines')->get();
+        return response()->json(['schedule' => $slots]);
+    }
+    else {
+        return response()->json(['error' => 'Could not find subject with specified id' . $code]);
+    }
+});
+
+Route::put('api/medications/{subject}',function($code) {
+    $subject = Subject::find($code);
+    
+    if($subject){
+        return response()->json(['Success! updated subject']);
+    }
+    else {
+        return response()->json(['error' => 'Could not find subject with specified id' . $code]);
+    }
+});
