@@ -57,7 +57,7 @@ Route::get('api/medications/{subject}',function($code) {
         return response()->json(['schedule' => $slots]);
     }
     else {
-        return response()->json(['error' => 'Could not find subject with specified id' . $code]);
+        return response()->json(['error' => 'Could not find subject with specified id' . $code],404);
     }
 });
 
@@ -65,9 +65,9 @@ Route::put('api/medications/{subject}',function($code) {
     $subject = Subject::find($code);
     
     if($subject){
-        return response()->json(['Success! updated subject']);
+        return response()->json(['messages'=>'Success! updated subject']);
     }
     else {
-        return response()->json(['error' => 'Could not find subject with specified id' . $code]);
+        return response()->json(['error' => 'Could not find subject with specified id' . $code],404);
     }
 });
