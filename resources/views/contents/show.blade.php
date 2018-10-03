@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.dashboard')
 
 
 @section('content')
@@ -20,8 +20,3 @@
     <hr>
 
 @endsection
-
-
-
-
-

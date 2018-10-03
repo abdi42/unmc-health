@@ -12,7 +12,7 @@
 
   @foreach($contents as $content)
     <p><b>Content:</b></p>
-    <a href="/contents/{{ $content->id }}">{{ $content->title }}</a>
+    <a href="/contents/{{ $content->id }}">{{ $content->content }}</a>
 
 
     <p style="align:right">   {{ $content->created_at->toFormattedDateString() }}</p>

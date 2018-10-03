@@ -1,5 +1,4 @@
-@extends('layouts.master')
-
+@extends('layouts.dashboard')
 
 @section('content')
 <title>Educational Contents</title>
@@ -33,5 +32,3 @@
 </form>
 
     @endsection
-
-

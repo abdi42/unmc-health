@@ -1,6 +1,5 @@
 @extends('layouts.dashboard')
 
-
 @section('content')
   
   @if (session('status'))
