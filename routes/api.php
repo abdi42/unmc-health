@@ -3,6 +3,8 @@
 
 use App\Subject;
 use App\Reminder;
+use App\Category;
+use App\Content;
 use App\Medicationslot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -70,4 +72,13 @@ Route::put('api/medications/{subject}',function($code) {
     else {
         return response()->json(['error' => 'Could not find subject with specified id' . $code],404);
     }
+});
+
+Route::get('api/content/{categoryname}',function(Request $request,$categoryname){
+    $exclude = explode(',', $request->query('exclude'));
+
+    $category = Category::where('category','=',$categoryname)->first();
+    $content = Content::where('category_id',$category->id)->whereNotIn('id',$exclude)->with('questions.answers')->inRandomOrder()->first();
+
+    return $content;
 });
