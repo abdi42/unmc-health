@@ -89,7 +89,7 @@ class SubjectsController extends Controller
 
     public function show($subject)
     {
-        $subject = Subject::find($subject);
+        $subject = Subject::with('medicationslots')->find($subject);
         $subject->subject = strtoupper($subject->subject);
 
         return view('subjects.show', compact('subject'));
