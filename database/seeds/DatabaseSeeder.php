@@ -7,68 +7,83 @@ use App\Category;
 use App\Question;
 use App\Answer;
 
-function seedSpreadSheet($filename){
-    $categoryId = null;
-    $contentId = null;
-    $questionId = null;
-    $answerId = null;
-    
-    $collection = (new FastExcel)->import($filename,function($line) use ($categoryId,$contentId,$answerId,$questionId)  {
-        
-        if($line["Category"] != ""){
-            $categories = Category::where("category","=",$line["Category"])->first();
-            
-            if(!$categories){
-                $categories = new Category();
-                $categories->category = $line["Category"];
-                $categoryId = $categories->id;
-                $categories->save();
-            }
-            
-            $content = new Content();
-            $content->title = $line["Category"];
-            $content->content = $line["CONTENT"];
-            $content->category_id = $categories->id;
-            $content->save();
-            $contentId = $content->id;
-        } 
+function parseContent($index,$lines){
+    $hint = "";
+    $questions = collect([]);
 
-        if($line["CONTENT"] != "" && $contentId) {
-            $question = new Question();
-            $question->content_id = $contentId;
-            $question->question = $line["Questions"];
-            $question->question_type = "Multi";
-            $question->save();
-            
-            $answers = collect(["A","B","C","D","E"]);
-            
-            foreach ($answers as $key => $value) {
-                if($line[$value] != "") {
-                    $answer = new Answer();
-                    $answer->question_id = $question->id;
-                    $answer->answer = $line[$value];
-                    $answer->save();
+    do {
+        $currLine = collect($lines[$index]);
+        $hint = $hint . $lines[$index]["CONTENT"] . " ";
+
+        if($lines[$index]["Questions"]){
+            $questions->push([
+                "text" => $currLine["Questions"],
+                "answers" => $currLine->only(["A","B","C","D","E"]),
+                "correct" => $currLine["Correct Answer"]
+            ]);
+        }
+        $index++;
+    }  while($index < count($lines) && !$lines[$index]["HINT #"]);
+
+    return [
+        "hint" => $hint,
+        "questions" => $questions
+    ];
+}
+
+function seedContent($filename,$categoryName){
+    print_r($categoryName);
+    $category = new Category();
+    $category->category = $categoryName;
+    $category->save();
+
+    $lines = (new FastExcel)->import($filename);
+
+    foreach($lines as $index => $line){
+        if($line["HINT #"]){
+            $result = parseContent($index,$lines);
+            $content = new Content();
+            $content->content = $result['hint'];
+            $content->category_id = $category->id;
+            $content->save();
+
+            foreach($result['questions'] as $question){
+
+                $newQuestion = new Question();
+                $newQuestion->content_id = $content->id;
+                $newQuestion->question = $question['text'];
+                $newQuestion->question_type = 'multiple choice';
+                $newQuestion->save();
+
+                foreach($question['answers'] as $key => $answer){
+                    if(gettype($answer) === "boolean")
+                        $answer = var_export($answer, true);
+
+                    if($answer){
+                        $newAnswer = new Answer();
+                        $newAnswer->question_id = $newQuestion->id;
+                        $newAnswer->answer = $answer;
+
+                        if($key == $question['correct'])
+                            $newAnswer->isAnswer = true;
+
+                        $newAnswer->save();
+                    }
                 }
+
             }
         }
-        
-    });   
+    }
+
 }
- 
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     *
-     * @return void
-     */
-    
     public function run()
     {
-        seedSpreadSheet(database_path('seeds/general.xlsx'));
-        seedSpreadSheet(database_path('seeds/diabetes.xlsx'));
-        seedSpreadSheet(database_path('seeds/heart.xlsx'));
-        seedSpreadSheet(database_path('seeds/hypertension.xlsx'));                 
+        seedContent(database_path('seeds/heart.xlsx'),'Heart');
+        seedContent(database_path('seeds/diabetes.xlsx'),'Diabetes');
+        seedContent(database_path('seeds/general.xlsx'),'General');
+        seedContent(database_path('seeds/hypertension.xlsx'),'Hypertension');
     }
 }
