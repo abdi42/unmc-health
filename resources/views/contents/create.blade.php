@@ -21,15 +21,11 @@
           <div class="row">
             <div class="col">
               <div class="form-group">
-                <label for="title">Title</label>
-                <input type="text" name="title" placeholder="Enter your title here" class="form-control" required><br>
+                <label for="content" class="font-weight-bold">Health Information Tips: </label>
+                <textarea name="hint" placeholder="Enter your hint here" class="form-control" cols="30" rows="10" required></textarea><br>
               </div>
               <div class="form-group">
-                <label for="content">Enter the Content here: </label>
-                <textarea name="content" placeholder="Enter your content here" class="form-control" cols="30" rows="10" required></textarea><br>
-              </div>
-              <div class="form-group">
-                <label for="category_id">Select category</label>
+                <label for="category_id" class="font-weight-bold">Select category</label>
                 <select class="form-control" name="category_id" >
                   @foreach($categories as $category)
                     <option value="{{ $category->id }}" >{{ $category->category }}</option>
@@ -38,7 +34,7 @@
               </div>
             </div>
             <div class="col">
-              <label for="questions">Questions</label>
+              <label for="questions" class="font-weight-bold">Questions</label>
               <div class="accordion" id="accordion" >
                 @for ($i=0;$i<=1;$i++)
                   <div class="card question">

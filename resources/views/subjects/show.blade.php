@@ -65,6 +65,54 @@
 			</ul>
 		</div>
 
+        <h4 class='sub-header mt-5'>Medication Reminders</h4>
+
+
+        <div class="row">
+            <div class="col">
+                <a href="/medicationslots/create" class="btn btn-success float-right" role="button">
+                    <i class="fas fa-plus"></i>
+                    Add Reminder
+                </a>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-body mt-3">
+
+                <table class="table table-hover mt-4">
+                    <thead>
+                    <tr>
+                        <th class='border-0'>
+                            <span class="ml-3">Name</span>
+                        </th>
+                        <th class='border-0'>Time</th>
+                        <th class='border-0'>Days</th>
+                        <th class='border-0'></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($subject->medicationslots as $slot)
+                            <tr>
+                                <th scope="row">
+                                    <a href="/medicationslots/{{$slot->id}}/edit" class="ml-3">{{$slot->medication_name}}</a>
+                                </th>
+                                <td>{{$slot->medication_time}}</td>
+                                <td>{{$slot->medication_day}}</td>
+                                <td>
+                                    <a href="/medicationslots/{{$slot->id}}/edit" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-pen"></i>
+                                        Edit
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
 	{{-- <p><b>Subject: </b></p>    {{$subject->subject }}<br><br>
 
 	<p><b>Disease State</b></p> {{$subject->disease_state}}<br><br>

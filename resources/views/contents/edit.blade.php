@@ -6,7 +6,7 @@
 <br><h1>Edit Educational Contents</h1>
 
 
-<form action="/contents/{{$content->id}}" method="post">
+<form action="/education/{{$content->id}}" method="post">
 
     {{ csrf_field() }}
     {{method_field('PUT')}}

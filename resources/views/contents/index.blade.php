@@ -11,10 +11,8 @@
   <h2 class='sub-header'>Educational Contents</h2>
 
   @foreach($contents as $content)
-    <p><b>Content:</b></p>
+    <p class="m-0"><b>Category:</b> <span>{{$content->category->category}}</span></p>
     <a href="/contents/{{ $content->id }}">{{ $content->content }}</a>
-
-
     <p style="align:right">   {{ $content->created_at->toFormattedDateString() }}</p>
     <hr>
   @endforeach

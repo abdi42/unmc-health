@@ -10,7 +10,24 @@
         <form action="/subjects" method="post">
             {{ csrf_field() }}
             <p>Enter Subject Code</p>
-            <input type="text" name="id" placeholder="Enter your subject code here" class="form-control" required>
+            <input type="text" name="id" placeholder="Enter your subject code here" class="form-control" required><br>
+
+            <p>Medication Schedule</p>
+
+            <div class="input-group">
+                <div class="col-1">
+                    <br>
+                    <p class="text-center font-weight-bold">1.</p>
+                </div>
+                <div class="col-6">
+                    <label for="medication_name">Medication name</label>
+                    <input type="text" name="medication_name" placeholder="Enter medication name here" class="form-control" required>
+                </div>
+                <div class="col-5">
+                    <label for="medication_time">Medication time</label>
+                    <input type="time" name="medication_time" placeholder="Enter your Medication time here" class="form-control px-2 py-1"  required>
+                </div>
+            </div>
 
 
             <br><p>Enter your PIN </p>

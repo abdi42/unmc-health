@@ -7,8 +7,6 @@
 <h1>Educational Contents</h1>
 
 
-<br><p><b>Title: </b></p>    {{$content->title }}<br><br>
-
 <p><b>Educational Content: </b></p>    {{$content->content}}<br><br>
 
 <p><b>Educational Category: </b></p> {{$content->category->category}}  <br><br>
