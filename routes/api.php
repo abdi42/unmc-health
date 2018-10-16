@@ -1,6 +1,5 @@
 <?php
 
-use Validator;
 use App\Subject;
 use App\Reminder;
 use App\Category;
