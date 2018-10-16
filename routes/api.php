@@ -1,10 +1,11 @@
 <?php
 
-
+use Validator;
 use App\Subject;
 use App\Reminder;
 use App\Category;
 use App\Content;
+use App\Question;
 use App\Medicationslot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -72,6 +73,26 @@ Route::put('api/medications/{subject}',function($code) {
     else {
         return response()->json(['error' => 'Could not find subject with specified id' . $code],404);
     }
+});
+
+Route::post('api/content',function(Request $request) {
+
+  $validator = Validator::make($request->all(), [
+    'subjectId' => 'required|exists:subjects,subject',
+    'questionId' => 'required|exists:questions,id',
+    'attempts' => 'required',
+    'time' => 'required'
+  ]);
+
+  if ($validator->fails()) {
+    return response()->json(['error' => $validator->errors()],404);
+  }
+
+  $subject = Subject::find($request->subjectId);
+  $question = Question::find($request->questionId);
+
+  return response()->json(['messages'=>'Saved subject attempts']);
+
 });
 
 Route::get('api/content/{categoryname}',function(Request $request,$categoryname){
