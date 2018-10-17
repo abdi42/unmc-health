@@ -88,7 +88,7 @@ class MedicationnamesController extends Controller
 
     public function delete($id)
     {
-        $medicationname = Medicationname::all()->find($id);
+        $medicationname = Medicationname::find($id);
 
         return view('medicationnames.delete',compact('medicationname'));
     }
@@ -97,7 +97,7 @@ class MedicationnamesController extends Controller
     {
         $medicationname = Medicationname::all()->find($id);
         $medicationname->delete();
-        session()->flash('message', 'Deleted Successfully');
+
         return redirect('/medicationnames');
     }
 
