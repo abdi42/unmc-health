@@ -51,7 +51,7 @@ function seedContent($filename,$categoryName){
 
                 $newQuestion = new Question();
                 $newQuestion->content_id = $content->id;
-                $newQuestion->question = $question['text'];
+                $newQuestion->text = $question['text'];
                 $newQuestion->question_type = 'multiple choice';
                 $newQuestion->save();
 

@@ -15,4 +15,14 @@ class Medicationslot extends Model
     {
         return $this->hasMany(Medicationname::class);
     }
+
+    public function setMedicationDayAttribute($days){
+        $daysKeys =["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
+
+        foreach($daysKeys as $day) {
+            $this->attributes[$day] = array_key_exists($day,$days);
+        }
+
+        $this->attributes['medication_day'] = implode(",",$days);
+    }
 }
