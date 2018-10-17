@@ -1,6 +1,14 @@
 @extends('layouts.dashboard')
 
 @section('content')
+
+  @if (session('status'))
+    <div class="alert alert-success">
+      {{ session('status') }}
+    </div>
+  @endif
+
+
   <title>Contents</title>
   <a href="{{ url("/contents/create") }}" class="btn btn-success float-right px-4 py-2" role="button">
     <i class="fas fa-plus"></i>
