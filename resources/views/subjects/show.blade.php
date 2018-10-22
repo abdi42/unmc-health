@@ -42,22 +42,22 @@
 				</ul>
 			</div>
 			<ul class="list-group">
-				<a href="/weights/{{$subject->userid}}" class="list-group-item px-5 py-3">
+				<a href="/subjects/{{$subject->subject}}/weights" class="list-group-item px-5 py-3">
 					<i class="fas fa-weight mr-2 text-danger"></i>
 					<strong>Weights</strong>
 					<i class="fas fa-angle-right text-secondary float-right"></i>
 				</a>
-				<a href="#" class="list-group-item px-5 py-3">
+				<a href="/subjects/{{$subject->subject}}/bloodpressures" class="list-group-item px-5 py-3">
 					<i class="fas fa-heartbeat mr-2 text-danger"></i>
 					<strong>Blood Pressure</strong>
 					<i class="fas fa-angle-right text-secondary float-right"></i>
 				</a>
-				<a href="#" class="list-group-item px-5 py-3">
+				<a href="/subjects/{{$subject->subject}}/bloodglucoses" class="list-group-item px-5 py-3">
 					<i class="fas fa-notes-medical mr-2 text-danger"></i>
 					<strong>Blood Glucose</strong>
 					<i class="fas fa-angle-right text-secondary float-right"></i>
 				</a>
-				<a href="#" class="list-group-item px-5 py-3">
+				<a href="/subjects/{{$subject->subject}}/pulseoxygens" class="list-group-item px-5 py-3">
 					<i class="fas fa-hand-holding-heart mr-2 text-danger"></i>
 					<strong>Pulse Oxygen</strong>
 					<i class="fas fa-angle-right text-secondary float-right"></i>
@@ -68,6 +68,14 @@
 		<h4 class='sub-header mt-5'>Medication Times</h4>
 
 
+		<div class="row">
+			<div class="col">
+				<a href="/medicationslots/create/{{$subject->subject}}" class="btn btn-success float-right" role="button">
+					<i class="fas fa-plus"></i>
+					Add Times
+				</a>
+			</div>
+		</div>
 
 		<div class="card mt-3">
 			<div class="card-body mt-3">
@@ -83,11 +91,11 @@
 					</thead>
 					<tbody id="accordionMedication">
 					@foreach($subject->medicationslots as $i => $slot)
-						<tr  data-toggle="collapse" data-parent="#accordionMedication" data-target="#collapse{{$i}}">
+						<tr data-toggle="collapse" data-parent="#accordionMedication"  href="#collapse{{$i}}">
 							<th scope="row">
-																	<span>
-																		{{date("g:i a", strtotime($slot->medication_time))}}
-																	</span>
+								<span>
+									{{date("g:i a", strtotime($slot->medication_time))}}
+								</span>
 							</th>
 							<td>{{$slot->medication_day}}</td>
 							<td>

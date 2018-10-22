@@ -17,7 +17,7 @@
 
       <div class="">
 
-        <a href="{{'/contents/'.$content->id.'/delete'}}" class="float-right mr-4">
+        <a href="{{'/contents/'.$content->id.'/delete'}}" class="float-right ml-5">
           <button class="btn btn-danger">Delete</button>
         </a>
 

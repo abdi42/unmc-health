@@ -84,7 +84,7 @@
                 </div>
               </div>
 
-              <div class="row justify-content-center my-4">
+              <div class="row justify-content-center my-4 medications-container">
                 <div class="col-7 p-0 m-0 medications">
                   <div id="medication0" class="col-12 medication">
                     <label for="medication_name" class="font-weight-bold">Medication Name</label>
@@ -94,7 +94,7 @@
                   </div>
                 </div>
                 <div class="col-3 align-self-end">
-                  <button id="addMedication" type="button" class="btn btn-link" data-slotindex="0">
+                  <button type="button" class="addMedication btn btn-link" data-inputname="slot[0][medication_name][]">
                     <i class="fas fa-plus"></i>
                     Add Medication
                   </button>
@@ -111,7 +111,7 @@
     <div class="row mt-5">
       <div class="col-12 mt-2">
         <input type="submit" value="Submit" class="btn btn-success float-right  py-2 mx-3">
-        <button id="addSlot" type="button" class="btn btn-primary float-right  py-2 mx-3" data-slotindex="0">
+        <button id="addSlot" type="button" class="btn btn-primary float-right  py-2 mx-3">
           <i class="fas fa-plus"></i>
           Add Medication Time
         </button>
@@ -122,4 +122,6 @@
 
 
 @endsection
-
+@push('scripts')
+  <script src="/js/medicationslots.js"></script>
+@endpush
