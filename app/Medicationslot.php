@@ -6,7 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Medicationslot extends Model
 {
-    public function subject()
+  protected $casts = [
+    'sunday' => 'boolean',
+    'monday' => 'boolean',
+    'tuesday' => 'boolean',
+    'wednesday' => 'boolean',
+    'thursday' => 'boolean',
+    'friday' => 'boolean',
+    'saturday' => 'boolean'
+  ];
+
+  public function subject()
     {
         return $this->belongsTo(Subject::class,'subject','subject');
     }

@@ -74,7 +74,7 @@
             </div>
           </div>
 
-          <div class="row justify-content-center my-4">
+          <div class="row justify-content-center my-4 medications-container">
             <div class="col-7 p-0 m-0 medications">
               @foreach($medicationslots->medicines as $i => $medicine)
                 @if($i == 0)
@@ -94,7 +94,7 @@
               @endforeach
             </div>
             <div class="col-3 align-self-end">
-              <button id="addMedication" type="button" class="btn btn-link">
+              <button type="button" class="addMedication btn btn-link" data-inputname="medication_name[][name]">
                 <i class="fas fa-plus"></i>
                 Add Medication
               </button>
@@ -115,57 +115,5 @@
 
 @endsection
 @push('scripts')
-  <script type="text/javascript">
-
-      function addMedication() {
-          var index = $(`.medication`).length;
-
-          var container = $("<div></div>", {
-              id: `medication${index}`,
-              class: "input-group col-12 mb-0 mt-4 medication"
-          })
-
-          var input = $("<input/>", {
-              type: "text",
-              name: `medication_name[${index}][name]`,
-              plaecholder: "Enter medication name here",
-              class: "form-control",
-              required: ""
-          })
-
-          var inputGroup = $("<div></div>", {
-              class: "input-group-append"
-          })
-
-          var button = $("<button>", {
-              class: "btn btn-danger remove-medication",
-              type: "button",
-              "data-index": index
-          }).click(removeMedication)
-
-          var icon = $("<i>", {
-              class: "fas fa-minus"
-          })
-
-          button.append(icon)
-          inputGroup.append(button)
-          container.append(input, inputGroup)
-
-          console.log(container)
-
-          $(`.medications`).append(container)
-      }
-
-      function removeMedication() {
-          var index = $(this).data('index');
-          var exists = $(this).data('existing');
-
-          $(`#medication${index}`).remove();
-      }
-
-
-      $('#addMedication').click(addMedication)
-      $('.remove-medication').click(removeMedication)
-
-  </script>
+  <script src="/js/medicationslots.js"></script>
 @endpush

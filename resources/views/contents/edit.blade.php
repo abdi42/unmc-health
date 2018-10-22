@@ -46,9 +46,6 @@
                            aria-expanded={{$i==0}} aria-controls="collapse{{$i}}">
                           Question {{$i + 1}}
                         </a>
-                        <button type="button" class="btn btn-link float-right">
-                          <i class="fas fa-times"></i>
-                        </button>
                       </h5>
                     </div>
                     <div id="collapse{{$i}}" class="collapse {{$i == 0 ? "show" : ""}}" data-parent="#accordion"
@@ -74,10 +71,6 @@
                                        value="{{$c}}" {{$answer->isAnswer ? "checked" : ""}}>
                                 <label id="questions_{{$i}}" for="questions[{{$i}}][isAnswer]">Correct</label>
                               </span>
-                              <button type="button" class="close" aria-label="Close" data-toggle="tooltip"
-                                      data-placement="right" title="Remove option">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
                             </li>
                           @endforeach
                         </ul>

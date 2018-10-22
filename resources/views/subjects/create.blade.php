@@ -219,37 +219,30 @@
                     <label for="slot[${slotIndex}][day][sunday]" class="btn btn-outline-primary active my-2">
                         <input type="checkbox" autocomplete="off" name="slot[${slotIndex}][day][sunday]"
                                value="Sunday" checked> Sun
-                        <span class="fa fa-check"></span>
                     </label>
                     <label for="slot[${slotIndex}][day][monday]" class="btn btn-outline-primary my-2">
                         <input type="checkbox" autocomplete="off" name="slot[${slotIndex}][day][monday]"
                                value="Monday"> Mon
-                        <span class="fa fa-check"></span>
                     </label>
                     <label for="slot[${slotIndex}][day][tuesday]" class="btn btn-outline-primary my-2">
                         <input type="checkbox" autocomplete="off" name="slot[${slotIndex}][day][tuesday]"
                                value="Tuesday"> Tue
-                        <span class="fa fa-check"></span>
                     </label>
                     <label for="slot[${slotIndex}][day][wednesday]" class="btn btn-outline-primary my-2">
                         <input type="checkbox" autocomplete="off" name="slot[${slotIndex}][day][wednesday]"
                                value="Wednesday"> Wed
-                        <span class="fa fa-check"></span>
                     </label>
                     <label for="slot[${slotIndex}][day][thursday]" class="btn btn-outline-primary my-2">
                         <input type="checkbox" autocomplete="off" name="slot[${slotIndex}][day][thursday]"
                                value="Thursday"> Thu
-                        <span class="fa fa-check"></span>
                     </label>
                     <label for="slot[${slotIndex}][day][friday]" class="btn btn-outline-primary my-2">
                         <input type="checkbox" autocomplete="off" name="slot[${slotIndex}][day][friday]"
                                value="Friday"> Fri
-                        <span class="fa fa-check"></span>
                     </label>
                     <label for="slot[${slotIndex}][day][saturday]" class="btn btn-outline-primary my-2">
                         <input type="checkbox" autocomplete="off" name="slot[${slotIndex}][day][saturday]"
                                value="Saturday"> Sat
-                        <span class="fa fa-check"></span>
                     </label>
                 </div>
             </div>
