@@ -29,25 +29,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('subjects', 'SubjectsController@index');
 
-/* Page showing list of users to get the weight details */
-Route::get('/subjects/weight','SubjectsController@index_weight');
 
-/* Page showing list of users to get the Blood Pressure details */
-Route::get('/subjects/bloodpressure', 'SubjectsController@index_bloodpressure');
+Route::get('/subjects/{subject}/weights','iHealthController@show_weight');
 
-/* Page showing list of users to get the Blood Glucose details */
-Route::get('/subjects/bloodglucose','SubjectsController@index_bloodglucose');
+Route::get('/subjects/{subject}/bloodpressures','iHealthController@show_bloodpressure');
 
-/* Page showing list of users to get the Pulse Oxygen details */
-Route::get('/subjects/pulseoxygen','SubjectsController@index_pulseoxygen');
+Route::get('/subjects/{subject}/bloodglucoses','iHealthController@show_bloodglucose');
 
-Route::get('/weights/{userid}','SubjectsController@show_weight');
-
-Route::get('/bloodpressures/{userid}','SubjectsController@show_bloodpressure');
-
-Route::get('/bloodglucoses/{userid}','SubjectsController@show_bloodglucose');
-
-Route::get('/pulseoxygens/{userid}','SubjectsController@show_pulseoxygen');
+Route::get('/subjects/{subject}/pulseoxygens','iHealthController@show_pulseoxygen');
 
 
 Route::get('/contents','ContentsController@index');
@@ -142,9 +131,9 @@ Route::delete('/actionplans/{id}','ActionplansController@destroy');
 
 Route::get('/medicationslots','MedicationslotsController@index');
 
-Route::get('/medicationslots/create','MedicationslotsController@create');
+Route::get('/medicationslots/create/{subject}','MedicationslotsController@create');
 
-Route::post('/medicationslots','MedicationslotsController@store');
+Route::post('/subjects/{subject_id}/medicationslots','MedicationslotsController@store');
 
 Route::get('/medicationslots/{subject}','MedicationslotsController@show');
 
