@@ -50,6 +50,15 @@
               <i data-feather="book-open" class="icon"></i><br>
               Education
             </div>
+            <!-- TODO: can't do div in <a> -->
+          </a>
+        </li>
+
+        <li class="text-center nav-item">
+          <a href="{{ url("/settings") }}">
+            <div class="lin"><i data-feather="settings" class="icon"></i>
+              <br>
+              Settings</div>
           </a>
         </li>
       </ul>
