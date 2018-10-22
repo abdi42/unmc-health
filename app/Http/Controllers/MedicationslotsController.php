@@ -33,23 +33,23 @@ class MedicationslotsController extends Controller
   public function store(Request $request,$subject_id)
   {
 
-    return $request->all();
+    $subject = Subject::findOrFail($subject_id);
 
-    $this->validate($request, [
-      'subject' => 'required',
-      'medication_time' => 'required'
+    foreach($request->input('slot') as $slot) {
+      $medicationslot = new Medicationslot();
+      $medicationslot->subject = $subject->subject;
+      $medicationslot->medication_time = $slot['time'];
+      $medicationslot->medication_day = $slot['day'];
+      $medicationslot->save();
 
-    ]);
-
-
-    $medicationslot = new Medicationslot();
-    $medicationslot->subject = $request->input('subject');
-    $medicationslot->medication_time = $request->input('medication_time');
-    $medicationslot->medication_day = $request->input('day');
-    $medicationslot->medication_name = $request->input('medication_name');
-    $medicationslot->save();
-
-    return redirect('/medicationslots');
+      foreach($slot['medication_name'] as $name){
+        $medicationname = new Medicationname();
+        $medicationname->medicationslot_id = $medicationslot->id;
+        $medicationname->medication_name = $name;
+        $medicationname->save();
+      }
+    }
+    return redirect('/subjects/' . $subject_id);
   }
 
   public function show($subject)
