@@ -12,7 +12,7 @@
 
 /*Home Page*/
 Route::get('/', function () {
-  return view('welcome');
+    return view('welcome');
 });
 
 /* Welcome Page*/
@@ -111,6 +111,9 @@ Route::get('/subjects/userexists','SubjectsController@message');
 
 Route::delete('/subjects/{subject}','SubjectsController@destroy');
 
+Route::get('/subjects/{subject}/questions-results','QuestionResultsController');
+
+
 
 Route::get('/actionplans','ActionplansController@index');
 
@@ -129,7 +132,7 @@ Route::get('/actionplans/{id}/delete','ActionplansController@delete');
 Route::delete('/actionplans/{id}','ActionplansController@destroy');
 
 
-Route::get('/medicationslots','MedicationslotsController@index');
+Route::get('/subjects/{subject}/medicationslots','MedicationslotsController@index');
 
 Route::get('/medicationslots/create/{subject}','MedicationslotsController@create');
 

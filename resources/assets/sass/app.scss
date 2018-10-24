@@ -286,3 +286,27 @@ body {
 .collapse-container td {
   padding:0px;
 }
+
+.table th,
+.table td {
+  padding: 1.25rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+}
+
+.table thead th {
+  color:#2e324a;
+}
+
+.table th {
+  padding-left:2em;
+  padding:20px;
+}
+
+.material-card {
+  background: #fff;
+  border-radius: 2px;
+  margin: 1rem;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
