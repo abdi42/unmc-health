@@ -5,9 +5,11 @@ use App\Reminder;
 use App\Category;
 use App\Content;
 use App\Question;
+use App\QuestionResult;
 use App\Medicationslot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,12 +29,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('api/subjects/authenticate',function(Request $request){
     $subject = Subject::findOrFail($request->subjectID);
-    
+
     if($subject == null)
     {
-      return response()->json(['error'=> 'Could not find subject '.$subjectID],404);
+        return response()->json(['error'=> 'Could not find subject '.$subjectID],404);
     } else if(Hash::check($request->pin,$subject->pin) == false) {
-      return response()->json(['error'=> 'Incorrect pin'],401);
+        return response()->json(['error'=> 'Incorrect pin'],401);
     }
 
 
@@ -53,7 +55,7 @@ Route::get('api/reminders/{subject}', function($code){
 
 Route::get('api/medications/{subject}',function($code) {
     $subject = Subject::find($code);
-    
+
     if($subject){
         $slots = Medicationslot::where("subject","=",$code)->with('medicines')->get();
         return response()->json(['schedule' => $slots]);
@@ -65,7 +67,7 @@ Route::get('api/medications/{subject}',function($code) {
 
 Route::put('api/medications/{subject}',function($code) {
     $subject = Subject::find($code);
-    
+
     if($subject){
         return response()->json(['messages'=>'Success! updated subject']);
     }
@@ -76,21 +78,30 @@ Route::put('api/medications/{subject}',function($code) {
 
 Route::post('api/content',function(Request $request) {
 
-  $validator = Validator::make($request->all(), [
-    'subjectId' => 'required|exists:subjects,subject',
-    'questionId' => 'required|exists:questions,id',
-    'attempts' => 'required',
-    'time' => 'required'
-  ]);
+    $validator = Validator::make($request->all(), [
+        'subjectId' => 'required|exists:subjects,subject',
+        'questionId' => 'required|exists:questions,id',
+        'attempts' => 'required',
+        'time' => 'required'
+    ]);
 
-  if ($validator->fails()) {
-    return response()->json(['error' => $validator->errors()],404);
-  }
+    if ($validator->fails()) {
+        return response()->json(['error' => $validator->errors()],404);
+    }
 
-  $subject = Subject::find($request->subjectId);
-  $question = Question::find($request->questionId);
+    $subject = Subject::find($request->subjectId);
+    $question = Question::find($request->questionId);
 
-  return response()->json(['messages'=>'Saved subject attempts']);
+    $result = new QuestionResult();
+    $result->question_id = $question->id;
+    $result->subject_id = $subject->subject;
+    $result->attempts = $request->attempts;
+    $result->time = Carbon::createFromTimestampMs($request->time,'US/Central')->toDateTimeString();
+    $result->save();
+
+    return response()->json($result);
+
+    return response()->json(['messages'=>'Saved subject attempts']);
 
 });
 

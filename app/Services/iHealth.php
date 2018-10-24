@@ -37,6 +37,25 @@ class iHealth {
     return $body;
   }
 
+  public function getNewToken($userId,$refreshToken){
+      $url = $this->baseUrl . '/OAuthv2/userauthorization/';                                                                                                      // Enter the URL to fetch the User Profile of all users
+
+      $response = $this->client->request('GET',$url,[
+          'query' => [
+              'client_id' => getenv('CLIENT_ID'),
+              'client_secret' => getenv('CLIENT_SECRET'),
+              'redirect_uri' => getenv('REDIRECT_URI'),
+              'access_token' => $access_token,
+              'sc' => $sc,
+              'sv' => $sv
+          ]
+      ]);
+
+      $body = json_decode($response->getBody());
+
+      return $body;
+  }
+
   public function weights($userId,$access_token){
     return $this->getHealthData('user/' . $userId . '/weight.json', getenv('SC_WEIGHT'), getenv('SV_WEIGHT'),$access_token);
   }
