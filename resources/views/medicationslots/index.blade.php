@@ -2,76 +2,82 @@
   'breadcrumbs' => [
     'Home' => '/',
     'Subjects' => '/subjects',
-    $subject->subject => null
+    $subjectId => '/subjects/'. $subjectId,
+    'Medications' => null
   ]
 ])
 
 @section('content')
-  <title>Subject</title>
-  
-  <div id="subject-container" class="mt-5">
-    <h3 class='sub-header'>Subject: {{$subject->subject}}</h3>
-    
-    <div id="subject-info" class="card mt-5">
-      <div class="card-body mt-3">
-        <ul>
-          <li>
-            <strong>iHealth oAuth:</strong>
-            <span class='ml-3'>
-							@if ($subject->access_token !== null)
-                <span class='text-success'>Authenticated</span>
-              @else
-                <span class='text-danger'>Pending</span>
-              @endif
-						</span>
-          </li>
-          @if ($subject->access_token !== null)
-            <li>
-              <strong>iHealth UserId:</strong>
-              <span class='text-body ml-3'>
-								{{$subject->userid}}
-							</span>
-            </li>
-          @endif
-          <li>
-            <strong>Disease State</strong>
-            <span class='text-body ml-3'>
-							{{$subject->disease_state}}
-						</span>
-          </li>
-        </ul>
-      </div>
-      <ul class="list-group">
-        <a href="/subjects/{{$subject->subject}}/medicationslots" class="list-group-item px-5 py-3">
-          <i class="fas fa-prescription-bottle mr-2 text-danger"></i>
-          <strong>Medications</strong>
-          <i class="fas fa-angle-right text-secondary float-right"></i>
-        </a>
-        <a href="/subjects/{{$subject->subject}}/hints-results" class="list-group-item px-5 py-3">
-          <i class="fas fa-book-open mr-2 text-danger"></i>
-          <strong>Health Information Tips Results</strong>
-          <i class="fas fa-angle-right text-secondary float-right"></i>
-        </a>
-        <a href="/subjects/{{$subject->subject}}/weights" class="list-group-item px-5 py-3">
-          <i class="fas fa-weight mr-2 text-danger"></i>
-          <strong>Weights</strong>
-          <i class="fas fa-angle-right text-secondary float-right"></i>
-        </a>
-        <a href="/subjects/{{$subject->subject}}/bloodpressures" class="list-group-item px-5 py-3">
-          <i class="fas fa-heartbeat mr-2 text-danger"></i>
-          <strong>Blood Pressure</strong>
-          <i class="fas fa-angle-right text-secondary float-right"></i>
-        </a>
-        <a href="/subjects/{{$subject->subject}}/bloodglucoses" class="list-group-item px-5 py-3">
-          <i class="fas fa-notes-medical mr-2 text-danger"></i>
-          <strong>Blood Glucose</strong>
-          <i class="fas fa-angle-right text-secondary float-right"></i>
-        </a>
-        <a href="/subjects/{{$subject->subject}}/pulseoxygens" class="list-group-item px-5 py-3">
-          <i class="fas fa-hand-holding-heart mr-2 text-danger"></i>
-          <strong>Pulse Oxygen</strong>
-          <i class="fas fa-angle-right text-secondary float-right"></i>
-        </a>
-      </ul>
+  <title>Medication Times</title>
+
+  <h4 class='sub-header mt-5'>Medication Times</h4>
+
+
+  <div class="row">
+    <div class="col">
+      <a href="/medicationslots/create/{{$subjectId}}" class="btn btn-success float-right" role="button">
+        <i class="fas fa-plus"></i>
+        Add Times
+      </a>
     </div>
+  </div>
+
+  <div class="card mt-3">
+    <div class="card-body mt-3">
+
+      <table class="table table-hover table-borderless mt-4">
+        <thead>
+        <tr>
+          <th class='border-0'>Time</th>
+          <th class='border-0'>Days</th>
+          <th class='border-0'>Medications</th>
+          <th class='border-0'></th>
+        </tr>
+        </thead>
+        <tbody id="accordionMedication">
+        @foreach($medicationslots as $i => $slot)
+          <tr class="border-bottom-0" data-toggle="collapse" data-parent="#accordionMedication"  href="#collapse{{$i}}">
+            <th scope="row">
+								<span>
+									{{date("g:i a", strtotime($slot->medication_time))}}
+								</span>
+            </th>
+            <td>{{$slot->medication_day}}</td>
+            <td>
+              <h5><span class="badge badge-secondary">{{count($slot->medicines)}}</span></h5>
+            </td>
+            <td>
+              <a href="/medicationslots/{{$slot->id}}/edit" class="btn btn-primary btn-sm">
+                <i class="fas fa-pen"></i>
+                Edit
+              </a>
+            </td>
+          </tr>
+          <tr class="collapse-container medications-list border-bottom-0">
+            <td colspan="4">
+              <div id="collapse{{$i}}" class="collapse" data-parent="#accordionMedication">
+                <ul class="list-group">
+                  @foreach($slot->medicines as $i => $medicine)
+                    @if($i == 0)
+                      <li class="list-group-item border-top-0 border-left-0 border-right-0">
+                        <i class="fas fa-prescription-bottle text-danger mr-5"></i>
+                        {{$medicine->medication_name}}
+                      </li>
+                    @else
+                      <li class="list-group-item border-left-0 border-right-0">
+                        <i class="fas fa-prescription-bottle text-danger mr-5"></i>
+                        {{$medicine->medication_name}}
+                      </li>
+                    @endif
+                  @endforeach
+                </ul>
+              </div>
+            </td>
+          </tr>
+        @endforeach
+        </tbody>
+      </table>
+
+    </div>
+  </div>
 @endsection
