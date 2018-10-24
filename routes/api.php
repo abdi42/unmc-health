@@ -106,6 +106,12 @@ Route::post('api/content',function(Request $request) {
 });
 
 Route::get('api/content/{categoryname}',function(Request $request,$categoryname){
+
+    if($categoryname == "HeartFailure")
+      $categoryname = "Heart";
+    else if ($categoryname == "COPD")
+      $categoryname = "General";
+
     $exclude = explode(',', $request->query('exclude'));
 
     $category = Category::where('category','=',$categoryname)->first();
