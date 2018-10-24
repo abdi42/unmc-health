@@ -1,4 +1,10 @@
-@extends('layouts.dashboard')
+@extends('layouts.dashboard',[
+  'breadcrumbs' => [
+    'Home' => '/',
+    'HINTS' => '/contents',
+    'New' => null
+  ]
+])
 
 @section('content')
 
@@ -18,10 +24,10 @@
     </div>
   @endif
 
-  <title>Add Educational Content</title>
+  <title>Add new HINT</title>
   <br>
 
-  <h2 class='sub-header'>Add Educational Content</h2>
+  <h2 class='sub-header'>Add new HINT</h2>
 
   <div class="card mt-5">
     <div class="card-body">
@@ -31,7 +37,7 @@
           <div class="row">
             <div class="col">
               <div class="form-group">
-                <label for="content" class="font-weight-bold">Health Information Tips: </label>
+                <label for="content" class="font-weight-bold">Health Information Tip: </label>
                 <textarea name="content" placeholder="Enter your hint here" class="form-control" cols="30" rows="10"
                           required></textarea><br>
               </div>
