@@ -14,7 +14,7 @@
   @endif
 
   <title>Review HINT</title>
-  <h1>HINT {{$content->category->category}} #{{$content->id}}</h1>
+  <h2 class="sub-header">HINT {{$content->category->category}} #{{$content->id}}</h2>
 
 
   <div class="card mt-5">

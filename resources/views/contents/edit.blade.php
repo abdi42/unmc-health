@@ -15,7 +15,7 @@
   @endif
 
   <title>Edit HINT</title>
-  <br>
+
 
   <h2 class='sub-header'>Update HINT {{$content->category->category}} #{{$content->id}}</h2>
 

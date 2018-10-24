@@ -25,7 +25,6 @@
   @endif
 
   <title>Add new HINT</title>
-  <br>
 
   <h2 class='sub-header'>Add new HINT</h2>
 

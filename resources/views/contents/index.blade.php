@@ -24,10 +24,14 @@
   <h2 class='sub-header'>HINTS</h2>
 
   @foreach($contents as $content)
-    <p class="m-0"><b>Category:</b> <span>{{$content->category->category}}</span></p>
+    <div class="card mt-3">
+
+    <div class="card-body"><p class="m-0"><b>Category:</b> <span>{{$content->category->category}}</span></p>
     <a href="/contents/{{ $content->id }}">{{ $content->content }}</a>
     <p style="text-align:right"> <em>Last updated  {{ $content->updated_at->toFormattedDateString() }} </em></p>
-    <hr>
+    </div>
+    </div>
+
   @endforeach
 
 @endsection
