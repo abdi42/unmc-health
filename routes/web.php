@@ -134,7 +134,7 @@ Route::delete('/actionplans/{id}','ActionplansController@destroy');
 
 Route::get('/subjects/{subject}/medicationslots','MedicationslotsController@index');
 
-Route::get('/medicationslots/create/{subject}','MedicationslotsController@create');
+Route::get('/subjects/{subject}/medicationslots/create','MedicationslotsController@create');
 
 Route::post('/subjects/{subject_id}/medicationslots','MedicationslotsController@store');
 

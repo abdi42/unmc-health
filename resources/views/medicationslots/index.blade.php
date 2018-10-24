@@ -15,7 +15,7 @@
 
   <div class="row">
     <div class="col">
-      <a href="/medicationslots/create/{{$subjectId}}" class="btn btn-success float-right" role="button">
+      <a href="/subjects/{{$subjectId}}/medicationslots/create" class="btn btn-success float-right" role="button">
         <i class="fas fa-plus"></i>
         Add Times
       </a>

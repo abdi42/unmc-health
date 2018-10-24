@@ -66,22 +66,22 @@ class SubjectsController extends Controller
 
     }
 
-    foreach($request->input('slot') as $slot) {
-      $medicationslot = new Medicationslot();
-      $medicationslot->subject = $subject->subject;
-      $medicationslot->medication_time = $slot['time'];
-      $medicationslot->medication_day = $slot['day'];
-      $medicationslot->save();
+//    foreach($request->input('slot') as $slot) {
+//      $medicationslot = new Medicationslot();
+//      $medicationslot->subject = $subject->subject;
+//      $medicationslot->medication_time = $slot['time'];
+//      $medicationslot->medication_day = $slot['day'];
+//      $medicationslot->save();
+//
+//      foreach($slot['medication_name'] as $name){
+//        $medicationname = new Medicationname();
+//        $medicationname->medicationslot_id = $medicationslot->id;
+//        $medicationname->medication_name = $name;
+//        $medicationname->save();
+//      }
+//    }
 
-      foreach($slot['medication_name'] as $name){
-        $medicationname = new Medicationname();
-        $medicationname->medicationslot_id = $medicationslot->id;
-        $medicationname->medication_name = $name;
-        $medicationname->save();
-      }
-    }
-
-    return redirect('/subjects');
+    return redirect('/subjects/'.$subject->subject.'/medicationslots/create');
   }
 
 

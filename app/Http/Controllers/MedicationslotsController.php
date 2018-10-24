@@ -18,12 +18,12 @@ class MedicationslotsController extends Controller
     }
 
 
-    public function create($subject_id)
+    public function create(Subject $subject)
     {
-        $subjects = Subject::all();
-        $selected_subject = Subject::all()->pluck('subject');
 
-        return view('medicationslots.create', compact('subjects', 'selected_subject', 'subject_id'));
+        return view('medicationslots.create', [
+          "subjectId" => $subject->subject
+        ]);
 
 
     }

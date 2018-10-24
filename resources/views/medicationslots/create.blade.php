@@ -1,10 +1,10 @@
 @extends('layouts.dashboard',[
-'breadcrumbs' => [
-'Home' => '/',
-'Subjects' => '/subjects',
-'ID' => url()->previous(),
-"Create" => null
-]
+  'breadcrumbs' => [
+  'Home' => '/',
+  'Subjects' => '/subjects',
+  $subjectId => '/subjects/'. $subjectId,
+  "Create" => null
+  ]
 ])
 
 @section('content')
@@ -14,7 +14,7 @@
   <br><h1>Add Medication Time</h1><br>
 
 
-  <form action="/subjects/{{$subject_id}}/medicationslots" method="post">
+  <form action="/subjects/{{$subjectId}}/medicationslots" method="post">
 
     {{ csrf_field() }}
 

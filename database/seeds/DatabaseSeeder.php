@@ -6,6 +6,7 @@ use App\Content;
 use App\Category;
 use App\Question;
 use App\Answer;
+use Illuminate\Support\Facades\DB;
 
 function parseContent($index,$lines){
     $hint = "";
@@ -81,6 +82,10 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
+        DB::table('answers')->delete();
+        DB::table('questions')->delete();
+        DB::table('categories')->delete();
+        DB::table('contents')->delete();
         seedContent(database_path('seeds/heart.xlsx'),'Heart');
         seedContent(database_path('seeds/diabetes.xlsx'),'Diabetes');
         seedContent(database_path('seeds/general.xlsx'),'General');
