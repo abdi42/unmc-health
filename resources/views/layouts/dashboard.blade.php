@@ -48,7 +48,7 @@
           <a href="{{ url("/contents") }}" class="text-center">
             <div class='link-text'>
               <i data-feather="book-open" class="icon"></i><br>
-              Education
+              HINTS
             </div>
             <!-- TODO: can't do div in <a> -->
           </a>
