@@ -48,7 +48,7 @@ class MedicationslotsController extends Controller
                 $medicationname->save();
             }
         }
-        return redirect('/subjects/'.$subject_id);
+        return redirect('/subjects/'.$subject_id.'/medicationslots');
     }
 
     public function show($subject)
