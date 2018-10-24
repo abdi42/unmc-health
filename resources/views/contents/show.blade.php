@@ -1,5 +1,10 @@
-@extends('layouts.dashboard')
-
+@extends('layouts.dashboard',[
+  'breadcrumbs' => [
+    'Home' => '/',
+    'HINTS' => '/contents',
+    'Review' => null
+  ]
+])
 
 @section('content')
   @if (session('status'))
@@ -8,8 +13,8 @@
     </div>
   @endif
 
-  <title>Content List</title>
-  <h1>Educational Contents</h1>
+  <title>Review HINT</title>
+  <h2 class="sub-header">HINT {{$content->category->category}} #{{$content->id}}</h2>
 
 
   <div class="card mt-5">
@@ -30,14 +35,14 @@
       <br>
       <br>
 
-      <p><b>Health Information Tips: </b></p> {{$content->content}}<br><br>
+      <p><b>Health Information Tip: </b></p> {{$content->content}}<br><br>
 
-      <p><b>Educational Category: </b> {{$content->category->category}}</p> <br><br>
+      <p><b>Category: </b> {{$content->category->category}}</p> <br><br>
 
 
-      @foreach($content->questions as $question)
+      @foreach($content->questions as $k=>$question)
         <br>
-        <h4><b>Question: </b> {{$question->text}}</h4>
+        <h4><b>Question {{$k+1}}: </b> {{$question->text}}</h4>
         <br>
         <h5>Possible Answers</h5>
         <ul class="list-group">
