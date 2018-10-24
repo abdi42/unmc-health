@@ -1,4 +1,9 @@
-@extends('layouts.dashboard')
+@extends('layouts.dashboard',[
+  'breadcrumbs' => [
+    'Home' => '/',
+    'HINTS' => null,
+  ]
+])
 
 @section('content')
 
