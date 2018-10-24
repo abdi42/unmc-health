@@ -32,9 +32,7 @@
           @foreach($questionResults as $i => $result)
             <tr>
               <th scope="row">
-                <a href="{{$result->question->content->category_id}}">
-                  {{$result->question->content->category->category}}
-                </a>
+                {{$result->question->content->category->category}}
               </th>
               <td>
                 {{$result->question->text}}
