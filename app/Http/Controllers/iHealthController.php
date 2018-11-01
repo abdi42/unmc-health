@@ -23,9 +23,18 @@ class iHealthController extends Controller
 
         $data = collect($this->ihealthService->weights($subject->userid, $subject->access_token)->WeightDataList);
 
-        $weightValues = $data->map(function ($weight) {
-            return round($weight->WeightValue * 2.2046);
+        $weightValues = $data->map(function ($value) {
+            return round($value->WeightValue * 2.2046);
         });
+
+        $bodyMassIndex = $data->map(function ($value) {
+          return round($value->BMI);
+        });
+
+        $bodyFat = $data->map(function ($value) {
+          return round($value->FatValue);
+        });
+
 
         $dates = $data->map(function ($weight) {
             return Carbon::parse($weight->measurement_time)->format('M d,  h:i a');
@@ -37,6 +46,8 @@ class iHealthController extends Controller
             "weightValues" => $weightValues,
             "dates" => $dates,
             "data" => $data,
+            "bodyMassIndex" => $bodyMassIndex,
+            "bodyFat" => $bodyFat
         ]);
     }
 
@@ -49,6 +60,14 @@ class iHealthController extends Controller
             return round($value->HR);
         });
 
+        $systolic = $data->map(function($value) {
+          return round($value->HP);
+        });
+
+        $diastolic = $data->map(function($value) {
+          return round($value->LP);
+        });
+
         $dates = $data->map(function ($value) {
             return Carbon::parse($value->measurement_time)->format('M d,  h:i a');
         });
@@ -59,6 +78,8 @@ class iHealthController extends Controller
             "values" => $values,
             "dates" => $dates,
             "data" => $data,
+            "systolic" => $systolic,
+            "diastolic" => $diastolic
         ]);
     }
 
@@ -97,12 +118,17 @@ class iHealthController extends Controller
             return Carbon::parse($value->measurement_time)->format('M d,  h:i a');
         });
 
+        $heartRate = $data->map(function($value) {
+          return round($value->HR);
+        });
+
 
         return view('pulseoxygens.index', [
             "subjectId" => $subject->subject,
             "values" => $values,
             "dates" => $dates,
             "data" => $data,
+            "heartRate" => $heartRate
         ]);
     }
 
