@@ -7,6 +7,7 @@ use App\Content;
 use App\Question;
 use App\QuestionResult;
 use App\Medicationslot;
+use App\MedicationResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -26,58 +27,65 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-Route::post('api/subjects/authenticate',function(Request $request){
+Route::post('api/subjects/authenticate', function (Request $request) {
     $subject = Subject::findOrFail($request->subjectID);
 
-    if($subject == null)
-    {
-        return response()->json(['error'=> 'Could not find subject '.$subjectID],404);
-    } else if(Hash::check($request->pin,$subject->pin) == false) {
-        return response()->json(['error'=> 'Incorrect pin'],401);
+    if ($subject == null) {
+        return response()->json(
+            ['error' => 'Could not find subject ' . $subjectID],
+            404
+        );
+    } elseif (Hash::check($request->pin, $subject->pin) == false) {
+        return response()->json(['error' => 'Incorrect pin'], 401);
     }
-
 
     return response()->json($subject);
 });
 
+Route::get('api/reminders/{subject}', function ($code) {
+    $subject = Reminder::where("subject", "=", $code)->first();
 
-Route::get('api/reminders/{subject}', function($code){
-    $subject = Reminder::where("subject","=",$code)->first();
-
-
-    if($subject == null)
-    {
-        return response()->json(['error'=> 'Could not find module'.$code],404);
+    if ($subject == null) {
+        return response()->json(
+            ['error' => 'Could not find module' . $code],
+            404
+        );
     }
     return response()->json($subject);
 });
 
-Route::get('api/medications/{subject}',function($code) {
+Route::get('api/medications/{subject}', function ($code) {
     $subject = Subject::find($code);
 
-    if($subject){
-        $slots = Medicationslot::where("subject","=",$code)->with('medicines')->get();
+    if ($subject) {
+        $slots = Medicationslot::where("subject", "=", $code)
+            ->with('medicines')
+            ->get();
         return response()->json(['schedule' => $slots]);
-    }
-    else {
-        return response()->json(['error' => 'Could not find subject with specified id' . $code],404);
-    }
-});
-
-Route::put('api/medications/{subject}',function($code) {
-    $subject = Subject::find($code);
-
-    if($subject){
-        return response()->json(['messages'=>'Success! updated subject']);
-    }
-    else {
-        return response()->json(['error' => 'Could not find subject with specified id' . $code],404);
+    } else {
+        return response()->json(
+            ['error' => 'Could not find subject with specified id' . $code],
+            404
+        );
     }
 });
 
-Route::post('api/content',function(Request $request) {
+Route::put('api/medications/{subject}', function (
+    Request $request,
+    Subject $subject
+) {
+    if (!$subject) {
+        return response()->json(
+            ['error' => 'Could not find subject with specified id' . $code],
+            404
+        );
+    }
 
+    foreach ($request->slots as $slot) {
+    }
+});
+
+Route::post('api/content', function (Request $request) {
     $validator = Validator::make($request->all(), [
         'subjectId' => 'required|exists:subjects,subject',
         'questionId' => 'required|exists:questions,id',
@@ -86,7 +94,7 @@ Route::post('api/content',function(Request $request) {
     ]);
 
     if ($validator->fails()) {
-        return response()->json(['error' => $validator->errors()],404);
+        return response()->json(['error' => $validator->errors()], 404);
     }
 
     $subject = Subject::find($request->subjectId);
@@ -96,26 +104,35 @@ Route::post('api/content',function(Request $request) {
     $result->question_id = $question->id;
     $result->subject_id = $subject->subject;
     $result->attempts = $request->attempts;
-    $result->time = Carbon::createFromTimestampMs($request->time,'US/Central')->toDateTimeString();
+    $result->time = Carbon::createFromTimestampMs(
+        $request->time,
+        'US/Central'
+    )->toDateTimeString();
     $result->save();
 
     return response()->json($result);
 
-    return response()->json(['messages'=>'Saved subject attempts']);
-
+    return response()->json(['messages' => 'Saved subject attempts']);
 });
 
-Route::get('api/content/{categoryname}',function(Request $request,$categoryname){
-
-    if($categoryname == "HeartFailure")
-      $categoryname = "Heart";
-    else if ($categoryname == "COPD")
-      $categoryname = "General";
+Route::get('api/content/{categoryname}', function (
+    Request $request,
+    $categoryname
+) {
+    if ($categoryname == "HeartFailure") {
+        $categoryname = "Heart";
+    } elseif ($categoryname == "COPD") {
+        $categoryname = "General";
+    }
 
     $exclude = explode(',', $request->query('exclude'));
 
-    $category = Category::where('category','=',$categoryname)->first();
-    $content = Content::where('category_id',$category->id)->whereNotIn('id',$exclude)->with('questions.answers')->inRandomOrder()->first();
+    $category = Category::where('category', '=', $categoryname)->first();
+    $content = Content::where('category_id', $category->id)
+        ->whereNotIn('id', $exclude)
+        ->with('questions.answers')
+        ->inRandomOrder()
+        ->first();
 
     return $content;
 });
