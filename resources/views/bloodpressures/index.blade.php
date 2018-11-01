@@ -60,7 +60,8 @@
         const values = @json($values);
 
         var dates = @json($dates);
-
+        const diastolic = @json($diastolic);
+        const systolic = @json($systolic);
 
         var ctx = document.getElementById("myChart").getContext('2d');
         var myChart = new Chart(ctx, {
@@ -68,13 +69,33 @@
             data: {
                 labels: dates,
                 datasets: [{
-                    label: 'Blood Pressure Value',
+                    label: 'Blood Pressure',
                     data: values,
                     backgroundColor: '#f47b77',
                     borderColor: '#f47b77',
                     borderWidth: 2,
                     pointBorderWidth:4,
                     pointBackgroundColor:'rgba(255,99,132,1)',
+                    fill: false,
+                    lineTension: 0
+                },{
+                    label: 'Systolic BP',
+                    data: systolic,
+                    backgroundColor: '#2ecc71',
+                    borderColor: '#2ecc71',
+                    borderWidth: 2,
+                    pointBorderWidth:4,
+                    pointBackgroundColor:'#2ecc71',
+                    fill: false,
+                    lineTension: 0
+                },{
+                    label: 'Diastolic BP',
+                    data: diastolic,
+                    backgroundColor: '#3498db',
+                    borderColor: '#3498db',
+                    borderWidth: 2,
+                    pointBorderWidth:4,
+                    pointBackgroundColor:'#2980b9',
                     fill: false,
                     lineTension: 0
                 }]

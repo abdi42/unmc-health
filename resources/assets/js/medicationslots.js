@@ -1,21 +1,34 @@
 function addMedication() {
     var index = $(`.medication`).length;
-    var inputName = $(this).data('inputname');
+    var slotIndex = $(this).data('slotindex');
 
     var medications = $(this).closest('.medications-container').children('.medications')
 
     var container = $("<div></div>", {
+        class: "col-6"
+    })
+
+    var row = $("<div></div>",{
         id: `medication${index}`,
-        class: "input-group col-12 mb-0 mt-4 medication"
+        class:"row mb-0 mt-4 medication"
     })
 
     var input = $("<input/>", {
         type: "text",
-        name: inputName,
-        plaecholder: "Enter medication name here",
+        name: `slot[${slotIndex}][medication][${index}][name]`,
+        placeholder: "Enter medication name here",
         class: "form-control",
         required: ""
     })
+
+    var drugClass = $(`
+        <div class="col-6 input-group">
+            <input type="text" name="slot[${slotIndex}][medication][${index}][class]" data-index="0"
+            placeholder="Enter class here"
+            class="form-control" required>
+        </div>    
+    `);
+
 
     var inputGroup = $("<div></div>", {
         class: "input-group-append"
@@ -33,9 +46,12 @@ function addMedication() {
 
     button.append(icon)
     inputGroup.append(button)
-    container.append(input, inputGroup)
+    container.append(input)
+    drugClass.append(inputGroup)
+    row.append(container,drugClass)
 
-    medications.append(container)
+
+    medications.append(row)
 }
 
 
@@ -46,13 +62,14 @@ function removeMedication() {
 
 
 function addSlot() {
+    var index = $(`.medication`).length;
     var slotIndex = $('.card').length;
 
     var time = $(`
-            <div class="col-3">
+            <div class="col-3 p-0">
                 <label for="medication_time" class="font-weight-bold">Medication Time</label>
                 <div class="input-group">
-                    <input type="time" name="slot[][time]" placeholder="Enter your Medication time here"
+                    <input type="time" name="slot[${slotIndex}][time]" placeholder="Enter your Medication time here"
                     class="form-control px-2 py-1" required>
                     <div class="input-group-append">
                         <span class="input-group-text">
@@ -102,17 +119,25 @@ function addSlot() {
 
     var nameInput = $(`
             <div class="col-7 p-0 m-0 medications">
-                <div class="col-12 medication">
-                    <label for="medication_name" class="font-weight-bold">Medication Name</label>
-                    <input type="text" name="slot[${slotIndex}][medication_name][]" data-index="0"
-                    placeholder="Enter medication name here"
-                    class="form-control" required>
+                <div class="row">
+                    <div class="col-6 medication">
+                        <label for="medication_name" class="font-weight-bold">Medication Name</label>
+                        <input type="text" name="slot[${slotIndex}][medication][${index}][name]" data-index="${index}"
+                        placeholder="Enter medication name here"
+                        class="form-control" required>
+                    </div>
+                    <div class="col-6">
+                      <label for="medication_class" class="font-weight-bold">Medication Class</label>
+                      <input type="text" name="slot[${slotIndex}][medication][${index}][class]" data-index="${index}"
+                             placeholder="Enter class here"
+                             class="form-control" required>
+                    </div>
                 </div>
             </div>
             `);
 
     var addButton = $(`
-            <button type="button" class="addMedication btn btn-link" data-inputname="slot[${slotIndex}][medication_name][]">
+            <button type="button" class="addMedication btn btn-link" data-slotindex="${slotIndex}">
                 <i class="fas fa-plus"></i>
                 Add Medication
             </button>
@@ -132,7 +157,7 @@ function addSlot() {
                         <div class="mb-0">
                             <button class="col-11 btn btn-link text-left text-body" type="button" data-toggle="collapse"
                                     data-target="#collapse${slotIndex}" aria-expanded="true" aria-controls="collapse${slotIndex}">
-                                Slot #${slotIndex + 1}
+                                Medication Slot
                             </button>
                             <div class="col-1 float-right">
                                 <button type="button" data-slotindex="${slotIndex}" class="removeSlot btn btn-danger">

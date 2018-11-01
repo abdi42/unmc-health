@@ -38,7 +38,7 @@
           <div class="card-body">
             <div class="container">
               <div class="row justify-content-center mt-2">
-                <div class="col-3">
+                <div class="col-3 p-0">
                   <label for="medication_time" class="font-weight-bold">Medication Time</label>
                   <div class="input-group">
                     <input type="time" name="slot[][time]"
@@ -86,15 +86,23 @@
 
               <div class="row justify-content-center my-4 medications-container">
                 <div class="col-7 p-0 m-0 medications">
-                  <div id="medication0" class="col-12 medication">
-                    <label for="medication_name" class="font-weight-bold">Medication Name</label>
-                    <input type="text" name="slot[0][medication_name][]" data-index="0"
-                           placeholder="Enter medication name here"
-                           class="form-control" required>
+                  <div class="row">
+                    <div id="medication0" class="col-6 medication">
+                      <label for="medication_name" class="font-weight-bold">Medication Name</label>
+                      <input type="text" name="slot[0][medication][0][name]" data-index="0"
+                             placeholder="Enter medication name here"
+                             class="form-control" required>
+                    </div>
+                    <div class="col-6">
+                      <label for="medication_class" class="font-weight-bold">Medication Class</label>
+                      <input type="text" name="slot[0][medication][0][class]" data-index="0"
+                             placeholder="Enter class here"
+                             class="form-control" required>
+                    </div>
                   </div>
                 </div>
                 <div class="col-3 align-self-end">
-                  <button type="button" class="addMedication btn btn-link" data-inputname="slot[0][medication_name][]">
+                  <button type="button" class="addMedication btn btn-link" data-slotindex="0">
                     <i class="fas fa-plus"></i>
                     Add Medication
                   </button>

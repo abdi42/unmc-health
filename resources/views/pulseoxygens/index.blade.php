@@ -56,7 +56,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
     <script !src="">
         const values = @json($values);
-
+        const heartRate = @json($heartRate);
         var dates = @json($dates);
 
 
@@ -66,13 +66,23 @@
             data: {
                 labels: dates,
                 datasets: [{
-                    label: 'Pulse Oxygen Value',
+                    label: 'Blood Oxygen',
                     data: values,
                     backgroundColor: '#f47b77',
                     borderColor: '#f47b77',
                     borderWidth: 2,
                     pointBorderWidth:4,
                     pointBackgroundColor:'rgba(255,99,132,1)',
+                    fill: false,
+                    lineTension: 0
+                },{
+                    label: 'Pulse (Beats/Min)',
+                    data: heartRate,
+                    backgroundColor: '#2ecc71',
+                    borderColor: '#2ecc71',
+                    borderWidth: 2,
+                    pointBorderWidth:4,
+                    pointBackgroundColor:'#2ecc71',
                     fill: false,
                     lineTension: 0
                 }]

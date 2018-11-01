@@ -73,5 +73,26 @@
 					<i class="fas fa-angle-right text-secondary float-right"></i>
 				</a>
 			</ul>
+
 		</div>
+
 @endsection
+
+
+		{{--@foreach($questionResults as $i => $result)--}}
+			{{--<tr>--}}
+				{{--<th scope="row">--}}
+					{{--{{$result->question->content->category->category}}--}}
+				{{--</th>--}}
+				{{--<td>--}}
+					{{--{{$result->question->text}}--}}
+				{{--</td>--}}
+				{{--<td>--}}
+					{{--<h5><span class="badge badge-secondary">{{$result->attempts}}</span></h5>--}}
+				{{--</td>--}}
+				{{--<td>--}}
+					{{--{{\Carbon\Carbon::parse($result->time,'UTC')->format('M d,  h:m a')}}--}}
+				{{--</td>--}}
+				{{--<td></td>--}}
+			{{--</tr>--}}
+	{{--@endforeach--}}

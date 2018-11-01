@@ -22,200 +22,213 @@ Route::get('/welcome', 'WelcomeController@welcome')->name('welcome');
 Auth::routes();
 
 /* Logout Route */
-Route::get('logout','\App\Http\Controllers\Auth\LoginController@logout');
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 /* Page after the authenticated user is signed in (Dashboard Page)*/
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('subjects', 'SubjectsController@index');
 
+Route::get('/subjects/{subject}/weights', 'iHealthController@show_weight');
 
-Route::get('/subjects/{subject}/weights','iHealthController@show_weight');
+Route::get(
+    '/subjects/{subject}/bloodpressures',
+    'iHealthController@show_bloodpressure'
+);
 
-Route::get('/subjects/{subject}/bloodpressures','iHealthController@show_bloodpressure');
+Route::get(
+    '/subjects/{subject}/bloodglucoses',
+    'iHealthController@show_bloodglucose'
+);
 
-Route::get('/subjects/{subject}/bloodglucoses','iHealthController@show_bloodglucose');
+Route::get(
+    '/subjects/{subject}/pulseoxygens',
+    'iHealthController@show_pulseoxygen'
+);
 
-Route::get('/subjects/{subject}/pulseoxygens','iHealthController@show_pulseoxygen');
-
-
-Route::get('/contents','ContentsController@index');
+Route::get('/contents', 'ContentsController@index');
 
 Route::get('/contents/create', 'ContentsController@create');
 
 Route::post('/contents', 'ContentsController@store');
 
-Route::get('/contents/{id}','ContentsController@show');
+Route::get('/contents/{id}', 'ContentsController@show');
 
-Route::get('/contents/{id}/edit','ContentsController@edit');
+Route::get('/contents/{id}/edit', 'ContentsController@edit');
 
-Route::put('/contents/{id}','ContentsController@update');
+Route::put('/contents/{id}', 'ContentsController@update');
 
-Route::get('/contents/{id}/delete','ContentsController@delete');
+Route::get('/contents/{id}/delete', 'ContentsController@delete');
 
-Route::delete('/contents/{id}','ContentsController@destroy');
+Route::delete('/contents/{id}', 'ContentsController@destroy');
 
+Route::get('/categories', 'CategoriesController@index');
 
+Route::get('/categories/create', 'CategoriesController@create');
 
+Route::post('/categories', 'CategoriesController@store');
 
-Route::get('/categories','CategoriesController@index');
+Route::get('/categories/{id}', 'CategoriesController@show');
 
-Route::get('/categories/create','CategoriesController@create');
+Route::get('/categories/{id}/edit', 'CategoriesController@edit');
 
-Route::post('/categories','CategoriesController@store');
+Route::put('/categories/{id}', 'CategoriesController@update');
 
-Route::get('/categories/{id}','CategoriesController@show');
+Route::get('/categories/{id}/delete', 'CategoriesController@delete');
 
-Route::get('/categories/{id}/edit','CategoriesController@edit');
+Route::delete('/categories/{id}', 'CategoriesController@destroy');
 
-Route::put('/categories/{id}','CategoriesController@update');
+Route::get('/tips', 'TipsController@index');
 
-Route::get('/categories/{id}/delete','CategoriesController@delete');
+Route::get('/tips/create', 'TipsController@create');
 
-Route::delete('/categories/{id}','CategoriesController@destroy');
+Route::post('/tips', 'TipsController@store');
 
+Route::get('/tips/{id}', 'TipsController@show');
 
-Route::get('/tips','TipsController@index');
+Route::get('/tip/{id}/edit', 'TipsController@edit');
 
-Route::get('/tips/create','TipsController@create');
+Route::put('/tip/{id}', 'TipsController@update');
 
-Route::post('/tips','TipsController@store');
+Route::get('/tip/{id}/delete', 'TipsController@delete');
 
-Route::get('/tips/{id}','TipsController@show');
+Route::delete('/tip/{id}', 'TipsController@destroy');
 
-Route::get('/tip/{id}/edit','TipsController@edit');
-
-Route::put('/tip/{id}','TipsController@update');
-
-Route::get('/tip/{id}/delete','TipsController@delete');
-
-Route::delete('/tip/{id}','TipsController@destroy');
-
-Route::get('/subjects','SubjectsController@display');
+Route::get('/subjects', 'SubjectsController@display');
 
 //Route::get('/subjects/ihealth','SubjectsController@index');
 
-Route::get('/subjects/create','SubjectsController@create');
+Route::get('/subjects/create', 'SubjectsController@create');
 
-Route:: post('/subjects','SubjectsController@store');
+Route::post('/subjects', 'SubjectsController@store');
 
-Route::get('/subjects/{subject}','SubjectsController@show');
+Route::get('/subjects/{subject}', 'SubjectsController@show');
 
-Route::get('/subject/{subject}/edit','SubjectsController@edit');
+Route::get('/subject/{subject}/edit', 'SubjectsController@edit');
 
-Route::put('/subject/{subject}','SubjectsController@update');
+Route::put('/subject/{subject}', 'SubjectsController@update');
 
-Route::get('/subject/{subject}/delete','SubjectsController@delete');
+Route::get('/subject/{subject}/delete', 'SubjectsController@delete');
 
-Route::get('/subjects/userexists','SubjectsController@message');
+Route::get('/subjects/userexists', 'SubjectsController@message');
 
-Route::delete('/subjects/{subject}','SubjectsController@destroy');
+Route::delete('/subjects/{subject}', 'SubjectsController@destroy');
 
-Route::get('/subjects/{subject}/questions-results','QuestionResultsController');
+Route::get(
+    '/subjects/{subject}/questions-results',
+    'QuestionResultsController'
+);
 
+Route::get('/actionplans', 'ActionplansController@index');
 
+Route::get('/actionplans/create', 'ActionplansController@create');
 
-Route::get('/actionplans','ActionplansController@index');
+Route::post('/actionplans', 'ActionplansController@store');
 
-Route::get('/actionplans/create','ActionplansController@create');
+Route::get('/actionplans/{subject}', 'ActionplansController@show');
 
-Route::post('/actionplans','ActionplansController@store');
+Route::get('/actionplans/{id}/edit', 'ActionplansController@edit');
 
-Route::get('/actionplans/{subject}','ActionplansController@show');
+Route::put('/actionplans/{id}', 'ActionplansController@update');
 
-Route::get('/actionplans/{id}/edit','ActionplansController@edit');
+Route::get('/actionplans/{id}/delete', 'ActionplansController@delete');
 
-Route::put('/actionplans/{id}','ActionplansController@update');
+Route::delete('/actionplans/{id}', 'ActionplansController@destroy');
 
-Route::get('/actionplans/{id}/delete','ActionplansController@delete');
+Route::get(
+    '/subjects/{subject}/medicationslots',
+    'MedicationslotsController@index'
+);
 
-Route::delete('/actionplans/{id}','ActionplansController@destroy');
+Route::get(
+    '/subjects/{subject}/medicationslots/create',
+    'MedicationslotsController@create'
+);
 
+Route::post(
+    '/subjects/{subject_id}/medicationslots',
+    'MedicationslotsController@store'
+);
 
-Route::get('/subjects/{subject}/medicationslots','MedicationslotsController@index');
+Route::put(
+    '/subjects/{subject}/medicationslots',
+    'MedicationslotsController@update'
+);
 
-Route::get('/subjects/{subject}/medicationslots/create','MedicationslotsController@create');
+Route::get('/medicationslots/{subject}', 'MedicationslotsController@show');
 
-Route::post('/subjects/{subject_id}/medicationslots','MedicationslotsController@store');
+Route::get('/medicationslots/{id}/edit', 'MedicationslotsController@edit');
 
-Route::get('/medicationslots/{subject}','MedicationslotsController@show');
+Route::put('/medicationslots/{id}', 'MedicationslotsController@update');
 
-Route::get('/medicationslots/{id}/edit','MedicationslotsController@edit');
+Route::get('/medicationslots/{id}/delete', 'MedicationslotsController@delete');
 
-Route::put('/medicationslots/{id}','MedicationslotsController@update');
+Route::delete('/medicationslots/{id}', 'MedicationslotsController@destroy');
 
-Route::get('/medicationslots/{id}/delete','MedicationslotsController@delete');
+Route::get('/medicationnames', 'MedicationnamesController@index');
 
-Route::delete('/medicationslots/{id}','MedicationslotsController@destroy');
+Route::get('/medicationnames/create', 'MedicationnamesController@create');
 
+Route::post('/medicationnames', 'MedicationnamesController@store');
 
-Route::get('/medicationnames','MedicationnamesController@index');
+Route::get('/medicationnames/{id}', 'MedicationnamesController@show');
 
-Route::get('/medicationnames/create','MedicationnamesController@create');
+Route::get('/medicationnames/{id}/edit', 'MedicationnamesController@edit');
 
-Route::post('/medicationnames','MedicationnamesController@store');
+Route::put('/medicationnames/{id}', 'MedicationnamesController@update');
 
-Route::get('/medicationnames/{id}','MedicationnamesController@show');
+Route::get('/medicationnames/{id}/delete', 'MedicationnamesController@delete');
 
-Route::get('/medicationnames/{id}/edit','MedicationnamesController@edit');
+Route::delete('/medicationnames/{id}', 'MedicationnamesController@destroy');
 
-Route::put('/medicationnames/{id}','MedicationnamesController@update');
+Route::get('/questions', 'QuestionsController@index');
 
-Route::get('/medicationnames/{id}/delete','MedicationnamesController@delete');
+Route::get('/questions/create', 'QuestionsController@create');
 
-Route::delete('/medicationnames/{id}','MedicationnamesController@destroy');
+Route::post('/questions', 'QuestionsController@store');
 
+Route::get('/questions/{id}', 'QuestionsController@show');
 
-Route::get('/questions','QuestionsController@index');
+Route::get('/questions/{id}/edit', 'QuestionsController@edit');
 
-Route::get('/questions/create','QuestionsController@create');
+Route::put('/questions/{id}', 'QuestionsController@update');
 
-Route::post('/questions','QuestionsController@store');
+Route::get('/questions/{id}/delete', 'QuestionsController@delete');
 
-Route::get('/questions/{id}','QuestionsController@show');
+Route::delete('/questions/{id}', 'QuestionsController@destroy');
 
-Route::get('/questions/{id}/edit','QuestionsController@edit');
+Route::get('/answers', 'AnswersController@index');
 
-Route::put('/questions/{id}','QuestionsController@update');
+Route::get('/answers/create', 'AnswersController@create');
 
-Route::get('/questions/{id}/delete','QuestionsController@delete');
+Route::post('/answers', 'AnswersController@store');
 
-Route::delete('/questions/{id}','QuestionsController@destroy');
+Route::get('/answers/{id}', 'AnswersController@show');
 
+Route::get('/answers/{id}/edit', 'AnswersController@edit');
 
-Route:: get('/answers','AnswersController@index');
+Route::put('/answers/{id}', 'AnswersController@update');
 
-Route::get('/answers/create','AnswersController@create');
+Route::get('/answers/{id}/delete', 'AnswersController@delete');
 
-Route::post('/answers','AnswersController@store');
+Route::delete('/answers/{id}', 'AnswersController@destroy');
 
-Route::get('/answers/{id}','AnswersController@show');
+Route::get('/reminders', 'RemindersController@index');
 
-Route::get('/answers/{id}/edit','AnswersController@edit');
+Route::get('/reminders/create', 'RemindersController@create');
 
-Route::put('/answers/{id}','AnswersController@update');
+Route::post('/reminders', 'RemindersController@store');
 
-Route::get('/answers/{id}/delete','AnswersController@delete');
+Route::get('/reminders/{id}', 'RemindersController@show');
 
-Route::delete('/answers/{id}','AnswersController@destroy');
+Route::get('/reminders/{id}/edit', 'RemindersController@edit');
 
+Route::put('/reminders/{id}', 'RemindersController@update');
 
-Route::get('/reminders','RemindersController@index');
+Route::get('/reminders/{id}/delete', 'RemindersController@delete');
 
-Route::get('/reminders/create','RemindersController@create');
+Route::delete('/reminders/{id}', 'RemindersController@destroy');
 
-Route::post('/reminders','RemindersController@store');
-
-Route::get('/reminders/{id}','RemindersController@show');
-
-Route::get('/reminders/{id}/edit','RemindersController@edit');
-
-Route::put('/reminders/{id}','RemindersController@update');
-
-Route::get('/reminders/{id}/delete','RemindersController@delete');
-
-Route::delete('/reminders/{id}','RemindersController@destroy');
-
-Route::get('/ihealth/callback','SubjectsController@authorize_subject');
-Route::get('/webhook','SubjectsController@webhook');
+Route::get('/ihealth/callback', 'SubjectsController@authorize_subject');
+Route::get('/webhook', 'SubjectsController@webhook');
 ?>

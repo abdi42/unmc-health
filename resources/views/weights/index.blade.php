@@ -68,8 +68,9 @@
         }
 
         const weightValues = @json($weightValues);
-
-        var dates = @json($dates);
+        const bodyMassIndex = @json($bodyMassIndex);
+        const dates = @json($dates);
+        const bodyFat = @json($bodyFat);
 
 
         var ctx = document.getElementById("myChart").getContext('2d');
@@ -85,6 +86,26 @@
                     borderWidth: 2,
                     pointBorderWidth:4,
                     pointBackgroundColor:'rgba(255,99,132,1)',
+                    fill: false,
+                    lineTension: 0
+                },{
+                    label: 'Body Mass Index',
+                    data: bodyMassIndex,
+                    backgroundColor: '#2ecc71',
+                    borderColor: '#2ecc71',
+                    borderWidth: 2,
+                    pointBorderWidth:4,
+                    pointBackgroundColor:'#2ecc71',
+                    fill: false,
+                    lineTension: 0
+                },{
+                    label: 'Body Fat',
+                    data: bodyFat,
+                    backgroundColor: '#3498db',
+                    borderColor: '#3498db',
+                    borderWidth: 2,
+                    pointBorderWidth:4,
+                    pointBackgroundColor:'#2980b9',
                     fill: false,
                     lineTension: 0
                 }]
