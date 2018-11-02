@@ -13,7 +13,7 @@ class Subject extends Model
      public const GROUP_TYPE_0_TEXT = 'Group Not Set';
      public const GROUP_TYPE_1_TEXT = 'Group 1 - No intervention';
      public const GROUP_TYPE_2_TEXT = 'Group 2 - Reminders';
-     public const GROUP_TYPE_3_TEXT = 'Group 3 - Remindres and Virtual Visits';
+     public const GROUP_TYPE_3_TEXT = 'Group 3 - Reminders and Virtual Visits';
 
      protected $group_type_lookup = array(
        0 => self::GROUP_TYPE_0_TEXT,
