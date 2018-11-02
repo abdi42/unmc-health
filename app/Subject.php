@@ -21,6 +21,16 @@ class Subject extends Model
        2 => self::GROUP_TYPE_2_TEXT,
        3 => self::GROUP_TYPE_3_TEXT,
      );
+    protected $fillable = [
+        'subject',
+        'user_id',
+        'pin',
+        'disease_state',
+        'virtualvisit',
+        'enrollmentdate',
+        'group_type',
+    ];
+
 
     protected $hidden = ['registration_token','access_token','refresh_token','expires','pin'];
 

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -18,6 +19,8 @@ class AlterSubjectsAddGroupTypeField extends Migration
             // Concern?  check psql for this type conversion.
             $table->unsignedTinyInteger('group_type');
         });
+        // Update existing subjects to group type 3 for testing.
+        DB::table('subjects')->update(['group_type'=>3]);
     }
 
     /**
