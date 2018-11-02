@@ -155,6 +155,13 @@ Route::put(
     'MedicationslotsController@update'
 );
 
+Route::get('/subjects/{subject}/virtualvisits', 'VirtualVisitController@index');
+
+Route::post(
+    '/subjects/{subject}/virtualvisits',
+    'VirtualVisitController@store'
+);
+
 Route::get('/medicationslots/{subject}', 'MedicationslotsController@show');
 
 Route::get('/medicationslots/{id}/edit', 'MedicationslotsController@edit');
