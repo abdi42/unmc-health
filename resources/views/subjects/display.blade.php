@@ -25,6 +25,7 @@
               </th>
               <th class='border-0'>iHealth</th>
               <th class='border-0'>Disease State</th>
+              <th class='border-0'>Group</th>
               <th class='border-0'></th>
             </tr>
           </thead>
@@ -42,6 +43,7 @@
                   @endif
                 </td>
                 <td>{{$subject->disease_state}}</td>
+                <td>{{$subject->group_type}}</td>
                 <td>
                   <a href="/subject/{{$subject->subject}}/edit" class="btn btn-primary btn-sm">
                       <i class="fas fa-pen"></i>

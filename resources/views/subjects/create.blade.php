@@ -32,6 +32,17 @@
                 <input type="checkbox" name="disease[]"  value="Diabetes"> Diabetes &nbsp;<br>
 
 
+                <br> <p>Select the intervention group for this subject:</p>
+                <select name="group_type" id="group_type" class="form-control" required>
+                    <option value="">Choose one</option>
+                    <option value="1">{{App\Subject::GROUP_TYPE_1_TEXT}}</option>
+                    <option value="2">{{App\Subject::GROUP_TYPE_2_TEXT}}</option>
+                    <option value="3">{{App\Subject::GROUP_TYPE_3_TEXT}}</option>
+                </select>
+                <br>
+                <div class="form-notes">
+                    <em>Selecting the intervention group will determine the features available to the subject in the app.</em>
+                </div>
 
                 <br> <p>Virtual Visits</p>
                 <input type="radio" name="virtualvisit"  value=1 checked="checked"> Yes &nbsp;
