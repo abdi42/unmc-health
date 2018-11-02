@@ -57,9 +57,16 @@
         <input type="radio" name="virtualvisit"  value=0> No &nbsp;<br>
 
         <br> <p>Enrollment Start Date</p>
-        <input type="date" name="enrollmentdate" value="{{ $subject->enrollmentdate }}" required><br>
+        <input type="date" name="enrollmentdate" id="enrollmentdate" class="form-control col-sm-2" value="{{ $subject->enrollmentdate }}" required><br>
 
 
+        <br> <p>Enrollment End Date</p>
+        <input type="date" name="enrollment_end_date" id="enrollment_end_date" class="form-control col-sm-2" value="{{ $subject->enrollment_end_date }}" required>
+        <a href="javascript:auto_calculate_enrollment_end_date()" >Click here to auto-calculate +90 days from enrollment</a>
+        <br>
+        <div class="form-notes">
+            <em>This date is used to block subject access to the app.</em>
+        </div>
 
 
 
@@ -67,5 +74,24 @@
         <input type="button" name="cancel" value="Cancel" class="btn btn-primary"onclick="window.location='{{ url("/subjects") }}'" />
 
     </form>
+
+    <script>
+        var days = '{{\App\Subject::ENROLLMENT_LENGTH_DEFAULT_DAYS}}';
+        function auto_calculate_enrollment_end_date() {
+            var e = document.getElementById('enrollmentdate');
+            var f = document.getElementById('enrollment_end_date');
+            var d = new Date(e.value);
+            d.setDate(d.getDate() + parseInt(days));
+            f.value = yyyy_mm_dd(d);
+
+        }
+        function yyyy_mm_dd(dateish) {
+            var now = new Date(dateish);
+            var y = now.getFullYear();
+            var m = now.getMonth()+1;
+            var d = now.getDate();
+            return '' + y + "-" + (m < 10 ? '0' : '') + m + "-" + (d < 10 ? '0' : '') + d;
+        }
+    </script>
 
 @endsection

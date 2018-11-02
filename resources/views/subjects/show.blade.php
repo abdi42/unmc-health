@@ -46,6 +46,12 @@
 						</span>
 					</li>
 
+					<li>
+						<strong>Enrollment Dates</strong>
+						<span class='text-body ml-3'>
+							{{date("m/d/Y",strtotime($subject->enrollmentdate))}} - {{date("m/d/Y",strtotime($subject->enrollment_end_date))}}
+						</span>
+					</li>
 				</ul>
 			</div>
 			<ul class="list-group">
