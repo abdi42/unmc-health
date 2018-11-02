@@ -15,6 +15,8 @@ class Subject extends Model
      public const GROUP_TYPE_2_TEXT = 'Group 2 - Reminders';
      public const GROUP_TYPE_3_TEXT = 'Group 3 - Reminders and Virtual Visits';
 
+     public const ENROLLMENT_LENGTH_DEFAULT_DAYS = 90; // Default time the subject is allowed into the app.
+
      protected $group_type_lookup = array(
        0 => self::GROUP_TYPE_0_TEXT,
        1 => self::GROUP_TYPE_1_TEXT,
@@ -28,6 +30,7 @@ class Subject extends Model
         'disease_state',
         'virtualvisit',
         'enrollmentdate',
+        'enrollment_end_date',
         'group_type',
     ];
 
