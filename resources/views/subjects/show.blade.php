@@ -47,6 +47,11 @@
 					<strong>Medications</strong>
 					<i class="fas fa-angle-right text-secondary float-right"></i>
 				</a>
+				<a href="/subjects/{{$subject->subject}}/virtualvisits" class="list-group-item px-5 py-3">
+					<i class="fas fa-calendar-check mr-2 text-danger"></i>
+					<strong>Virtual Visits</strong>
+					<i class="fas fa-angle-right text-secondary float-right"></i>
+				</a>
 				<a href="/subjects/{{$subject->subject}}/questions-results" class="list-group-item px-5 py-3">
 					<i class="fas fa-book-open mr-2 text-danger"></i>
 					<strong>Health Information Questions Results</strong>

@@ -1,4 +1,4 @@
-let mix = require('laravel-mix');
+let mix = require("laravel-mix");
 
 /*
  |--------------------------------------------------------------------------
@@ -11,7 +11,8 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-    .js('resources/assets/js/medicationslots.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css')
-   .copyDirectory('resources/assets/img', 'public/img')
+mix.js("resources/assets/js/app.js", "public/js")
+    .js("resources/assets/js/medicationslots.js", "public/js")
+    .js("resources/assets/js/virtualvisit.js", "public/js")
+    .sass("resources/assets/sass/app.scss", "public/css")
+    .copyDirectory("resources/assets/img", "public/img");
