@@ -7,7 +7,7 @@
 
     <h3>Are you sure you want to delete?</h3>
 
-    <p>{{ $subject->subject }}</p>
+    <p>{{ $subject->subject }} ({{$subject->getGroupTypeName() }})</p>
 
     <form action="{{'/subjects/'. $subject->subject}}" method="post">
 

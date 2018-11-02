@@ -45,7 +45,8 @@ class SubjectsController extends Controller
         //dd($request->all());
         $this->validate($request, [
             'id' => 'required',
-            'pin' => 'required'
+            'pin' => 'required',
+            'group_type' => 'required',
         ]);
 
         try {
@@ -55,6 +56,7 @@ class SubjectsController extends Controller
             $subject->disease_state = implode(",", $request->input('disease'));
             $subject->virtualvisit = $request->input('virtualvisit');
             $subject->enrollmentdate = $request->input('enrollmentdate');
+            $subject->group_type = $request->input('group_type');
 
             $subject->save();
         } catch (\Illuminate\Database\QueryException $e) {
@@ -117,6 +119,8 @@ class SubjectsController extends Controller
         $subject->disease_state = implode(",", $request->input('disease'));
         $subject->virtualvisit = $request->input('virtualvisit');
         $subject->enrollmentdate = $request->input('enrollmentdate');
+        $subject->group_type = $request->input('group_type');
+
 
         $subject->save();
 

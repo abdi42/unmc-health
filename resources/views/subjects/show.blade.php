@@ -39,6 +39,13 @@
 							{{$subject->disease_state}}
 						</span>
 					</li>
+					<li>
+						<strong>Intervention Group</strong>
+						<span class='text-body ml-3'>
+							{{$subject->getGroupTypeName()}}
+						</span>
+					</li>
+
 				</ul>
 			</div>
 			<ul class="list-group">
