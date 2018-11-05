@@ -88,5 +88,8 @@ class Subject extends Model
     public function getGroupTypeName() {
         return $this->group_type_lookup[$this->group_type];
     }
+    public function questionResults() {
+        return $this->hasMany(QuestionResult::class, 'subject_id','subject');
+    }
 
 }
