@@ -140,22 +140,22 @@ Route::get('api/content/{categoryname}', function (
 Route::get('api/subjects/{subject}/checkupdates',function(
     Request $request, Subject $subject
 ){
-    $subject_last_updated = date("Y-m-d H:i:s",strtotime($subject->updated_at));
+    $subject_last_updated = date("YmdHis",strtotime($subject->updated_at));
 
     // Get last medication update for this subject
     // Note- medication name touches medication slot, so that's covered.
     $last_med = Medicationslot::where('subject',$subject->subject)->orderBy('updated_at','desc')->first();
     if ($last_med) {
-        $last_med_time = date("Y-m-d H:i:s", strtotime($last_med->updated_at));
+        $last_med_time = date("YmdHis", strtotime($last_med->updated_at));
     } else {
-        $last_med_time = null;
+        $last_med_time = 0;
     }
     // Get last VV update date for this subject.
     $last_vv = \App\VirtualVisit::where('subject',$subject->subject)->orderBy('updated_at','desc')->first();
     if ($last_vv) {
-        $last_vv_time = date("Y-m-d H:i:s", strtotime($last_vv->updated_at)) ?? '';
+        $last_vv_time = date("YmdHis", strtotime($last_vv->updated_at)) ?? '';
     } else {
-        $last_vv_time = null;
+        $last_vv_time = 0;
     }
 
     $data = [
@@ -164,5 +164,5 @@ Route::get('api/subjects/{subject}/checkupdates',function(
         'virtualVisits' => $last_vv_time,
     ];
 
-    return response()->json($data);
+    return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
 });
