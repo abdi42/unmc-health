@@ -137,6 +137,57 @@ Route::get('api/content/{categoryname}', function (
     return $content;
 });
 
+// Get the next Hint for the subject, based on the ones they've already answered.
+// This is a doosey.
+Route::get('api/subjects/{subject}/nextHint',function(
+    Request $request,
+    Subject $subject
+){
+    // First, get a set of all questions that a subject has answered already.
+    $answeredQuestions = [];
+    foreach ($subject->questionResults as $question) {
+        $answeredQuestions[] = $question->question_id;
+    }
+
+    $subjectDiseaseIds = [];
+    // Do array map of subject disease STRINGS (!?!) to IDs.
+    // This will be fixed when the IDs are based from the DATABASE.
+    foreach (explode(",", $subject->disease_state) as $subjectDisease) {
+        switch ($subjectDisease) {
+            case 'HeartFailure':
+                $subjectDiseaseIds[] = 1; // Heart
+                break;
+            case 'Diabetes':
+                $subjectDiseaseIds[] = 2; //Diabetes
+                break;
+            case 'COPD':
+                $subjectDiseaseIds[] = 3; // General(?)
+                break;
+            case 'Hypertension':
+                $subjectDiseaseIds[] = 4;
+                break;
+        }
+    }
+    // Remove duplicates.
+    $subjectDiseaseIds = array_unique($subjectDiseaseIds);
+
+    // Get all content (hints) from the catories, as an array to use in a sec.
+    $contentIds = Content::select('id')->whereIn('category_id',$subjectDiseaseIds)->pluck('id')->toArray();
+    // Get a random question from the category types above.
+    $question = Question::whereIn('content_id',$contentIds)->whereNotIn('id',$answeredQuestions)->inRandomOrder()->first();
+
+    // Now, build the content answer, but only from the singulary randomized question up there.
+    // Be sure to return nexted child data.
+    $content = Content::where('id', $question->content_id)->whereHas('questions',function($query) use ($question){
+        $query->where('id',$question->id);
+        })
+        ->with('questions.answers')
+        ->inRandomOrder()
+        ->first();
+
+    return $content;
+});
+
 Route::get('api/subjects/{subject}/checkupdates',function(
     Request $request, Subject $subject
 ){
