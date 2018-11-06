@@ -153,19 +153,28 @@ Route::get('api/subjects/{subject}/nextHint',function(
     $subjectDiseaseIds = [];
     // Do array map of subject disease STRINGS (!?!) to IDs.
     // This will be fixed when the IDs are based from the DATABASE.
-    foreach (explode(",", $subject->disease_state) as $subjectDisease) {
+    if (strstr( $subject->disease_state, ",")) {
+        $categories = explode(",", $subject->disease_state);
+    } else {
+        $categories = [$subject->disease_state];
+    }
+    foreach ($categories as $subjectDisease) {
         switch ($subjectDisease) {
             case 'HeartFailure':
-                $subjectDiseaseIds[] = 1; // Heart
+                $c = Category::where('category','Heart')->first();
+                $subjectDiseaseIds[] = $c->id; // Heart
                 break;
             case 'Diabetes':
-                $subjectDiseaseIds[] = 2; //Diabetes
+                $c = Category::where('category','Diabetes')->first();
+                $subjectDiseaseIds[] = $c->id; //Diabetes
                 break;
             case 'COPD':
-                $subjectDiseaseIds[] = 3; // General(?)
+                $c = Category::where('category','General')->first();
+                $subjectDiseaseIds[] = $c->id; // General(?)
                 break;
             case 'Hypertension':
-                $subjectDiseaseIds[] = 4;
+                $c = Category::where('category','Hypertension')->first();
+                $subjectDiseaseIds[] = $c->id;
                 break;
         }
     }
@@ -179,7 +188,6 @@ Route::get('api/subjects/{subject}/nextHint',function(
 
     // Now, build the content answer, but only from the singulary randomized question up there.
     // Be sure to return nexted child data.
-    echo 'Question ID should be ' . $question->id;
     $content = Content::where('id', $question->content_id)->whereHas('questions',function($query) use ($question){
         $query->where('id',$question->id);
         })
