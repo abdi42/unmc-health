@@ -91,5 +91,8 @@ class Subject extends Model
     public function questionResults() {
         return $this->hasMany(QuestionResult::class, 'subject_id','subject');
     }
+    public function virtualVisits() {
+        return $this->hasMany(VirtualVisit::class, 'subject','subject');
+    }
 
 }
