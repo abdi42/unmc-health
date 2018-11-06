@@ -8,6 +8,7 @@ use App\Question;
 use App\QuestionResult;
 use App\Medicationslot;
 use App\MedicationResponse;
+use App\VirtualVisit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -216,4 +217,21 @@ Route::get('api/subjects/{subject}/checkupdates',function(
     ];
 
     return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
+});
+
+
+// Virtual Visits section
+Route::get('api/virtualvisits/{subject}', function (Request $request, Subject $subject) {
+
+
+    if ($subject) {
+        $virtualvisits = $subject->virtualvisits;
+
+        return $virtualvisits;
+    } else {
+        return response()->json(
+            ['error' => 'Could not find subject with specified id' . $subject],
+            404
+        );
+    }
 });
