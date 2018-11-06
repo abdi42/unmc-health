@@ -174,16 +174,16 @@ Route::get('api/subjects/{subject}/nextHint',function(
     // Get all content (hints) from the catories, as an array to use in a sec.
     $contentIds = Content::select('id')->whereIn('category_id',$subjectDiseaseIds)->pluck('id')->toArray();
     // Get a random question from the category types above.
-    $question = Question::whereIn('content_id',$contentIds)->whereNotIn('id',$answeredQuestions)->inRandomOrder()->first();
+    $question = Question::whereIn('content_id',$contentIds)->whereNotIn('id',$answeredQuestions)->inRandomOrder()->with('answers')->first();
 
     // Now, build the content answer, but only from the singulary randomized question up there.
     // Be sure to return nexted child data.
+    echo 'Question ID should be ' . $question->id;
     $content = Content::where('id', $question->content_id)->whereHas('questions',function($query) use ($question){
         $query->where('id',$question->id);
         })
-        ->with('questions.answers')
-        ->inRandomOrder()
         ->first();
+    $content->question = $question;
 
     return $content;
 });
