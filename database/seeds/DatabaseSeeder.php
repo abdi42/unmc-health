@@ -8,7 +8,8 @@ use App\Question;
 use App\Answer;
 use Illuminate\Support\Facades\DB;
 
-function parseContent($index,$lines){
+function parseContent($index, $lines)
+{
     $hint = "";
     $questions = collect([]);
 
@@ -16,15 +17,15 @@ function parseContent($index,$lines){
         $currLine = collect($lines[$index]);
         $hint = $hint . $lines[$index]["CONTENT"] . " ";
 
-        if($lines[$index]["Questions"]){
+        if ($lines[$index]["Questions"]) {
             $questions->push([
                 "text" => $currLine["Questions"],
-                "answers" => $currLine->only(["A","B","C","D","E"]),
+                "answers" => $currLine->only(["A", "B", "C", "D", "E"]),
                 "correct" => $currLine["Correct Answer"]
             ]);
         }
         $index++;
-    }  while($index < count($lines) && !$lines[$index]["HINT #"]);
+    } while ($index < count($lines) && !$lines[$index]["HINT #"]);
 
     return [
         "hint" => $hint,
@@ -32,50 +33,51 @@ function parseContent($index,$lines){
     ];
 }
 
-function seedContent($filename,$categoryName){
+function seedContent($filename, $categoryName)
+{
     print_r($categoryName);
     $category = new Category();
     $category->category = $categoryName;
     $category->save();
 
-    $lines = (new FastExcel)->import($filename);
+    $lines = (new FastExcel())->import($filename);
 
-    foreach($lines as $index => $line){
-        if($line["HINT #"]){
-            $result = parseContent($index,$lines);
+    foreach ($lines as $index => $line) {
+        if ($line["HINT #"]) {
+            $result = parseContent($index, $lines);
             $content = new Content();
+            $content->hint_number = $line["HINT #"];
             $content->content = $result['hint'];
             $content->category_id = $category->id;
             $content->save();
 
-            foreach($result['questions'] as $question){
-
+            foreach ($result['questions'] as $question) {
                 $newQuestion = new Question();
                 $newQuestion->content_id = $content->id;
                 $newQuestion->text = $question['text'];
                 $newQuestion->question_type = 'multiple choice';
                 $newQuestion->save();
 
-                foreach($question['answers'] as $key => $answer){
-                    if(gettype($answer) === "boolean")
+                foreach ($question['answers'] as $key => $answer) {
+                    if (gettype($answer) === "boolean") {
                         $answer = var_export($answer, true);
+                    }
 
-                    if($answer){
+                    if ($answer) {
                         $newAnswer = new Answer();
                         $newAnswer->question_id = $newQuestion->id;
                         $newAnswer->answer = $answer;
 
-                        if($key == $question['correct'])
+                        if ($key == $question['correct']) {
                             $newAnswer->isAnswer = true;
+                        }
 
                         $newAnswer->save();
                     }
                 }
-
             }
         }
     }
-
 }
 
 class DatabaseSeeder extends Seeder
@@ -86,9 +88,9 @@ class DatabaseSeeder extends Seeder
         DB::table('questions')->delete();
         DB::table('categories')->delete();
         DB::table('contents')->delete();
-        seedContent(database_path('seeds/heart.xlsx'),'Heart');
-        seedContent(database_path('seeds/diabetes.xlsx'),'Diabetes');
-        seedContent(database_path('seeds/general.xlsx'),'General');
-        seedContent(database_path('seeds/hypertension.xlsx'),'Hypertension');
+        seedContent(database_path('seeds/heart.xlsx'), 'Heart');
+        seedContent(database_path('seeds/diabetes.xlsx'), 'Diabetes');
+        seedContent(database_path('seeds/general.xlsx'), 'General');
+        seedContent(database_path('seeds/hypertension.xlsx'), 'Hypertension');
     }
 }

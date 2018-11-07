@@ -33,7 +33,7 @@ Route::post('api/subjects/authenticate', function (Request $request) {
 
     if ($subject == null) {
         return response()->json(
-            ['error' => 'Could not find subject ' . $subjectID],
+            ['error' => 'Could not find subject ' . $request->subjectID],
             404
         );
     } elseif (Hash::check($request->pin, $subject->pin) == false) {
@@ -140,10 +140,10 @@ Route::get('api/content/{categoryname}', function (
 
 // Get the next Hint for the subject, based on the ones they've already answered.
 // This is a doosey.
-Route::get('api/subjects/{subject}/nextHint',function(
+Route::get('api/subjects/{subject}/nextHint', function (
     Request $request,
     Subject $subject
-){
+) {
     // First, get a set of all questions that a subject has answered already.
     $answeredQuestions = [];
     foreach ($subject->questionResults as $question) {
@@ -153,7 +153,7 @@ Route::get('api/subjects/{subject}/nextHint',function(
     $subjectDiseaseIds = [];
     // Do array map of subject disease STRINGS (!?!) to IDs.
     // This will be fixed when the IDs are based from the DATABASE.
-    if (strstr( $subject->disease_state, ",")) {
+    if (strstr($subject->disease_state, ",")) {
         $categories = explode(",", $subject->disease_state);
     } else {
         $categories = [$subject->disease_state];
@@ -161,19 +161,19 @@ Route::get('api/subjects/{subject}/nextHint',function(
     foreach ($categories as $subjectDisease) {
         switch ($subjectDisease) {
             case 'HeartFailure':
-                $c = Category::where('category','Heart')->first();
+                $c = Category::where('category', 'Heart')->first();
                 $subjectDiseaseIds[] = $c->id; // Heart
                 break;
             case 'Diabetes':
-                $c = Category::where('category','Diabetes')->first();
+                $c = Category::where('category', 'Diabetes')->first();
                 $subjectDiseaseIds[] = $c->id; //Diabetes
                 break;
             case 'COPD':
-                $c = Category::where('category','General')->first();
+                $c = Category::where('category', 'General')->first();
                 $subjectDiseaseIds[] = $c->id; // General(?)
                 break;
             case 'Hypertension':
-                $c = Category::where('category','Hypertension')->first();
+                $c = Category::where('category', 'Hypertension')->first();
                 $subjectDiseaseIds[] = $c->id;
                 break;
         }
@@ -182,14 +182,22 @@ Route::get('api/subjects/{subject}/nextHint',function(
     $subjectDiseaseIds = array_unique($subjectDiseaseIds);
 
     // Get all content (hints) from the catories, as an array to use in a sec.
-    $contentIds = Content::select('id')->whereIn('category_id',$subjectDiseaseIds)->pluck('id')->toArray();
+    $contentIds = Content::select('id')
+        ->whereIn('category_id', $subjectDiseaseIds)
+        ->pluck('id')
+        ->toArray();
     // Get a random question from the category types above.
-    $question = Question::whereIn('content_id',$contentIds)->whereNotIn('id',$answeredQuestions)->inRandomOrder()->with('answers')->first();
+    $question = Question::whereIn('content_id', $contentIds)
+        ->whereNotIn('id', $answeredQuestions)
+        ->inRandomOrder()
+        ->with('answers')
+        ->first();
 
     // Now, build the content answer, but only from the singulary randomized question up there.
     // Be sure to return nexted child data.
-    $content = Content::where('id', $question->content_id)->whereHas('questions',function($query) use ($question){
-        $query->where('id',$question->id);
+    $content = Content::where('id', $question->content_id)
+        ->whereHas('questions', function ($query) use ($question) {
+            $query->where('id', $question->id);
         })
         ->first();
     $content->question = $question;
@@ -197,21 +205,26 @@ Route::get('api/subjects/{subject}/nextHint',function(
     return $content;
 });
 
-Route::get('api/subjects/{subject}/checkupdates',function(
-    Request $request, Subject $subject
-){
-    $subject_last_updated = date("YmdHis",strtotime($subject->updated_at));
+Route::get('api/subjects/{subject}/checkupdates', function (
+    Request $request,
+    Subject $subject
+) {
+    $subject_last_updated = date("YmdHis", strtotime($subject->updated_at));
 
     // Get last medication update for this subject
     // Note- medication name touches medication slot, so that's covered.
-    $last_med = Medicationslot::where('subject',$subject->subject)->orderBy('updated_at','desc')->first();
+    $last_med = Medicationslot::where('subject', $subject->subject)
+        ->orderBy('updated_at', 'desc')
+        ->first();
     if ($last_med) {
         $last_med_time = date("YmdHis", strtotime($last_med->updated_at));
     } else {
         $last_med_time = 0;
     }
     // Get last VV update date for this subject.
-    $last_vv = \App\VirtualVisit::where('subject',$subject->subject)->orderBy('updated_at','desc')->first();
+    $last_vv = \App\VirtualVisit::where('subject', $subject->subject)
+        ->orderBy('updated_at', 'desc')
+        ->first();
     if ($last_vv) {
         $last_vv_time = date("YmdHis", strtotime($last_vv->updated_at)) ?? '';
     } else {
@@ -221,17 +234,17 @@ Route::get('api/subjects/{subject}/checkupdates',function(
     $data = [
         'subject' => $subject_last_updated,
         'medications' => $last_med_time,
-        'virtualVisits' => $last_vv_time,
+        'virtualVisits' => $last_vv_time
     ];
 
     return response()->json($data, 200, [], JSON_NUMERIC_CHECK);
 });
 
-
 // Virtual Visits section
-Route::get('api/virtualvisits/{subject}', function (Request $request, Subject $subject) {
-
-
+Route::get('api/virtualvisits/{subject}', function (
+    Request $request,
+    Subject $subject
+) {
     if ($subject) {
         $virtualvisits = $subject->virtualvisits;
 

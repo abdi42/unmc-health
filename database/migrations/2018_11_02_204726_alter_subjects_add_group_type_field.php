@@ -20,7 +20,7 @@ class AlterSubjectsAddGroupTypeField extends Migration
             $table->unsignedTinyInteger('group_type');
         });
         // Update existing subjects to group type 3 for testing.
-        DB::table('subjects')->update(['group_type'=>3]);
+        DB::table('subjects')->update(['group_type' => 3]);
     }
 
     /**
