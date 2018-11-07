@@ -22,7 +22,8 @@ class AlterSubjectsAddEnrollmentEndDateField extends Migration
         $days = \App\Subject::ENROLLMENT_LENGTH_DEFAULT_DAYS;
         foreach (\App\Subject::all() as $subject) {
             // add some seconds based on num days.
-            $default_end_date = strtotime($subject->enrollmentdate)+86400*$days;
+            $default_end_date =
+                strtotime($subject->enrollmentdate) + 86400 * $days;
             $subject->enrollment_end_date = date("Ymd", $default_end_date);
             $subject->save();
         }
