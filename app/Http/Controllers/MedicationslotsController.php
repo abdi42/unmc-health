@@ -17,33 +17,54 @@ class MedicationslotsController extends Controller
         ]);
     }
 
-    public function create(Subject $subject)
+    public function create(Request $request, Subject $subject)
     {
         return view('medicationslots.create', [
             "subjectId" => $subject->subject
         ]);
     }
 
-    public function store(Request $request, $subject_id)
+    public function store(Request $request, $subjectId)
     {
-        $subject = Subject::findOrFail($subject_id);
+        $subject = Subject::findOrFail($subjectId);
 
-        foreach ($request->input('slot') as $slot) {
-            $medicationslot = new Medicationslot();
-            $medicationslot->subject = $subject->subject;
+        foreach ($request->input("slot") as $slot) {
+            if (!array_key_exists('id', $slot)) {
+                $medicationslot = new Medicationslot();
+            } else {
+                $medicationslot = Medicationslot::with('medicines')->find(
+                    $slot['id']
+                );
+            }
+
             $medicationslot->medication_time = $slot['time'];
             $medicationslot->medication_day = $slot['day'];
+            $medicationslot->subject = $subject->subject;
             $medicationslot->save();
 
-            foreach ($slot['medication'] as $medication) {
-                $medicationname = new Medicationname();
-                $medicationname->medicationslot_id = $medicationslot->id;
-                $medicationname->medication_name = $medication['name'];
-                $medicationname->class = $medication['class'];
-                $medicationname->save();
-            }
+            $medications = collect($slot['medication']);
+
+            $medications->map(function ($medication, $key) use (
+                $medicationslot
+            ) {
+                if (!array_key_exists('id', $medication)) {
+                    $medicationName = new Medicationname();
+                } else {
+                    $medicationName = Medicationname::findOrFail(
+                        $medication['id']
+                    );
+                }
+
+                $medicationName->medicationslot_id = $medicationslot->id;
+                $medicationName->medication_name = $medication['name'];
+                $medicationName->class = $medication['class'];
+                $medicationName->save();
+            });
         }
-        return redirect('/subjects/' . $subject_id . '/medicationslots');
+
+        return redirect(
+            '/subjects/' . $medicationslot->subject . '/virtualvisits/create'
+        );
     }
 
     public function show($subject)
@@ -59,7 +80,7 @@ class MedicationslotsController extends Controller
         return view('medicationslots.edit', compact('medicationslots'));
     }
 
-    public function update(Request $request, Subject $subject)
+    public function update(Subject $subject, Request $request)
     {
         foreach ($request->input("slot") as $slot) {
             if (!array_key_exists('id', $slot)) {

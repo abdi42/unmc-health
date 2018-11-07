@@ -17,36 +17,24 @@ class SubjectsController extends Controller
 {
     public static function index()
     {
-        $users = getHealthData(
-            'application/userinfo.json',
-            getenv('SC_SUBJECT'),
-            getenv('SV_SUBJECT')
-        );
-
-        return view('subjects.index', compact('users'));
-    }
-
-    public function display()
-    {
         $subjects = Subject::all();
-
-        return view('subjects.display', compact('subjects'));
+        return view('subjects.index', compact('subjects'));
     }
 
     public function create()
     {
         $subject = Subject::all();
-
         return view('subjects.create', compact('subject'));
     }
 
     public function store(Request $request)
     {
-        //dd($request->all());
+        session(['newUser' => true]);
+
         $this->validate($request, [
             'id' => 'required',
             'pin' => 'required',
-            'group_type' => 'required',
+            'group_type' => 'required'
         ]);
 
         try {
@@ -56,7 +44,9 @@ class SubjectsController extends Controller
             $subject->disease_state = implode(",", $request->input('disease'));
             $subject->virtualvisit = $request->input('virtualvisit');
             $subject->enrollmentdate = $request->input('enrollmentdate');
-            $subject->enrollment_end_date = $request->input('enrollment_end_date');
+            $subject->enrollment_end_date = $request->input(
+                'enrollment_end_date'
+            );
             $subject->group_type = $request->input('group_type');
 
             $subject->save();
@@ -67,21 +57,6 @@ class SubjectsController extends Controller
                 return redirect('/subjects/create');
             }
         }
-
-        //    foreach($request->input('slot') as $slot) {
-        //      $medicationslot = new Medicationslot();
-        //      $medicationslot->subject = $subject->subject;
-        //      $medicationslot->medication_time = $slot['time'];
-        //      $medicationslot->medication_day = $slot['day'];
-        //      $medicationslot->save();
-        //
-        //      foreach($slot['medication_name'] as $name){
-        //        $medicationname = new Medicationname();
-        //        $medicationname->medicationslot_id = $medicationslot->id;
-        //        $medicationname->medication_name = $name;
-        //        $medicationname->save();
-        //      }
-        //    }
 
         return redirect(
             '/subjects/' . $subject->subject . '/medicationslots/create'
@@ -122,7 +97,6 @@ class SubjectsController extends Controller
         $subject->enrollmentdate = $request->input('enrollmentdate');
         $subject->enrollment_end_date = $request->input('enrollment_end_date');
         $subject->group_type = $request->input('group_type');
-
 
         $subject->save();
 
@@ -189,5 +163,32 @@ class SubjectsController extends Controller
         Log::debug('An informational message.');
         Log::debug(json_encode($request->json()));
         return response()->json(['success' => 'success'], 200);
+    }
+
+    public function getReminders(Subject $subject, Request $request)
+    {
+        $request->session()->forget('newUser');
+        $virtualVisits = $subject->virtualVisits;
+        $medicationsReminders = $subject->medicationslots->map(function (
+            $slot
+        ) {
+            return [
+                'medications' => $slot->medicines->pluck('medication_name'),
+                'days' => $slot->medication_day
+            ];
+        });
+
+        return view('subjects.reminders', [
+            'subjectId' => $subject->subject,
+            'virtualVisits' => $virtualVisits,
+            'medicationsReminders' => $medicationsReminders
+        ]);
+    }
+
+    public function ihealthPrompt(Subject $subject, Request $request)
+    {
+        return view('subjects.ihealth_prompt', [
+            'subjectId' => $subject->subject
+        ]);
     }
 }
