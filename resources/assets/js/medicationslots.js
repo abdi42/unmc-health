@@ -1,17 +1,19 @@
 function addMedication() {
     var index = $(`.medication`).length;
-    var slotIndex = $(this).data('slotindex');
+    var slotIndex = $(this).data("slotindex");
 
-    var medications = $(this).closest('.medications-container').children('.medications')
+    var medications = $(this)
+        .closest(".medications-container")
+        .children(".medications");
 
     var container = $("<div></div>", {
         class: "col-6"
-    })
+    });
 
-    var row = $("<div></div>",{
+    var row = $("<div></div>", {
         id: `medication${index}`,
-        class:"row mb-0 mt-4 medication"
-    })
+        class: "row mb-0 mt-4 medication"
+    });
 
     var input = $("<input/>", {
         type: "text",
@@ -19,7 +21,7 @@ function addMedication() {
         placeholder: "Enter medication name here",
         class: "form-control",
         required: ""
-    })
+    });
 
     var drugClass = $(`
         <div class="col-6 input-group">
@@ -29,41 +31,37 @@ function addMedication() {
         </div>    
     `);
 
-
     var inputGroup = $("<div></div>", {
         class: "input-group-append"
-    })
+    });
 
     var button = $("<button>", {
         class: "btn btn-danger remove-medication",
         type: "button",
         "data-index": index
-    }).click(removeMedication)
+    }).click(removeMedication);
 
     var icon = $("<i>", {
         class: "fas fa-minus"
-    })
+    });
 
-    button.append(icon)
-    inputGroup.append(button)
-    container.append(input)
-    drugClass.append(inputGroup)
-    row.append(container,drugClass)
+    button.append(icon);
+    inputGroup.append(button);
+    container.append(input);
+    drugClass.append(inputGroup);
+    row.append(container, drugClass);
 
-
-    medications.append(row)
+    medications.append(row);
 }
 
-
 function removeMedication() {
-    var index = $(this).data('index');
+    var index = $(this).data("index");
     $(`#medication${index}`).remove();
 }
 
-
 function addSlot() {
     var index = $(`.medication`).length;
-    var slotIndex = $('.card').length;
+    var slotIndex = $(".card").length;
 
     var time = $(`
             <div class="col-3 p-0">
@@ -114,8 +112,7 @@ function addSlot() {
                     </label>
                 </div>
             </div>
-            `)
-
+            `);
 
     var nameInput = $(`
             <div class="col-7 p-0 m-0 medications">
@@ -143,13 +140,11 @@ function addSlot() {
             </button>
             `);
 
-    addButton.click(addMedication)
+    addButton.click(addMedication);
 
-
-    var buttonContainer =  $(`
+    var buttonContainer = $(`
               <div class="col-3 align-self-end"></div>
-            `).append(addButton)
-
+            `).append(addButton);
 
     var card = $(`
                 <div id="medication-time-${slotIndex}" class="card">
@@ -176,32 +171,29 @@ function addSlot() {
                 </div>
             `);
 
-    card.find('.removeSlot').click(removeSlot)
+    card.find(".removeSlot").click(removeSlot);
 
-    var medicationTime = $('<div></div>',{
-        class:"row justify-content-center mt-2"
+    var medicationTime = $("<div></div>", {
+        class: "row justify-content-center mt-2"
     });
 
-    var medicationName = $('<div></div>',{
-        class:"row justify-content-center my-4 medications-container"
+    var medicationName = $("<div></div>", {
+        class: "row justify-content-center my-4 medications-container"
     });
 
+    medicationTime.append(time, dates);
+    medicationName.append(nameInput, buttonContainer);
 
-    medicationTime.append(time,dates)
-    medicationName.append(nameInput,buttonContainer)
+    card.find(".container:first").append(medicationTime, medicationName);
 
-    card.find('.container:first').append(medicationTime,medicationName)
-
-    $("#medications-accordion").append(card)
+    $("#medications-accordion").append(card);
 }
 
-
-function removeSlot(){
-    var index = $(this).data('slotindex');
+function removeSlot() {
+    var index = $(this).data("slotindex");
     $(`#medication-time-${index}`).remove();
 }
 
-
-$('.addMedication').click(addMedication)
-$('#addSlot').click(addSlot)
-$(".removeSlot").click(removeSlot)
+$(".addMedication").click(addMedication);
+$("#addSlot").click(addSlot);
+$(".removeSlot").click(removeSlot);
