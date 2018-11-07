@@ -85,6 +85,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         DB::table('answers')->delete();
+        DB::table('question_results')->delete();
         DB::table('questions')->delete();
         DB::table('categories')->delete();
         DB::table('contents')->delete();
