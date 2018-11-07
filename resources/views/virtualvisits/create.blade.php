@@ -21,6 +21,12 @@ $subject->subject => '/subjects/'. $subject->subject,
           This subject isn't part of Virtual Visits
         </h3>
       </div>
+
+      <div class="row mt-5">
+        <div class="col-12 mt-2">
+          <a class="btn btn-success float-right  py-2 mx-3" href="/subjects/{{$subjectId}}/reminders" role="button">Next</a>
+        </div>
+      </div>
     @endif
   </div>
 
