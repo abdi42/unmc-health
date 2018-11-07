@@ -23,15 +23,47 @@
   <br>
   <h2 class='sub-header'>HINTS</h2>
 
-  @foreach($contents as $content)
-    <div class="card mt-3">
 
-    <div class="card-body"><p class="m-0"><b>Category:</b> <span>{{$content->category->category}}</span></p>
-    <a href="/contents/{{ $content->id }}">{{ $content->content }}</a>
-    <p style="text-align:right"> <em>Last updated  {{ $content->updated_at->toFormattedDateString() }} </em></p>
-    </div>
-    </div>
+  <div class="card mt-5">
+    <div class="table-responsive">
 
-  @endforeach
+      <table class="table table-hover mt-4">
+        <thead>
+        <tr>
+          <th class='border-0 font-weight-bold' scope="col">#</th>
+          <th class='border-0' scope="col">Category</th>
+          <th class='border-0' scope="col">Content</th>
+          <th class='border-0' scope="col">Questions</th>
+          <th class='border-0' scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($contents as $content)
+          <tr>
+            <th scope="row">
+              {{$content->hint_number}}
+            </th>
+            <td>{{$content->category->category}}</td>
+            <td>
+              <a href="/contents/{{$content->id}}">
+                {{substr($content->content,0,175) . '.......'}}
+              </a>
+            </td>
+            <td>
+              <h5><span class="badge badge-secondary">{{count($content->questions)}}</span></h5>
+            </td>
+            <td>
+              <a href="/contents/{{$content->id}}/edit" class="btn btn-primary btn-sm">
+                <i class="fas fa-pen"></i>
+                Edit
+              </a>
+            </td>
+          </tr>
+        @endforeach
+        </tbody>
+      </table>
+
+    </div>
+  </div>
 
 @endsection
