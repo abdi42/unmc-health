@@ -13,7 +13,6 @@ $subject->subject => '/subjects/'. $subject->subject,
   <div class="container">
     @if($subject->group_type === 3)
       <form action="/subjects/{{$subject->subject}}/virtualvisits" method="post">
-        {{ method_field('PUT') }}
         @include('virtualvisits.form')
       </form>
     @else
