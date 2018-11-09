@@ -43,6 +43,9 @@
 						<strong>Intervention Group</strong>
 						<span class='text-body ml-3'>
 							{{$subject->getGroupTypeName()}}
+							@if ($subject->group_type == 3)
+								(<a href="{{$subject->virtual_visit_url}}" target="_blank">{{$subject->virtual_visit_url}}</a>)
+							@endif
 						</span>
 					</li>
 
