@@ -1,5 +1,10 @@
-@extends('layouts.dashboard')
-
+@extends('layouts.dashboard',[
+  'breadcrumbs' => [
+    'Home' => '/',
+    'Subjects' => '/subjects',
+    $subject->subject => null
+  ]
+])
 @section('content')
     <title>Edit Subject</title>
 
@@ -9,7 +14,7 @@
     <br><h1>Edit Subject</h1><br>
 
 
-    <form action="/subject/{{$subject->subject}}" method="post">
+    <form action="/subjects/{{$subject->subject}}" method="post">
 
 
         {{ csrf_field() }}
