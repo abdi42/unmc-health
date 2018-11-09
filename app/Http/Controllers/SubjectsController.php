@@ -44,6 +44,9 @@ class SubjectsController extends Controller
             $subject->disease_state = implode(",", $request->input('disease'));
             $subject->virtualvisit = $request->input('virtualvisit');
             $subject->enrollmentdate = $request->input('enrollmentdate');
+            $subject->enrollment_end_notifications_date = $request->input(
+                'enrollment_end_notifications_date'
+            );
             $subject->enrollment_end_date = $request->input(
                 'enrollment_end_date'
             );
@@ -95,6 +98,7 @@ class SubjectsController extends Controller
         $subject->disease_state = implode(",", $request->input('disease'));
         $subject->virtualvisit = $request->input('virtualvisit');
         $subject->enrollmentdate = $request->input('enrollmentdate');
+        $subject->enrollment_end_notifications_date = $request->input('enrollment_end_notifications_date');
         $subject->enrollment_end_date = $request->input('enrollment_end_date');
         $subject->group_type = $request->input('group_type');
 
