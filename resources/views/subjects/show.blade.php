@@ -34,7 +34,7 @@
 						</li>
 					@endif
 					<li>
-						<strong>Disease State</strong>
+						<strong>Disease State(s)</strong>
 						<span class='text-body ml-3'>
 							{{$subject->disease_state}}
 						</span>
@@ -51,9 +51,9 @@
 
 					<li>
 						<strong>Enrollment Dates</strong>
-						<span class='text-body ml-3'>
-							{{date("m/d/Y",strtotime($subject->enrollmentdate))}} - {{date("m/d/Y",strtotime($subject->enrollment_end_date))}}
-						</span>
+						<div class='text-body ml-3'>{{date("m/d/Y",strtotime($subject->enrollmentdate))}} - Begin</div>
+						<div class='text-body ml-3'>{{date("m/d/Y",strtotime($subject->enrollment_end_notifications_date))}} - Stop Notifications</div>
+						<div class='text-body ml-3'>{{date("m/d/Y",strtotime($subject->enrollment_end_date))}} - Close App Access</div>
 					</li>
 				</ul>
 			</div>
