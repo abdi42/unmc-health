@@ -26,6 +26,7 @@
   <div class="card mt-5">
     <div class="card-header">Virtual visits</div>
     <div class="card-body">
+      <b>Zoom URL:</b> {{ $subject->virtual_visit_url }}
       <ul class="list-group list-group-flush ">
         @foreach($virtualVisits as $visit)
           <li class="list-group-item">

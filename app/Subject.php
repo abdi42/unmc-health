@@ -25,7 +25,8 @@ class Subject extends Model
         'virtualvisit',
         'enrollmentdate',
         'enrollment_end_date',
-        'group_type'
+        'group_type',
+        'virtual_visit_url'
     ];
     protected $hidden = [
         'registration_token',

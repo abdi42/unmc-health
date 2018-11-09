@@ -48,6 +48,9 @@ class VirtualVisitController extends Controller
             $visit->save();
         }
 
+        $subject->virtual_visit_url = $request->input('virtual_visit_url');
+        $subject->save();
+
         return redirect('/subjects/' . $subject->subject . '/reminders')->with(
             'status',
             'Saved virtual visits!'
@@ -73,6 +76,9 @@ class VirtualVisitController extends Controller
             $visit->notes = $visitData['notes'];
             $visit->save();
         }
+
+        $subject->virtual_visit_url = $request->input('virtual_visit_url');
+        $subject->save();
 
         return redirect(
             '/subjects/' . $subject->subject . '/virtualvisits'

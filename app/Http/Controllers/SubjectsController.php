@@ -181,6 +181,7 @@ class SubjectsController extends Controller
         return view('subjects.reminders', [
             'subjectId' => $subject->subject,
             'virtualVisits' => $virtualVisits,
+            'subject' => $subject,
             'medicationsReminders' => $medicationsReminders
         ]);
     }
