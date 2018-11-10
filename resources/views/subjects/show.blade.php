@@ -58,6 +58,11 @@
 				</ul>
 			</div>
 			<ul class="list-group">
+				<a href="/subjects/{{$subject->subject}}/reminders" class="list-group-item px-5 py-3">
+					<i class="fas fa-bell mr-2 text-danger"></i>
+					<strong>Reminders Overview</strong>
+					<i class="fas fa-angle-right text-secondary float-right"></i>
+				</a>
 				<a href="/subjects/{{$subject->subject}}/medicationslots" class="list-group-item px-5 py-3">
 					<i class="fas fa-prescription-bottle mr-2 text-danger"></i>
 					<strong>Medications</strong>
