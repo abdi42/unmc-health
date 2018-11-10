@@ -87,14 +87,16 @@ class SubjectsController extends Controller
 
     public function update(Request $request, $subject)
     {
-        $this->validate($request, [
-            'pin' => 'required'
-        ]);
+//        $this->validate($request, [
+//            'pin' => 'required'
+//        ]);
 
         $subject = Subject::all()->find($subject);
         $subject->subject = $request->input('id');
         $subject->userid = $request->input('userid');
-        $subject->pin = bcrypt($request->input('pin'));
+        if ($request->input('pin') != '') {
+            $subject->pin = bcrypt($request->input('pin'));
+        }
         $subject->disease_state = implode(",", $request->input('disease'));
         $subject->virtualvisit = $request->input('virtualvisit');
         $subject->enrollmentdate = $request->input('enrollmentdate');

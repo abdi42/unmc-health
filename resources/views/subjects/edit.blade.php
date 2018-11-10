@@ -26,7 +26,8 @@
         <input type="text" name="id" placeholder="Enter your subject code here" class="form-control" value="{{ $subject->subject }}" required><br>
 
         <p>Enter your PIN </p>
-        <input type="password" name="pin" placeholder="Enter your PIN here" class="form-control" value="{{ $subject->pin }}"required>
+        <input type="password" name="pin" placeholder="Enter a new PIN here to change it for the subject" class="form-control" value="">
+        <em>Will only update if a new PIN is entered here.</em><br>
 
         <br>    <p>Enter the iHealth User ID </p>
         <input type="text" name="userid" placeholder="Enter your iHealth userid here" class="form-control" value="{{ $subject->userid }}">
