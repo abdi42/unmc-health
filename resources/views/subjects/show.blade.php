@@ -52,7 +52,11 @@
 					<li>
 						<strong>Enrollment Dates</strong>
 						<div class='text-body ml-3'>{{date("m/d/Y",strtotime($subject->enrollmentdate))}} - Begin</div>
-						<div class='text-body ml-3'>{{date("m/d/Y",strtotime($subject->enrollment_end_notifications_date))}} - Stop Notifications</div>
+                        @if ($subject->group_type > 1)
+                            <div class='text-body ml-3'>{{date("m/d/Y",strtotime($subject->enrollment_end_notifications_date))}} - Stop Notifications</div>
+                        @else
+
+                        @endif
 						<div class='text-body ml-3'>{{date("m/d/Y",strtotime($subject->enrollment_end_date))}} - Close App Access</div>
 					</li>
 				</ul>

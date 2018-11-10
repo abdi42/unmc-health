@@ -80,7 +80,7 @@
         <a href="javascript:auto_calculate_enrollment_end_date('enrollment_end_date','{{\App\Subject::ENROLLMENT_LENGTH_DEFAULT_DAYS}}')" >Click here to auto-calculate +{{\App\Subject::ENROLLMENT_LENGTH_DEFAULT_DAYS}} days from enrollment</a>
         <br>
         <div class="form-notes">
-            <em>This date is used to block subject access to the app. Not used for Group 1.</em>
+            <em>This date is used to block subject access to the app.</em>
         </div>
 
 
