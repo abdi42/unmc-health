@@ -49,6 +49,7 @@ class VirtualVisitController extends Controller
         }
 
         $subject->virtual_visit_url = $request->input('virtual_visit_url');
+        $subject->timestamps = false; // disable timestamp update here.
         $subject->save();
 
         return redirect('/subjects/' . $subject->subject . '/reminders')->with(
@@ -78,6 +79,7 @@ class VirtualVisitController extends Controller
         }
 
         $subject->virtual_visit_url = $request->input('virtual_visit_url');
+        $subject->timestamps = false; // disable timestamp update here.
         $subject->save();
 
         return redirect(
