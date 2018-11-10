@@ -173,7 +173,6 @@ class SubjectsController extends Controller
 
     public function getReminders(Subject $subject, Request $request)
     {
-        $request->session()->forget('newUser');
         $virtualVisits = $subject->virtualVisits;
         $medicationsReminders = $subject->medicationslots->map(function (
             $slot
@@ -194,6 +193,7 @@ class SubjectsController extends Controller
 
     public function ihealthPrompt(Subject $subject, Request $request)
     {
+        $request->session()->forget('newUser');
         return view('subjects.ihealth_prompt', [
             'subjectId' => $subject->subject
         ]);
