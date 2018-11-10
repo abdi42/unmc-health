@@ -174,20 +174,10 @@ class SubjectsController extends Controller
     public function getReminders(Subject $subject, Request $request)
     {
         $virtualVisits = $subject->virtualVisits;
-        $medicationsReminders = $subject->medicationslots->map(function (
-            $slot
-        ) {
-            return [
-                'medications' => $slot->medicines->pluck('medication_name'),
-                'days' => $slot->medication_day
-            ];
-        });
-
         return view('subjects.reminders', [
             'subjectId' => $subject->subject,
             'virtualVisits' => $virtualVisits,
             'subject' => $subject,
-            'medicationsReminders' => $medicationsReminders
         ]);
     }
 

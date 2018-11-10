@@ -36,12 +36,15 @@
     <div class="card-header">Medications</div>
     <div class="card-body">
       <ul class="list-group list-group-flush ">
-        @foreach($medicationsReminders as $reminder)
-          <li class="list-group-item"><strong>Every {{$reminder['days']}}</strong>
+        @foreach($subject->medicationslots as $medslot)
+          <li class="list-group-item">
+              <strong>Every {{preg_replace("/,/",", ", $medslot->medication_day)}}
+                  at {{date("g:m a",strtotime($medslot->medication_time))}}
+              </strong>
             <ul>
-              @foreach($reminder['medications'] as $medication)
+              @foreach($medslot->medicines as $medication)
                 <li>
-                  <p class="mt-3">{{$medication}}</p>
+                  <p class="mt-3">{{$medication->medication_name}} - {{$medication->class}}</p>
                 </li>
               @endforeach
             </ul>
