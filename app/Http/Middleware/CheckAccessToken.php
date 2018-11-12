@@ -21,6 +21,12 @@ class CheckAccessToken
         if ($request->route()->hasParameter('subject')) {
             $subject = $request->route()->parameter('subject');
 
+            if ($subject->access_token == null) {
+                return redirect('/subjects/' . $subject->subject)->withErrors([
+                    'iHealth account not connected'
+                ]);
+            }
+
             if (Carbon::parse($subject->expires_in)->lt(Carbon::now())) {
                 $body = $this->ihealthService->refreshToken($subject);
 
