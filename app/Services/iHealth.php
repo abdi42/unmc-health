@@ -42,21 +42,34 @@ class iHealth
 
     public function getNewToken(Subject $subject, $code)
     {
-        $url = $this->baseUrl . '/OAuthv2/userauthorization/'; // Enter the URL to fetch the User Profile of all users
+        $url = $this->baseUrl . '/OAuthv2/userauthorization/';
         $query = [
             'client_id' => getenv('CLIENT_ID'),
             'client_secret' => getenv('CLIENT_SECRET'),
             'redirect_uri' =>
-                getenv('REDIRECT_URI') . '?subject_code=' . $subject->subject
+                getenv('REDIRECT_URI') . '?subject_code=' . $subject->subject,
+            'grant_type' => 'authorization_code',
+            'code' => $code
         ];
 
-        if (Carbon::parse($subject->expires_in)->lt(Carbon::now())) {
-            $query['response_type'] = 'refresh_token';
-            $query['refresh_token'] = $subject->refresh_token;
-        } else {
-            $query['grant_type'] = 'authorization_code';
-            $query['code'] = $code;
-        }
+        $response = $this->client->request('GET', $url, ['query' => $query]);
+
+        $body = json_decode($response->getBody());
+
+        return $body;
+    }
+
+    public function refreshToken(Subject $subject)
+    {
+        $url = $this->baseUrl . '/OAuthv2/userauthorization/';
+        $query = [
+            'client_id' => getenv('CLIENT_ID'),
+            'client_secret' => getenv('CLIENT_SECRET'),
+            'redirect_uri' =>
+                getenv('REDIRECT_URI') . '?subject_code=' . $subject->subject,
+            'response_type' => 'refresh_token',
+            'refresh_token' => $subject->refresh_token
+        ];
 
         $response = $this->client->request('GET', $url, ['query' => $query]);
 
