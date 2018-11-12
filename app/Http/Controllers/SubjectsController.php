@@ -9,12 +9,21 @@ use App\Pulseoxygen;
 use App\Medicationslot;
 use App\Medicationname;
 use App\Weight;
+use App\Services\iHealth;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class SubjectsController extends Controller
 {
+    protected $ihealthService;
+
+    public function __construct(iHealth $ihealth)
+    {
+        $this->ihealthService = $ihealth;
+    }
+
     public static function index()
     {
         $subjects = Subject::all();
@@ -131,26 +140,13 @@ class SubjectsController extends Controller
         $subject = Subject::findOrFail($request->query('subject_code'));
         $code = $request->query('code');
 
-        $url =
-            "https://api.ihealthlabs.com:8443/OpenApiV2/OAuthv2/userauthorization/";
-
-        $client = new Client();
-
-        $response = $client->request('GET', $url, [
-            'query' => [
-                'client_id' => getenv('CLIENT_ID'),
-                'client_secret' => getenv('CLIENT_SECRET'),
-                'redirect_uri' => getenv('REDIRECT_URI'),
-                'grant_type' => 'authorization_code',
-                'code' => $code
-            ]
-        ]);
-
-        $body = json_decode($response->getBody());
+        $body = $this->ihealthService->getNewToken($subject, $code);
 
         $subject->access_token = $body->AccessToken;
         $subject->refresh_token = $body->RefreshToken;
-        $subject->expires = $body->RefreshTokenExpires;
+        $subject->expires_in = Carbon::now()
+            ->addSecond($body->Expires)
+            ->toDateTimeString();
         $subject->userid = $body->UserID;
 
         $subject->save();
