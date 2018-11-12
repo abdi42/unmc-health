@@ -41,23 +41,25 @@ Route::resource('medicationslots', 'MedicationslotsController');
 
 Route::resource('reminders', 'RemindersController');
 
-// Ihealth Data
-Route::get('/subjects/{subject}/weights', 'iHealthController@show_weight');
+Route::group(['middleware' => ['CheckAccessToken']], function () {
+    // Ihealth Data
+    Route::get('/subjects/{subject}/weights', 'iHealthController@show_weight');
 
-Route::get(
-    '/subjects/{subject}/bloodpressures',
-    'iHealthController@show_bloodpressure'
-);
+    Route::get(
+        '/subjects/{subject}/bloodpressures',
+        'iHealthController@show_bloodpressure'
+    );
 
-Route::get(
-    '/subjects/{subject}/bloodglucoses',
-    'iHealthController@show_bloodglucose'
-);
+    Route::get(
+        '/subjects/{subject}/bloodglucoses',
+        'iHealthController@show_bloodglucose'
+    );
 
-Route::get(
-    '/subjects/{subject}/pulseoxygens',
-    'iHealthController@show_pulseoxygen'
-);
+    Route::get(
+        '/subjects/{subject}/pulseoxygens',
+        'iHealthController@show_pulseoxygen'
+    );
+});
 
 //Medication Slots & Names
 
