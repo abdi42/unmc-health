@@ -24,7 +24,18 @@
 
     <h3 class='sub-header mb-5'>Virtual Visits</h3>
 
+
+
     @if($visits)
+        <div class="card">
+          <div class="card-body">
+            <label for="virtual_visit_url"  class="font-weight-bold">Zoom Link/URL for this subject's virtual visits:</label>
+            <input type="text" name="virtual_visit_url" id="virtual_visit_url" class="form-control" value="{{$subject->virtual_visit_url}}">
+            <em>This link will be used to allow the subject to open Zoom on their device.</em><br>
+            <em>Must be unique per subject.</em>
+
+          </div>
+        </div>
       @foreach($visits as $i => $visit)
         <div class="card">
           <div id="heading{{$i}}" class="card-header bg-white">

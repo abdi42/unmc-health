@@ -53,6 +53,9 @@ class SubjectsController extends Controller
             $subject->disease_state = implode(",", $request->input('disease'));
             $subject->virtualvisit = $request->input('virtualvisit');
             $subject->enrollmentdate = $request->input('enrollmentdate');
+            $subject->enrollment_end_notifications_date = $request->input(
+                'enrollment_end_notifications_date'
+            );
             $subject->enrollment_end_date = $request->input(
                 'enrollment_end_date'
             );
@@ -93,17 +96,20 @@ class SubjectsController extends Controller
 
     public function update(Request $request, $subject)
     {
-        $this->validate($request, [
-            'pin' => 'required'
-        ]);
+//        $this->validate($request, [
+//            'pin' => 'required'
+//        ]);
 
         $subject = Subject::all()->find($subject);
         $subject->subject = $request->input('id');
         $subject->userid = $request->input('userid');
-        $subject->pin = bcrypt($request->input('pin'));
+        if ($request->input('pin') != '') {
+            $subject->pin = bcrypt($request->input('pin'));
+        }
         $subject->disease_state = implode(",", $request->input('disease'));
         $subject->virtualvisit = $request->input('virtualvisit');
         $subject->enrollmentdate = $request->input('enrollmentdate');
+        $subject->enrollment_end_notifications_date = $request->input('enrollment_end_notifications_date');
         $subject->enrollment_end_date = $request->input('enrollment_end_date');
         $subject->group_type = $request->input('group_type');
 
@@ -163,26 +169,17 @@ class SubjectsController extends Controller
 
     public function getReminders(Subject $subject, Request $request)
     {
-        $request->session()->forget('newUser');
         $virtualVisits = $subject->virtualVisits;
-        $medicationsReminders = $subject->medicationslots->map(function (
-            $slot
-        ) {
-            return [
-                'medications' => $slot->medicines->pluck('medication_name'),
-                'days' => $slot->medication_day
-            ];
-        });
-
         return view('subjects.reminders', [
             'subjectId' => $subject->subject,
             'virtualVisits' => $virtualVisits,
-            'medicationsReminders' => $medicationsReminders
+            'subject' => $subject,
         ]);
     }
 
     public function ihealthPrompt(Subject $subject, Request $request)
     {
+        $request->session()->forget('newUser');
         return view('subjects.ihealth_prompt', [
             'subjectId' => $subject->subject
         ]);

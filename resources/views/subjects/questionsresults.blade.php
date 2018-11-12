@@ -67,10 +67,10 @@
 
   <p><b>Enrollment Start Date</b></p> {{ $subject->enrollmentdate }}
 
-  <br> <br>  <a href="{{'/subject/'.$subject->subject.'/edit'}}"><button class="btn btn-primary">Edit</button></a><br><br>
+  <br> <br>  <a href="{{'/subjects/'.$subject->subject.'/edit'}}"><button class="btn btn-primary">Edit</button></a><br><br>
 
 
-  <a href="{{ '/subject/'.$subject->subject.'/delete' }}"><button class="btn btn-primary">Delete</button></a>
+  <a href="{{ '/subjects/'.$subject->subject.'/delete' }}"><button class="btn btn-primary">Delete</button></a>
 
   <hr>
 

@@ -51,9 +51,17 @@
                 <br> <p>Enrollment Start Date</p>
                 <input type="date" name="enrollmentdate"  id="enrollmentdate" class="form-control col-sm-2" value="date" required><br>
 
+                <br> <p>Enrollment Stop Notifications Date</p>
+                <input type="date" name="enrollment_end_notifications_date" id="enrollment_end_notifications_date" class="form-control col-sm-2" value="" required>
+                <a href="javascript:auto_calculate_enrollment_end_date('enrollment_end_notifications_date','{{\App\Subject::ENROLLMENT_NOTIFICATION_DAYS}}' )" >Click here to auto-calculate +{{\App\Subject::ENROLLMENT_NOTIFICATION_DAYS}} days from enrollment</a>
+                <br>
+                <div class="form-notes">
+                    <em>This date is used to disable subject reminders in the app. Not used for Group 1.</em>
+                </div>
+
                 <br> <p>Enrollment End Date</p>
                 <input type="date" name="enrollment_end_date" id="enrollment_end_date" class="form-control col-sm-2" value="" required>
-                <a href="javascript:auto_calculate_enrollment_end_date()" >Click here to auto-calculate +90 days from enrollment</a>
+                <a href="javascript:auto_calculate_enrollment_end_date('enrollment_end_date','{{\App\Subject::ENROLLMENT_LENGTH_DEFAULT_DAYS}}' )" >Click here to auto-calculate +{{\App\Subject::ENROLLMENT_LENGTH_DEFAULT_DAYS}} days from enrollment</a>
                 <br>
                 <div class="form-notes">
                     <em>This date is used to block subject access to the app.</em>
@@ -264,12 +272,11 @@
 
 
 
-        var days = '{{\App\Subject::ENROLLMENT_LENGTH_DEFAULT_DAYS}}';
-        function auto_calculate_enrollment_end_date() {
+        function auto_calculate_enrollment_end_date(field_string,num_days) {
             var e = document.getElementById('enrollmentdate');
-            var f = document.getElementById('enrollment_end_date');
+            var f = document.getElementById(field_string);
             var d = new Date(e.value);
-            d.setDate(d.getDate() + parseInt(days));
+            d.setDate(d.getDate() + parseInt(num_days));
             f.value = yyyy_mm_dd(d);
 
         }

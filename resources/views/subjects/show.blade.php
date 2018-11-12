@@ -34,7 +34,7 @@
 						</li>
 					@endif
 					<li>
-						<strong>Disease State</strong>
+						<strong>Disease State(s)</strong>
 						<span class='text-body ml-3'>
 							{{$subject->disease_state}}
 						</span>
@@ -43,18 +43,30 @@
 						<strong>Intervention Group</strong>
 						<span class='text-body ml-3'>
 							{{$subject->getGroupTypeName()}}
+							@if ($subject->group_type == 3)
+								(<a href="{{$subject->virtual_visit_url}}" target="_blank">{{$subject->virtual_visit_url}}</a>)
+							@endif
 						</span>
 					</li>
 
 					<li>
 						<strong>Enrollment Dates</strong>
-						<span class='text-body ml-3'>
-							{{date("m/d/Y",strtotime($subject->enrollmentdate))}} - {{date("m/d/Y",strtotime($subject->enrollment_end_date))}}
-						</span>
+						<div class='text-body ml-3'>{{date("m/d/Y",strtotime($subject->enrollmentdate))}} - Begin</div>
+                        @if ($subject->group_type > 1)
+                            <div class='text-body ml-3'>{{date("m/d/Y",strtotime($subject->enrollment_end_notifications_date))}} - Stop Notifications</div>
+                        @else
+
+                        @endif
+						<div class='text-body ml-3'>{{date("m/d/Y",strtotime($subject->enrollment_end_date))}} - Close App Access</div>
 					</li>
 				</ul>
 			</div>
 			<ul class="list-group">
+				<a href="/subjects/{{$subject->subject}}/reminders" class="list-group-item px-5 py-3">
+					<i class="fas fa-bell mr-2 text-danger"></i>
+					<strong>Reminders Overview</strong>
+					<i class="fas fa-angle-right text-secondary float-right"></i>
+				</a>
 				<a href="/subjects/{{$subject->subject}}/medicationslots" class="list-group-item px-5 py-3">
 					<i class="fas fa-prescription-bottle mr-2 text-danger"></i>
 					<strong>Medications</strong>

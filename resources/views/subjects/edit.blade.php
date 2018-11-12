@@ -1,5 +1,10 @@
-@extends('layouts.dashboard')
-
+@extends('layouts.dashboard',[
+  'breadcrumbs' => [
+    'Home' => '/',
+    'Subjects' => '/subjects',
+    $subject->subject => null
+  ]
+])
 @section('content')
     <title>Edit Subject</title>
 
@@ -9,7 +14,7 @@
     <br><h1>Edit Subject</h1><br>
 
 
-    <form action="/subject/{{$subject->subject}}" method="post">
+    <form action="/subjects/{{$subject->subject}}" method="post">
 
 
         {{ csrf_field() }}
@@ -21,7 +26,8 @@
         <input type="text" name="id" placeholder="Enter your subject code here" class="form-control" value="{{ $subject->subject }}" required><br>
 
         <p>Enter your PIN </p>
-        <input type="password" name="pin" placeholder="Enter your PIN here" class="form-control" value="{{ $subject->pin }}"required>
+        <input type="password" name="pin" placeholder="Enter a new PIN here to change it for the subject" class="form-control" value="">
+        <em>Will only update if a new PIN is entered here.</em><br>
 
         <br>    <p>Enter the iHealth User ID </p>
         <input type="text" name="userid" placeholder="Enter your iHealth userid here" class="form-control" value="{{ $subject->userid }}">
@@ -60,9 +66,18 @@
         <input type="date" name="enrollmentdate" id="enrollmentdate" class="form-control col-sm-2" value="{{ $subject->enrollmentdate }}" required><br>
 
 
+        <br> <p>Enrollment Stop Notifications Date</p>
+        <input type="date" name="enrollment_end_notifications_date" id="enrollment_end_notifications_date" class="form-control col-sm-2" value="{{ $subject->enrollment_end_notifications_date }}" required>
+        <a href="javascript:auto_calculate_enrollment_end_date('enrollment_end_notifications_date','{{\App\Subject::ENROLLMENT_NOTIFICATION_DAYS}}')" >Click here to auto-calculate +{{\App\Subject::ENROLLMENT_NOTIFICATION_DAYS}} days from enrollment</a>
+        <br>
+        <div class="form-notes">
+            <em>This date is used to disable subject reminders in the app. Not used for Group 1.</em>
+        </div>
+
+
         <br> <p>Enrollment End Date</p>
         <input type="date" name="enrollment_end_date" id="enrollment_end_date" class="form-control col-sm-2" value="{{ $subject->enrollment_end_date }}" required>
-        <a href="javascript:auto_calculate_enrollment_end_date()" >Click here to auto-calculate +90 days from enrollment</a>
+        <a href="javascript:auto_calculate_enrollment_end_date('enrollment_end_date','{{\App\Subject::ENROLLMENT_LENGTH_DEFAULT_DAYS}}')" >Click here to auto-calculate +{{\App\Subject::ENROLLMENT_LENGTH_DEFAULT_DAYS}} days from enrollment</a>
         <br>
         <div class="form-notes">
             <em>This date is used to block subject access to the app.</em>
@@ -76,12 +91,11 @@
     </form>
 
     <script>
-        var days = '{{\App\Subject::ENROLLMENT_LENGTH_DEFAULT_DAYS}}';
-        function auto_calculate_enrollment_end_date() {
+        function auto_calculate_enrollment_end_date(field_string,num_days) {
             var e = document.getElementById('enrollmentdate');
-            var f = document.getElementById('enrollment_end_date');
+            var f = document.getElementById(field_string);
             var d = new Date(e.value);
-            d.setDate(d.getDate() + parseInt(days));
+            d.setDate(d.getDate() + parseInt(num_days));
             f.value = yyyy_mm_dd(d);
 
         }
