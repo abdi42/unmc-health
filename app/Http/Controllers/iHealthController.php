@@ -16,7 +16,7 @@ class iHealthController extends Controller
         $this->ihealthService = $ihealth;
     }
 
-    public function getIndex(Subject $subject)
+    public function show_weight(Subject $subject)
     {
         $data = collect(
             $this->ihealthService->weights(
