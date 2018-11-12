@@ -34,7 +34,7 @@ class Subject extends Model
         'registration_token',
         'access_token',
         'refresh_token',
-        'expires',
+        'expires_in',
         'pin'
     ];
     public $incrementing = false;
