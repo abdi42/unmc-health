@@ -23,7 +23,7 @@
 
 
         <p>Enter Subject Code</p>
-        <input type="text" name="id" placeholder="Enter your subject code here" class="form-control" value="{{ $subject->subject }}" required><br>
+        <input type="text" name="id" placeholder="Enter your subject code here" class="form-control" value="{{ $subject->subject }}" readonly><br>
 
         <p>Enter your PIN </p>
         <input type="password" name="pin" placeholder="Enter a new PIN here to change it for the subject" class="form-control" value="">
@@ -44,7 +44,7 @@
         <input type="checkbox" name="disease[]"  value="Diabetes"> Diabetes &nbsp;<br>
 
         <br> <p>Select the intervention group for this subject:</p>
-        <select name="group_type" id="group_type" class="form-control" required>
+        <select name="group_type" id="group_type" class="form-control" disabled>
             <option value="">Choose one</option>
             <option value="1" {{ $subject->group_type == 1 ? "selected" : '' }}>{{App\Subject::GROUP_TYPE_1_TEXT}}</option>
             <option value="2" {{ $subject->group_type == 2 ? "selected" : '' }}>{{App\Subject::GROUP_TYPE_2_TEXT}}</option>
@@ -58,12 +58,9 @@
 
         <br>
 
-        <br> <p>Virtual Visits</p>
-        <input type="radio" name="virtualvisit"  value=1 checked="checked"> Yes &nbsp;
-        <input type="radio" name="virtualvisit"  value=0> No &nbsp;<br>
 
         <br> <p>Enrollment Start Date</p>
-        <input type="date" name="enrollmentdate" id="enrollmentdate" class="form-control col-sm-2" value="{{ $subject->enrollmentdate }}" required><br>
+        <input type="date" name="enrollmentdate" id="enrollmentdate" class="form-control col-sm-2" value="{{ $subject->enrollmentdate }}" readonly><br>
 
 
         <br> <p>Enrollment Stop Notifications Date</p>
