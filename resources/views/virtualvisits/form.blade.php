@@ -33,7 +33,6 @@
             <input type="text" name="virtual_visit_url" id="virtual_visit_url" class="form-control" value="{{$subject->virtual_visit_url}}">
             <em>This link will be used to allow the subject to open Zoom on their device.</em><br>
             <em>Must be unique per subject.</em>
-
           </div>
         </div>
       @foreach($visits as $i => $visit)
@@ -82,57 +81,7 @@
   </div>
 </div>
 
-<div id="virtual-vists" class="row justify-content-center">
-
-  <div id="visit-0" class="col-10">
-    <div class="card mt-5">
-      <div class="card-header bg-white">
-        <div class="float-left font-weight-bold pt-2 pl-3">
-          <p class="text-secondary">New Virtual Visit</p>
-        </div>
-        <div class="col-1 float-right">
-          <button type="button" class="removeVisit btn btn-link" data-index="0">
-            <i class="fas fa-times text-danger"></i>
-          </button>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="row justify-content-center mt-2">
-          <div class="col-4">
-            <label for="visit[0][date]" class="font-weight-bold">Date </label>
-            <div class="input-group">
-              <input type="date" class="form-control" name="visit[0][date]" value="date" required><br>
-            </div>
-          </div>
-          <div class="col-4">
-            <label for="visit[0][time]" class="font-weight-bold">Time</label>
-            <div class="input-group">
-              <input type="time" name="visit[0][time]"
-                     class="form-control px-2 py-1" required>
-              <div class="input-group-append">
-                <i class="input-group-text fas fa-clock"></i>
-              </div>
-            </div>
-          </div>
-          <div class="col-2"></div>
-        </div>
-        <div class="row justify-content-center">
-          <div class="col-10">
-            <div class="form-group mt-4">
-              <label for="visit[0][notes]" class="font-weight-bold">Notes:</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="visit[0][notes]"></textarea>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-  </div>
-
-
-
-</div>
+<div id="virtual-vists" class="row justify-content-center"></div>
 
 
 
