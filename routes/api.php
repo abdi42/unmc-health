@@ -66,7 +66,7 @@ Route::get('api/subjects/{subject}/getReminders', function (Request $request, Su
     // Array used for output
     $json_reminders = [];
 
-
+    $timeSubjectEndNotificationsDateEndOfDay = strtotime($subject->enrollment_end_notifications_date) + 24*60*60 - 1;
     ///// Medicine Slot Scheduling for Reminders
     ///
     // Go set the next $days worth of reminders for med slots.
@@ -78,6 +78,12 @@ Route::get('api/subjects/{subject}/getReminders', function (Request $request, Su
 
             $dtNextDayFromToday = mktime(0, 0, 0, date("m"), (date("j") + $d));
             $strNextDayFromTodaysDayName = strtolower(date("l", $dtNextDayFromToday));
+
+
+            // If the date is past the subject's end notification date, don't send the date.
+            if ($dtNextDayFromToday > $timeSubjectEndNotificationsDateEndOfDay) {
+                continue;
+            }
 
             // If the loop's next day is in the medication slot's day list
             if (stristr($slot->medication_day, $strNextDayFromTodaysDayName)) {
@@ -106,10 +112,14 @@ Route::get('api/subjects/{subject}/getReminders', function (Request $request, Su
     ///// Virtual Visit Reminders
 
     // Get today + $days
-    $dateDaysFromToday = date("Y-m-d H:i:s", mktime(0,0,0,date("m"),(date("d") + $days), date("Y")));
-    $dateToday = date("Y-m-d 00-00-00");
-    $virtual_visit_reminders = VirtualVisit::whereBetween('date',[$dateToday,$dateDaysFromToday])->where('subject','=',$subject->subject)->orderBy('date')->get();
+    // Don't forget to set the time to the end of the day...
+    $datetimeReqParamDaysFromToday = date("Y-m-d H:i:s", mktime(23,59,59,date("m"),(date("d") + $days), date("Y")));
+    $datetimeTodayStartsAt = date("Y-m-d 00:00:00");
+    $datetimeEndNotifications = date("Y-m-d 23:59:59",$timeSubjectEndNotificationsDateEndOfDay);
+    $endVVNotificationDate = min($datetimeReqParamDaysFromToday,$datetimeEndNotifications);
+    $virtual_visit_reminders = VirtualVisit::where('date','>=',$datetimeTodayStartsAt)->where('date','<=',$endVVNotificationDate)->where('subject','=',$subject->subject)->orderBy('date')->get();
 
+    $json_reminders['virtualvisits'] = [];
     foreach ($virtual_visit_reminders as $vv) {
         $json_reminders['virtualvisits'][] = [
             'vvtime' => date("H:i",strtotime($vv->date)),
@@ -119,8 +129,7 @@ Route::get('api/subjects/{subject}/getReminders', function (Request $request, Su
         ];
     }
 
-    echo "<pre>";
-    return json_encode($json_reminders);
+    return response()->json($json_reminders);
 
 });
 
