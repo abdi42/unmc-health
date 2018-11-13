@@ -55,6 +55,85 @@ Route::get('api/reminders/{subject}', function ($code) {
     return response()->json($subject);
 });
 
+Route::get('api/subjects/{subject}/getReminders', function (Request $request, Subject $subject) {
+    // Check your input params.
+    $default_days = 365;
+    $days = $request->input('days', $default_days);
+    if (!is_numeric($days)) {
+        $days = $default_days;
+    }
+
+    // Array used for output
+    $json_reminders = [];
+
+    $timeSubjectEndNotificationsDateEndOfDay = strtotime($subject->enrollment_end_notifications_date) + 24*60*60 - 1;
+    ///// Medicine Slot Scheduling for Reminders
+    ///
+    // Go set the next $days worth of reminders for med slots.
+    $medication_reminders = [];
+    foreach ($subject->medicationslots as $slot) {
+        $timeparts = explode(":", $slot->medication_time);
+        for ($d = 0; $d < $days; $d++) {
+            // For the next $days days, set reminders for this slot, based on the day's name.
+
+            $dtNextDayFromToday = mktime(0, 0, 0, date("m"), (date("j") + $d));
+            $strNextDayFromTodaysDayName = strtolower(date("l", $dtNextDayFromToday));
+
+
+            // If the date is past the subject's end notification date, don't send the date.
+            if ($dtNextDayFromToday > $timeSubjectEndNotificationsDateEndOfDay) {
+                continue;
+            }
+
+            // If the loop's next day is in the medication slot's day list
+            if (stristr($slot->medication_day, $strNextDayFromTodaysDayName)) {
+                // Add it to the master array with the slot's time.
+                $reminderTime = mktime($timeparts[0], $timeparts[1], $timeparts[2], date("m", $dtNextDayFromToday), date("d", $dtNextDayFromToday), date("Y", $dtNextDayFromToday));
+                // Using the day's unixtime as the array index, so we can collapse results.
+                // If we want to do something with the meds for this slot, we need to add them.
+                // If not, this loop isn't needed and could be replaced by a ++ or count() or ... nothing,
+                // as long as it's adding the time as an index.
+                foreach ($slot->medicines as $med) {
+                    $medication_reminders[$reminderTime][] = $med;
+                }
+            }
+        }
+    }
+    ksort($medication_reminders);
+
+    foreach($medication_reminders as $time=>$medcines_at_this_time) {
+        $json_reminders['medications'][] = [
+            'medtime' => date("H:i",$time),
+            'meddate' => date("m/d/Y",$time),
+            'medcount' => count($medcines_at_this_time)
+        ];
+    }
+
+    ///// Virtual Visit Reminders
+
+    // Get today + $days
+    // Don't forget to set the time to the end of the day...
+    $datetimeReqParamDaysFromToday = date("Y-m-d H:i:s", mktime(23,59,59,date("m"),(date("d") + $days), date("Y")));
+    $datetimeTodayStartsAt = date("Y-m-d 00:00:00");
+    $datetimeEndNotifications = date("Y-m-d 23:59:59",$timeSubjectEndNotificationsDateEndOfDay);
+    $endVVNotificationDate = min($datetimeReqParamDaysFromToday,$datetimeEndNotifications);
+    $virtual_visit_reminders = VirtualVisit::where('date','>=',$datetimeTodayStartsAt)->where('date','<=',$endVVNotificationDate)->where('subject','=',$subject->subject)->orderBy('date')->get();
+
+    $json_reminders['virtualvisits'] = [];
+    foreach ($virtual_visit_reminders as $vv) {
+        $json_reminders['virtualvisits'][] = [
+            'vvtime' => date("H:i",strtotime($vv->date)),
+            'vvdate' => date("m/d/Y",strtotime($vv->date)),
+            'vvnotes' => $vv->notes,
+            'vvurl' => $subject->virtual_visit_url
+        ];
+    }
+
+    return response()->json($json_reminders);
+
+});
+
+
 Route::get('api/medications/{subject}', function ($code) {
     $subject = Subject::find($code);
 
