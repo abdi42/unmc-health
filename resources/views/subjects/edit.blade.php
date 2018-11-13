@@ -38,7 +38,7 @@
 
 
         <br>  <p>Select Disease(s) that apply</p>
-        <input type="checkbox" name="disease[]"  value="HeartFailure" checked="checked"> Heart Failure &nbsp;
+        <input type="checkbox" name="disease[]"  value="Heart" checked="checked"> Heart Failure &nbsp;
         <input type="checkbox" name="disease[]"  value="HyperTension"> Hyper Tension &nbsp;
         <input type="checkbox" name="disease[]"  value="COPD"> COPD &nbsp;
         <input type="checkbox" name="disease[]"  value="Diabetes"> Diabetes &nbsp;<br>

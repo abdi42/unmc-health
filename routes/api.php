@@ -120,12 +120,6 @@ Route::get('api/content/{categoryname}', function (
     Request $request,
     $categoryname
 ) {
-    if ($categoryname == "HeartFailure") {
-        $categoryname = "Heart";
-    } elseif ($categoryname == "COPD") {
-        $categoryname = "General";
-    }
-
     $exclude = explode(',', $request->query('exclude'));
 
     $category = Category::where('category', '=', $categoryname)->first();
@@ -247,8 +241,9 @@ Route::get('api/virtualvisits/{subject}', function (
 ) {
     if ($subject) {
         $virtualvisits = $subject->virtualvisits;
-        foreach ($virtualvisits as $k=>$virtualvisit) {
-            $virtualvisits[$k]['virtual_visit_url'] = $subject->virtual_visit_url;
+        foreach ($virtualvisits as $k => $virtualvisit) {
+            $virtualvisits[$k]['virtual_visit_url'] =
+                $subject->virtual_visit_url;
         }
         return $virtualvisits;
     } else {
