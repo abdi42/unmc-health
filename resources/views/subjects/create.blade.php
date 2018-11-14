@@ -26,7 +26,7 @@
                 <input type="password" name="pin" placeholder="Enter your PIN here" class="form-control" required>
 
                 <br><p>Select Disease(s) that apply</p>
-                <input type="checkbox" name="disease[]"  value="HeartFailure" checked="checked"> Heart Failure &nbsp;
+                <input type="checkbox" name="disease[]"  value="Heart" checked="checked"> Heart Failure &nbsp;
                 <input type="checkbox" name="disease[]"  value="HyperTension"> Hyper Tension &nbsp;
                 <input type="checkbox" name="disease[]"  value="COPD"> COPD &nbsp;
                 <input type="checkbox" name="disease[]"  value="Diabetes"> Diabetes &nbsp;<br>
@@ -43,10 +43,6 @@
                 <div class="form-notes">
                     <em>Selecting the intervention group will determine the features available to the subject in the app.</em>
                 </div>
-
-                <br> <p>Virtual Visits</p>
-                <input type="radio" name="virtualvisit"  value=1 checked="checked"> Yes &nbsp;
-                <input type="radio" name="virtualvisit"  value=0> No &nbsp;<br>
 
                 <br> <p>Enrollment Start Date</p>
                 <input type="date" name="enrollmentdate"  id="enrollmentdate" class="form-control col-sm-2" value="date" required><br>
