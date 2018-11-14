@@ -24,8 +24,6 @@ $subject->subject => '/subjects/'. $subject->subject,
       </div>
     @endif
   </div>
-
-  </div>
 @endsection
 @push('scripts')
   <script src="/js/virtualvisit.js"></script>
