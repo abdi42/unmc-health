@@ -55,7 +55,10 @@ Route::get('api/reminders/{subject}', function ($code) {
     return response()->json($subject);
 });
 
-Route::get('api/subjects/{subject}/getReminders', function (Request $request, Subject $subject) {
+Route::get('api/subjects/{subject}/getReminders', function (
+    Request $request,
+    Subject $subject
+) {
     // Check your input params.
     $default_days = 365;
     $days = $request->input('days', $default_days);
@@ -66,7 +69,10 @@ Route::get('api/subjects/{subject}/getReminders', function (Request $request, Su
     // Array used for output
     $json_reminders = [];
 
-    $timeSubjectEndNotificationsDateEndOfDay = strtotime($subject->enrollment_end_notifications_date) + 24*60*60 - 1;
+    $timeSubjectEndNotificationsDateEndOfDay =
+        strtotime($subject->enrollment_end_notifications_date) +
+        24 * 60 * 60 -
+        1;
     ///// Medicine Slot Scheduling for Reminders
     ///
     // Go set the next $days worth of reminders for med slots.
@@ -76,19 +82,29 @@ Route::get('api/subjects/{subject}/getReminders', function (Request $request, Su
         for ($d = 0; $d < $days; $d++) {
             // For the next $days days, set reminders for this slot, based on the day's name.
 
-            $dtNextDayFromToday = mktime(0, 0, 0, date("m"), (date("j") + $d));
-            $strNextDayFromTodaysDayName = strtolower(date("l", $dtNextDayFromToday));
-
+            $dtNextDayFromToday = mktime(0, 0, 0, date("m"), date("j") + $d);
+            $strNextDayFromTodaysDayName = strtolower(
+                date("l", $dtNextDayFromToday)
+            );
 
             // If the date is past the subject's end notification date, don't send the date.
-            if ($dtNextDayFromToday > $timeSubjectEndNotificationsDateEndOfDay) {
+            if (
+                $dtNextDayFromToday > $timeSubjectEndNotificationsDateEndOfDay
+            ) {
                 continue;
             }
 
             // If the loop's next day is in the medication slot's day list
             if (stristr($slot->medication_day, $strNextDayFromTodaysDayName)) {
                 // Add it to the master array with the slot's time.
-                $reminderTime = mktime($timeparts[0], $timeparts[1], $timeparts[2], date("m", $dtNextDayFromToday), date("d", $dtNextDayFromToday), date("Y", $dtNextDayFromToday));
+                $reminderTime = mktime(
+                    $timeparts[0],
+                    $timeparts[1],
+                    $timeparts[2],
+                    date("m", $dtNextDayFromToday),
+                    date("d", $dtNextDayFromToday),
+                    date("Y", $dtNextDayFromToday)
+                );
                 // Using the day's unixtime as the array index, so we can collapse results.
                 // If we want to do something with the meds for this slot, we need to add them.
                 // If not, this loop isn't needed and could be replaced by a ++ or count() or ... nothing,
@@ -101,10 +117,10 @@ Route::get('api/subjects/{subject}/getReminders', function (Request $request, Su
     }
     ksort($medication_reminders);
 
-    foreach($medication_reminders as $time=>$medcines_at_this_time) {
+    foreach ($medication_reminders as $time => $medcines_at_this_time) {
         $json_reminders['medications'][] = [
-            'medtime' => date("H:i",$time),
-            'meddate' => date("m/d/Y",$time),
+            'medtime' => date("H:i", $time),
+            'meddate' => date("m/d/Y", $time),
             'medcount' => count($medcines_at_this_time)
         ];
     }
@@ -113,26 +129,41 @@ Route::get('api/subjects/{subject}/getReminders', function (Request $request, Su
 
     // Get today + $days
     // Don't forget to set the time to the end of the day...
-    $datetimeReqParamDaysFromToday = date("Y-m-d H:i:s", mktime(23,59,59,date("m"),(date("d") + $days), date("Y")));
+    $datetimeReqParamDaysFromToday = date(
+        "Y-m-d H:i:s",
+        mktime(23, 59, 59, date("m"), date("d") + $days, date("Y"))
+    );
     $datetimeTodayStartsAt = date("Y-m-d 00:00:00");
-    $datetimeEndNotifications = date("Y-m-d 23:59:59",$timeSubjectEndNotificationsDateEndOfDay);
-    $endVVNotificationDate = min($datetimeReqParamDaysFromToday,$datetimeEndNotifications);
-    $virtual_visit_reminders = VirtualVisit::where('date','>=',$datetimeTodayStartsAt)->where('date','<=',$endVVNotificationDate)->where('subject','=',$subject->subject)->orderBy('date')->get();
+    $datetimeEndNotifications = date(
+        "Y-m-d 23:59:59",
+        $timeSubjectEndNotificationsDateEndOfDay
+    );
+    $endVVNotificationDate = min(
+        $datetimeReqParamDaysFromToday,
+        $datetimeEndNotifications
+    );
+    $virtual_visit_reminders = VirtualVisit::where(
+        'date',
+        '>=',
+        $datetimeTodayStartsAt
+    )
+        ->where('date', '<=', $endVVNotificationDate)
+        ->where('subject', '=', $subject->subject)
+        ->orderBy('date')
+        ->get();
 
     $json_reminders['virtualvisits'] = [];
     foreach ($virtual_visit_reminders as $vv) {
         $json_reminders['virtualvisits'][] = [
-            'vvtime' => date("H:i",strtotime($vv->date)),
-            'vvdate' => date("m/d/Y",strtotime($vv->date)),
+            'vvtime' => date("H:i", strtotime($vv->date)),
+            'vvdate' => date("m/d/Y", strtotime($vv->date)),
             'vvnotes' => $vv->notes,
             'vvurl' => $subject->virtual_visit_url
         ];
     }
 
     return response()->json($json_reminders);
-
 });
-
 
 Route::get('api/medications/{subject}', function ($code) {
     $subject = Subject::find($code);
@@ -156,13 +187,22 @@ Route::put('api/medications/{subject}', function (
 ) {
     if (!$subject) {
         return response()->json(
-            ['error' => 'Could not find subject with specified id' . $code],
+            ['error' => 'Could not find subject with specified'],
             404
         );
     }
 
-    foreach ($request->slots as $slot) {
+    foreach ($request->all() as $slot) {
+        foreach ($slot['medicines'] as $medicine) {
+            $medicationResponse = new MedicationResponse();
+            $medicationResponse->medication_id = $medicine['id'];
+            $medicationResponse->isTaken = $medicine['isTaken'];
+            $medicationResponse->reason = $medicine['reason'];
+            $medicationResponse->save();
+        }
     }
+
+    return response()->json("Saved medication data");
 });
 
 Route::post('api/content', function (Request $request) {

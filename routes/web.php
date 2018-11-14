@@ -113,6 +113,11 @@ Route::get(
     'SubjectsController@ihealthPrompt'
 );
 
+Route::get(
+    '/subjects/{subject}/medicationresponses',
+    'SubjectsController@showMedicationResponses'
+);
+
 Route::get('/ihealth/callback', 'SubjectsController@authorize_subject');
 Route::get('/webhook', 'SubjectsController@webhook');
 ?>

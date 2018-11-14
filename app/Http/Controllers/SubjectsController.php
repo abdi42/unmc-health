@@ -96,9 +96,9 @@ class SubjectsController extends Controller
 
     public function update(Request $request, $subject)
     {
-//        $this->validate($request, [
-//            'pin' => 'required'
-//        ]);
+        //        $this->validate($request, [
+        //            'pin' => 'required'
+        //        ]);
 
         $subject = Subject::all()->find($subject);
         $subject->subject = $request->input('id');
@@ -109,7 +109,9 @@ class SubjectsController extends Controller
         $subject->disease_state = implode(",", $request->input('disease'));
         $subject->virtualvisit = $request->input('virtualvisit');
         $subject->enrollmentdate = $request->input('enrollmentdate');
-        $subject->enrollment_end_notifications_date = $request->input('enrollment_end_notifications_date');
+        $subject->enrollment_end_notifications_date = $request->input(
+            'enrollment_end_notifications_date'
+        );
         $subject->enrollment_end_date = $request->input('enrollment_end_date');
         $subject->group_type = $request->input('group_type');
 
@@ -173,7 +175,7 @@ class SubjectsController extends Controller
         return view('subjects.reminders', [
             'subjectId' => $subject->subject,
             'virtualVisits' => $virtualVisits,
-            'subject' => $subject,
+            'subject' => $subject
         ]);
     }
 
@@ -181,6 +183,22 @@ class SubjectsController extends Controller
     {
         $request->session()->forget('newUser');
         return view('subjects.ihealth_prompt', [
+            'subjectId' => $subject->subject
+        ]);
+    }
+
+    public function showMedicationResponses($subject, Request $request)
+    {
+        $subject = Subject::with('medicationslots.medicines.responses')->find(
+            $subject
+        );
+
+        $medications = collect($subject->medicationslots)
+            ->pluck('medicines')
+            ->flatten();
+
+        return view('medication_responses.index', [
+            'medications' => $medications,
             'subjectId' => $subject->subject
         ]);
     }
