@@ -93,5 +93,6 @@ class DatabaseSeeder extends Seeder
         seedContent(database_path('seeds/diabetes.xlsx'), 'Diabetes');
         seedContent(database_path('seeds/general.xlsx'), 'General');
         seedContent(database_path('seeds/hypertension.xlsx'), 'Hypertension');
+        seedContent(database_path('seeds/copd.xlsx'), 'COPD');
     }
 }
