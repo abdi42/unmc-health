@@ -19,7 +19,7 @@ class AlterMedicationResponseAddSlotidColumn extends Migration
             $table
                 ->foreign('slot_id')
                 ->references('id')
-                ->on('mnedicationslots')
+                ->on('medicationslots')
                 ->onDelete('cascade');
         });
     }
