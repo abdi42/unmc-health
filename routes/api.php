@@ -180,7 +180,9 @@ Route::get('api/medications/{subject}', function ($code) {
         );
     }
 });
-
+Route::put('api/zac',function(Request $request){
+    dd($request->headers);
+});
 Route::put('api/medications/{subject}', function (
     Request $request,
     Subject $subject
@@ -191,17 +193,16 @@ Route::put('api/medications/{subject}', function (
             404
         );
     }
-
-    $data = $request->input('data');
-    $slot = json_decode($data, true);
-    $slot_id = $slot['slotId'];
-    foreach ($slot['medicines'] as $medicine) {
-        $medicationResponse = new MedicationResponse();
-        $medicationResponse->slot_id = $slot_id;
-        $medicationResponse->medication_id = $medicine['id'];
-        $medicationResponse->isTaken = $medicine['isTaken'] ? 1 : 0;
-        $medicationResponse->reason = $medicine['reason'];
-        $medicationResponse->save();
+    foreach ($request->all() as $slot) {
+	    $slot_id = $slot['slotId'];
+	    foreach ($slot['medicines'] as $medicine) {
+	        $medicationResponse = new MedicationResponse();
+	        $medicationResponse->slot_id = $slot_id;
+	        $medicationResponse->medication_id = $medicine['id'];
+	        $medicationResponse->isTaken = $medicine['isTaken'] ? 1 : 0;
+	        $medicationResponse->reason = isset($medicine['reason']) && !empty($medicine['reason']) ? $medicine['reason'] : '';
+	        $medicationResponse->save();
+	    }
     }
 
     return response()->json("Saved medication data");
