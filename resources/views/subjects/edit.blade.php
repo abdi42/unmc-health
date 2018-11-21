@@ -50,6 +50,7 @@
             <option value="2" {{ $subject->group_type == 2 ? "selected" : '' }}>{{App\Subject::GROUP_TYPE_2_TEXT}}</option>
             <option value="3" {{ $subject->group_type == 3 ? "selected" : '' }}>{{App\Subject::GROUP_TYPE_3_TEXT}}</option>
         </select>
+        <input type="hidden" name="group_type" value="{{$subject->group_type}}">
         <br>
         <div class="form-notes">
             <em>Selecting the intervention group will determine the features available to the subject in the app.</em>
