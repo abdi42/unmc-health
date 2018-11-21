@@ -112,6 +112,7 @@ Route::get('api/subjects/{subject}/getReminders', function (
                 foreach ($slot->medicines as $med) {
                     $medication_reminders[$reminderTime][] = $med;
                 }
+                $medication_reminders[$reminderTime]['mednotify'] = $slot->notification_preference;
             }
         }
     }
@@ -121,7 +122,8 @@ Route::get('api/subjects/{subject}/getReminders', function (
         $json_reminders['medications'][] = [
             'medtime' => date("H:i", $time),
             'meddate' => date("m/d/Y", $time),
-            'medcount' => count($medcines_at_this_time)
+            'medcount' => count($medcines_at_this_time),
+            'mednotify' => (bool) $medcines_at_this_time['mednotify']
         ];
     }
 
@@ -163,6 +165,53 @@ Route::get('api/subjects/{subject}/getReminders', function (
     }
 
     return response()->json($json_reminders);
+});
+
+// Set notification preference
+Route::put('api/subjects/{subject}/setMedicineTimeReminderPreference', function(Request $request, Subject $subject) {
+    // Subject check is automatic with this route and hinting.
+    $matches = [];
+    if (! ($request->filled('medtime')
+            && preg_match('/(\d\d):(\d\d)/',$request->input('medtime'),$matches)
+            && $matches[1] <= 23
+            && $matches[2] <= 59
+          )
+    ) {
+        return response()->json(
+            ['error' => 'Misisng or invalid field: medtime (HH:mm).'],
+            422
+        );
+    }
+    if (! ( $request->filled('mednotify') && is_bool($request->input('mednotify')) ) )  {
+        return response()->json(
+            ['error' => 'Missing or invalid field: mednotify (bool).'],
+            422
+        );
+    }
+
+    // Now, the time and notification fields should be correct.
+    // do the insert.
+    $time = $request->input('medtime') . ":00"; // add seconds to match format.
+    $timeOnOff = strtoupper(date("g:i a",strtotime($request->input('medtime'))));
+    $preference = $request->input('mednotify');
+    $preferenceOnOff = $preference ? 'On' : 'Off';
+    \Illuminate\Support\Facades\DB::table('medicationslots')
+        ->where('subject',$subject->subject)
+        ->where('medication_time',$time)
+        ->update(['notification_preference' => $preference]);
+    $slotsUpdated = \Illuminate\Support\Facades\DB::table('medicationslots')
+        ->where('subject',$subject->subject)
+        ->where('medication_time',$time)
+        ->where('notification_preference',$preference)
+        ->count();
+    if ($slotsUpdated > 0) {
+        $message = "Reminder preference updated: $timeOnOff set to $preferenceOnOff";
+    } else {
+        $message = "Time sent did not match any medications. Nothing updated.";
+    }
+    return response()->json(
+        ["message" => $message , "slots_updated"=>$slotsUpdated]
+    );
 });
 
 Route::get('api/medications/{subject}', function ($code) {

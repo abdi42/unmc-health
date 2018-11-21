@@ -41,6 +41,7 @@
               <strong>Every {{preg_replace("/,/",", ", $medslot->medication_day)}}
                   at {{date("g:m a",strtotime($medslot->medication_time))}}
               </strong>
+              <br><em>Subject Reminder Preference: {{$medslot->notification_preference ? 'On' : 'Off'}}</em>
             <ul>
               @foreach($medslot->medicines as $medication)
                 <li>
@@ -66,7 +67,7 @@
               @foreach($virtualVisits as $visit)
                   <li class="list-group-item">
                       <p class="font-weight-bold">{{\Carbon\Carbon::parse($visit->date,'UTC')->format('M d,  h:m a')}}</p>
-                      <p class="font-weight-bold">{{$visit->notes}}</p>
+                      <p>{{$visit->notes}}</p>
                   </li>
               @endforeach
           </ul>
