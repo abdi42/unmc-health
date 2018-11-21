@@ -41,7 +41,7 @@
               <strong>Every {{preg_replace("/,/",", ", $medslot->medication_day)}}
                   at {{date("g:m a",strtotime($medslot->medication_time))}}
               </strong>
-              <br><em>Subject Notification Preference: {{$medslot->notification_preference ? 'Yes' : 'No'}}</em>
+              <br><em>Subject Reminder Preference: {{$medslot->notification_preference ? 'On' : 'Off'}}</em>
             <ul>
               @foreach($medslot->medicines as $medication)
                 <li>
