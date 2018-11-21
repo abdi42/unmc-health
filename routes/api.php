@@ -112,6 +112,7 @@ Route::get('api/subjects/{subject}/getReminders', function (
                 foreach ($slot->medicines as $med) {
                     $medication_reminders[$reminderTime][] = $med;
                 }
+                $medication_reminders[$reminderTime]['mednotify'] = $slot->notification_preference;
             }
         }
     }
@@ -121,7 +122,8 @@ Route::get('api/subjects/{subject}/getReminders', function (
         $json_reminders['medications'][] = [
             'medtime' => date("H:i", $time),
             'meddate' => date("m/d/Y", $time),
-            'medcount' => count($medcines_at_this_time)
+            'medcount' => count($medcines_at_this_time),
+            'mednotify' => (bool) $medcines_at_this_time['mednotify']
         ];
     }
 
