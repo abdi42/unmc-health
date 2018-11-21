@@ -106,7 +106,6 @@ class SubjectsController extends Controller
             $subject->pin = bcrypt($request->input('pin'));
         }
         $subject->disease_state = implode(",", $request->input('disease'));
-        $subject->virtualvisit = $request->input('virtualvisit');
         $subject->enrollmentdate = $request->input('enrollmentdate');
         $subject->enrollment_end_notifications_date = $request->input(
             'enrollment_end_notifications_date'
