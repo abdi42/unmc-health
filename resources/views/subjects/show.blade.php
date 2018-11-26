@@ -8,21 +8,6 @@
 
 @section('content')
 	<title>Subject</title>
-	@if (session('status'))
-		<div class="alert alert-success mb-5">
-			{{ session('status') }}
-		</div>
-	@endif
-
-	@if ($errors->any())
-		<div class="alert alert-danger mb-5">
-			<ul>
-				@foreach ($errors->all() as $error)
-					<li>{{ $error }}</li>
-				@endforeach
-			</ul>
-		</div>
-	@endif
 
 	<div id="subject-container" class="mt-5">
 		<h3 class='sub-header'>Subject: {{$subject->subject}}</h3>
