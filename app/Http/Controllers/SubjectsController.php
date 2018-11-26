@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use App\QuestionResult;
+use App\MedicationResponse;
 
 class SubjectsController extends Controller
 {
@@ -71,7 +73,7 @@ class SubjectsController extends Controller
 
         return redirect(
             '/subjects/' . $subject->subject . '/medicationslots/create'
-        );
+        )->with('status', 'Created new subject ' . $subject->subject);
     }
 
     public function message()
@@ -199,6 +201,114 @@ class SubjectsController extends Controller
         return view('medication_responses.index', [
             'medications' => $medications,
             'subjectId' => $subject->subject
+        ]);
+    }
+
+    public function getWeeklyProgress(Subject $subject, Request $request)
+    {
+        $fromDate = Carbon::now()
+            ->subWeek(1)
+            ->startOfWeek();
+        $toDate = Carbon::now()
+            ->subWeek(1)
+            ->endOfWeek();
+        $questionResults = QuestionResult::where(
+            'subject_id',
+            $subject->subject
+        )
+            ->whereBetween('time', [$fromDate, $toDate])
+            ->get();
+        $medicationResults = MedicationResponse::where(
+            'subject_id',
+            $subject->subject
+        )
+            ->whereBetween('created_at', [$fromDate, $toDate])
+            ->get();
+        $questionResultsByWeek = $questionResults->groupBy(function ($date) {
+            return Carbon::parse($date->time)->format('m/d');
+        });
+        $medicationResultsByWeek = $medicationResults->groupBy(function (
+            $date
+        ) {
+            return Carbon::parse($date->created_at)->format('m/d');
+        });
+        $weights = $this->ihealthService->getHealthData(
+            'user/' . $subject->userid . '/weight.json',
+            getenv('SC_WEIGHT'),
+            getenv('SV_WEIGHT'),
+            $subject->access_token,
+            $fromDate->timestamp,
+            $toDate->timestamp
+        );
+        $weightsByWeek = collect($weights->WeightDataList)->groupBy(function (
+            $date
+        ) {
+            return Carbon::parse($date->measurement_time)->format('m/d');
+        });
+        $bloodPressure = $this->ihealthService->getHealthData(
+            'user/' . $subject->userid . '/bp.json',
+            getenv('SC_BP'),
+            getenv('SV_BP'),
+            $subject->access_token,
+            $fromDate->timestamp,
+            $toDate->timestamp
+        );
+        $bloodPressureByWeek = collect($bloodPressure->BPDataList)->groupBy(
+            function ($date) {
+                return Carbon::parse($date->measurement_time)->format('m/d');
+            }
+        );
+        $pulseOxygen = $this->ihealthService->getHealthData(
+            'user/' . $subject->userid . '/spo2.json',
+            getenv('SC_SPO2'),
+            getenv('SV_SPO2'),
+            $subject->access_token,
+            $fromDate->timestamp,
+            $toDate->timestamp
+        );
+        $pulseOxygenByWeek = collect($pulseOxygen->BODataList)->groupBy(
+            function ($date) {
+                return Carbon::parse($date->measurement_time)->format('m/d');
+            }
+        );
+        $bloodGlucose = $this->ihealthService->getHealthData(
+            'user/' . $subject->userid . '/glucose.json',
+            getenv('SC_BG'),
+            getenv('SV_BG'),
+            $subject->access_token,
+            $fromDate->timestamp,
+            $toDate->timestamp
+        );
+        $bloodGlucoseByWeek = collect($bloodGlucose->BGDataList)->groupBy(
+            function ($date) {
+                return Carbon::parse($date->measurement_time)->format('m/d');
+            }
+        );
+        return response()->json([
+            "hints" => [
+                "count" => count($questionResults),
+                "data" => $questionResultsByWeek
+            ],
+            "medicationresponse" => [
+                "count" => count($medicationResults),
+                "data" => $medicationResultsByWeek
+            ],
+            "weights" => [
+                "count" => $weights->RecordCount,
+                "data" => $weightsByWeek
+            ],
+            "bloodpressure" => [
+                "count" => $bloodPressure->RecordCount,
+                "data" => $bloodPressureByWeek
+            ],
+            "bloodglucose" => [
+                "count" => $bloodGlucose->RecordCount,
+                "data" => $bloodGlucoseByWeek
+            ],
+            "pulseoxygen" => [
+                "count" => $pulseOxygen->RecordCount,
+                "data" => $pulseOxygenByWeek
+            ]
         ]);
     }
 }

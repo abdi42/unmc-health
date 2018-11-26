@@ -86,4 +86,9 @@ class Subject extends Model
     {
         return $this->hasMany(VirtualVisit::class, 'subject', 'subject');
     }
+
+    public function medicationResponses()
+    {
+        return $this->hasMany(Medicationslot::class, 'subject', 'subject');
+    }
 }
