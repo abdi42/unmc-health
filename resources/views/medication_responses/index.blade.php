@@ -8,12 +8,6 @@
 
 @section('content')
 
-  @if (session('status'))
-    <div class="alert alert-success">
-      {{ session('status') }}
-    </div>
-  @endif
-
 
   <title>Medication Responses</title> <!-- todo: you can't have a title here! -->
   <br>

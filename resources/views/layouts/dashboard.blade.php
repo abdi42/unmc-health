@@ -55,7 +55,7 @@
         </li>
 
         <li class="text-center nav-item">
-          <a href="{{ url("/settings") }}">
+          <a href="{{ url("/admin") }}">
             <div class="lin"><i data-feather="settings" class="icon"></i>
               <br>
               Settings</div>
@@ -64,8 +64,8 @@
       </ul>
     </div>
     <div id="page-content-wrapper">
-      <div class="nav-container row">
-        <ol class="breadcrumb col" id="navbar">
+      <div class="nav-container row" id="navbar">
+        <ol class="breadcrumb col" id="breadcumbs">
           @if (isset($breadcrumbs))
             @foreach ($breadcrumbs as $crumb => $link)
               @if ($link !== null)
@@ -76,10 +76,48 @@
             @endforeach
           @endif
         </ol>
+
+        <!-- Right Side Of Navbar -->
+        @auth
+          <ul class="breadcrumb p-4 ml-auto" id="user-nav">
+            <li class="nav-item dropdown">
+              <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                {{ Auth::user()->name }} <span class="caret"></span>
+              </a>
+
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                  {{ __('Logout') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                  @csrf
+                </form>
+              </div>
+            </li>
+          </ul>
+        @endauth
       </div>
 
       <div class="container">
         <div id="page-content-body" class="p-3">
+          @if (session('status'))
+            <div class="alert alert-success mb-5">
+              {{ session('status') }}
+            </div>
+          @endif
+
+          @if ($errors->any())
+            <div class="alert alert-danger mb-5">
+              <ul>
+                @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach
+              </ul>
+            </div>
+          @endif
           @yield('content')
         </div>
       </div>
