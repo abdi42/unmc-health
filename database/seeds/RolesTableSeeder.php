@@ -17,11 +17,7 @@ class RolesTableSeeder extends Seeder
         $role_admin->save();
 
         $role_instructor = new Role();
-        $role_instructor->name = 'instructor';
+        $role_instructor->name = 'user';
         $role_instructor->save();
-
-        $role_reporter = new Role();
-        $role_reporter->name = 'reporter';
-        $role_reporter->save();
     }
 }
