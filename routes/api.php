@@ -112,6 +112,7 @@ Route::get('api/subjects/{subject}/getReminders', function (
                 foreach ($slot->medicines as $med) {
                     $medication_reminders[$reminderTime][] = $med;
                 }
+                $medication_reminders[$reminderTime]['mednotify'] = $slot->notification_preference;
             }
         }
     }
@@ -121,7 +122,8 @@ Route::get('api/subjects/{subject}/getReminders', function (
         $json_reminders['medications'][] = [
             'medtime' => date("H:i", $time),
             'meddate' => date("m/d/Y", $time),
-            'medcount' => count($medcines_at_this_time)
+            'medcount' => count($medcines_at_this_time),
+            'mednotify' => (bool) $medcines_at_this_time['mednotify']
         ];
     }
 
@@ -165,6 +167,53 @@ Route::get('api/subjects/{subject}/getReminders', function (
     return response()->json($json_reminders);
 });
 
+// Set notification preference
+Route::put('api/subjects/{subject}/setMedicineTimeReminderPreference', function(Request $request, Subject $subject) {
+    // Subject check is automatic with this route and hinting.
+    $matches = [];
+    if (! ($request->filled('medtime')
+            && preg_match('/(\d\d):(\d\d)/',$request->input('medtime'),$matches)
+            && $matches[1] <= 23
+            && $matches[2] <= 59
+          )
+    ) {
+        return response()->json(
+            ['error' => 'Misisng or invalid field: medtime (HH:mm).'],
+            422
+        );
+    }
+    if (! ( $request->filled('mednotify') && is_bool($request->input('mednotify')) ) )  {
+        return response()->json(
+            ['error' => 'Missing or invalid field: mednotify (bool).'],
+            422
+        );
+    }
+
+    // Now, the time and notification fields should be correct.
+    // do the insert.
+    $time = $request->input('medtime') . ":00"; // add seconds to match format.
+    $timeOnOff = strtoupper(date("g:i a",strtotime($request->input('medtime'))));
+    $preference = $request->input('mednotify');
+    $preferenceOnOff = $preference ? 'On' : 'Off';
+    \Illuminate\Support\Facades\DB::table('medicationslots')
+        ->where('subject',$subject->subject)
+        ->where('medication_time',$time)
+        ->update(['notification_preference' => $preference]);
+    $slotsUpdated = \Illuminate\Support\Facades\DB::table('medicationslots')
+        ->where('subject',$subject->subject)
+        ->where('medication_time',$time)
+        ->where('notification_preference',$preference)
+        ->count();
+    if ($slotsUpdated > 0) {
+        $message = "Reminder preference updated: $timeOnOff set to $preferenceOnOff";
+    } else {
+        $message = "Time sent did not match any medications. Nothing updated.";
+    }
+    return response()->json(
+        ["message" => $message , "slots_updated"=>$slotsUpdated]
+    );
+});
+
 Route::get('api/medications/{subject}', function ($code) {
     $subject = Subject::find($code);
 
@@ -180,7 +229,9 @@ Route::get('api/medications/{subject}', function ($code) {
         );
     }
 });
-
+Route::put('api/zac',function(Request $request){
+    dd($request->headers);
+});
 Route::put('api/medications/{subject}', function (
     Request $request,
     Subject $subject
@@ -191,17 +242,16 @@ Route::put('api/medications/{subject}', function (
             404
         );
     }
-
-    $data = $request->input('data');
-    $slot = json_decode($data, true);
-    $slot_id = $slot['slotId'];
-    foreach ($slot['medicines'] as $medicine) {
-        $medicationResponse = new MedicationResponse();
-        $medicationResponse->slot_id = $slot_id;
-        $medicationResponse->medication_id = $medicine['id'];
-        $medicationResponse->isTaken = $medicine['isTaken'] ? 1 : 0;
-        $medicationResponse->reason = $medicine['reason'];
-        $medicationResponse->save();
+    foreach ($request->all() as $slot) {
+	    $slot_id = $slot['slotId'];
+	    foreach ($slot['medicines'] as $medicine) {
+	        $medicationResponse = new MedicationResponse();
+	        $medicationResponse->slot_id = $slot_id;
+	        $medicationResponse->medication_id = $medicine['id'];
+	        $medicationResponse->isTaken = $medicine['isTaken'] ? 1 : 0;
+	        $medicationResponse->reason = isset($medicine['reason']) && !empty($medicine['reason']) ? $medicine['reason'] : '';
+	        $medicationResponse->save();
+	    }
     }
 
     return response()->json("Saved medication data");

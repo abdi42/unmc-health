@@ -125,6 +125,12 @@
               </div>
             </div>
 
+            <div class="row justify-content-center mt-2">
+              <div class="col-10 p-0">
+                Notification preference for subject reminders is set to <strong>{{$slot->notification_preference ? 'On':'Off'}}</strong>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
