@@ -211,26 +211,9 @@ class SubjectsController extends Controller
         $toDate = Carbon::now()
             ->subWeek(1)
             ->endOfWeek();
-        $questionResults = QuestionResult::where(
-            'subject_id',
-            $subject->subject
-        )
-            ->whereBetween('time', [$fromDate, $toDate])
-            ->get();
-        $medicationResults = MedicationResponse::where(
-            'subject_id',
-            $subject->subject
-        )
-            ->whereBetween('created_at', [$fromDate, $toDate])
-            ->get();
-        $questionResultsByWeek = $questionResults->groupBy(function ($date) {
-            return Carbon::parse($date->time)->format('m/d');
-        });
-        $medicationResultsByWeek = $medicationResults->groupBy(function (
-            $date
-        ) {
-            return Carbon::parse($date->created_at)->format('m/d');
-        });
+
+        $disease_states = collect(explode(",", $subject->disease_state));
+
         $weights = $this->ihealthService->getHealthData(
             'user/' . $subject->userid . '/weight.json',
             getenv('SC_WEIGHT'),
@@ -239,11 +222,13 @@ class SubjectsController extends Controller
             $fromDate->timestamp,
             $toDate->timestamp
         );
+
         $weightsByWeek = collect($weights->WeightDataList)->groupBy(function (
             $date
         ) {
             return Carbon::parse($date->measurement_time)->format('m/d');
         });
+
         $bloodPressure = $this->ihealthService->getHealthData(
             'user/' . $subject->userid . '/bp.json',
             getenv('SC_BP'),
@@ -283,31 +268,177 @@ class SubjectsController extends Controller
                 return Carbon::parse($date->measurement_time)->format('m/d');
             }
         );
-        return response()->json([
+
+        $weeklyReport = [
             "hints" => [
-                "count" => count($questionResults),
-                "data" => $questionResultsByWeek
+                "expected" => 7,
+                "actual" => 0,
+                "response" => collect([])
             ],
-            "medicationresponse" => [
-                "count" => count($medicationResults),
-                "data" => $medicationResultsByWeek
+            "medication" => [
+                "expected" => 0,
+                "actual" => 0,
+                "response" => collect([])
             ],
             "weights" => [
-                "count" => $weights->RecordCount,
-                "data" => $weightsByWeek
+                "expected" => 0,
+                "actual" => 0,
+                "measurements" => collect([])
             ],
-            "bloodpressure" => [
-                "count" => $bloodPressure->RecordCount,
-                "data" => $bloodPressureByWeek
+            "bloodPressure" => [
+                "expected" => 0,
+                "actual" => 0,
+                "measurements" => collect([])
             ],
-            "bloodglucose" => [
-                "count" => $bloodGlucose->RecordCount,
-                "data" => $bloodGlucoseByWeek
+            "pulseOxygen" => [
+                "expected" => 0,
+                "actual" => 0,
+                "measurements" => collect([])
             ],
-            "pulseoxygen" => [
-                "count" => $pulseOxygen->RecordCount,
-                "data" => $pulseOxygenByWeek
+            "bloodGlucose" => [
+                "expected" => 0,
+                "actual" => 0,
+                "measurements" => collect([])
             ]
-        ]);
+        ];
+
+        $weeklyReport["hints"]["actual"] = count(
+            QuestionResult::where('subject_id', $subject->subject)
+                ->whereBetween("created_at", [$fromDate, $toDate])
+                ->get()
+        );
+
+        $daysofWeek = [
+            0 => "Sunday",
+            1 => "Monday",
+            2 => "Tuesday",
+            3 => "Wednesday",
+            4 => "Thursday",
+            5 => "Friday",
+            6 => "Saturday"
+        ];
+
+        for ($i = 0; $i < 7; $i++) {
+            $currentDate = Carbon::now()
+                ->subWeek(1)
+                ->startOfWeek()
+                ->addDay($i);
+
+            $day = $daysofWeek[$currentDate->dayOfWeek];
+
+            $questionResults = QuestionResult::where(
+                'subject_id',
+                $subject->subject
+            )
+                ->whereDate('created_at', '=', $currentDate->toDateString())
+                ->get();
+
+            $medicationSlot = Medicationslot::with('medicines')
+                ->where('subject', $subject->subject)
+                ->where($day, '=', true)
+                ->get();
+
+            $medicationResponses = MedicationResponse::where(
+                'subject_id',
+                $subject->subject
+            )
+                ->whereDate('created_at', '=', $currentDate->toDateString())
+                ->get();
+
+            $weeklyReport["medication"]["expected"] += count(
+                $medicationSlot->pluck('medicines')->flatten(1)
+            );
+
+            $weeklyReport["medication"]["actual"] += count(
+                $medicationResponses
+            );
+
+            $weeklyReport["hints"]["response"]->push([
+                "date" => $currentDate->format('m/d/y'),
+                "actual" => count($questionResults),
+                "expected" => 1
+            ]);
+
+            $weeklyReport["medication"]["response"]->push([
+                "date" => $currentDate->format('m/d/y'),
+                "actual" => count($medicationResponses),
+                "expected" => count(
+                    $medicationSlot->pluck('medicines')->flatten(1)
+                )
+            ]);
+
+            if ($disease_states->search("Heart", true) !== false) {
+                $weeklyReport["weights"]["expected"] += 1;
+
+                if ($weightsByWeek->get($currentDate->format("m/d"))) {
+                    $weeklyReport["weights"]["actual"] += 1;
+                    $weeklyReport["weights"]["measurements"]->push([
+                        "date" => $currentDate->format('m/d/y'),
+                        "value" => $weightsByWeek->get("11/19")->first()
+                            ->WeightValue
+                    ]);
+                } else {
+                    $weeklyReport["weights"]["measurements"]->push([
+                        "date" => $currentDate->format('m/d/y'),
+                        "value" => 0
+                    ]);
+                }
+            }
+
+            if ($disease_states->search("Diabetes", true) !== false) {
+                $weeklyReport["bloodGlucose"]["expected"] += 1;
+
+                if ($bloodGlucoseByWeek->get($currentDate->format("m/d"))) {
+                    $weeklyReport["bloodGlucose"]["actual"] += 1;
+                    $weeklyReport["bloodGlucose"]["measurements"]->push([
+                        "date" => $currentDate->format('m/d/y'),
+                        "value" => $bloodGlucoseByWeek->get("11/19")->first()
+                            ->BG
+                    ]);
+                } else {
+                    $weeklyReport["bloodGlucose"]["measurements"]->push([
+                        "date" => $currentDate->format('m/d/y'),
+                        "value" => 0
+                    ]);
+                }
+            }
+
+            if ($disease_states->search("COPD", true) !== false) {
+                $weeklyReport["pulseOxygen"]["expected"] += 1;
+
+                if ($pulseOxygenByWeek->get($currentDate->format("m/d"))) {
+                    $weeklyReport["pulseOxygen"]["actual"] += 1;
+                    $weeklyReport["pulseOxygen"]["measurements"]->push([
+                        "date" => $currentDate->format('m/d/y'),
+                        "value" => $pulseOxygenByWeek->get("11/19")->first()->BO
+                    ]);
+                } else {
+                    $weeklyReport["pulseOxygen"]["measurements"]->push([
+                        "date" => $currentDate->format('m/d/y'),
+                        "value" => 0
+                    ]);
+                }
+            }
+
+            if ($disease_states->search("HyperTension", true) !== false) {
+                $weeklyReport["bloodPressure"]["expected"] += 1;
+
+                if ($bloodPressureByWeek->get($currentDate->format("m/d"))) {
+                    $weeklyReport["bloodPressure"]["actual"] += 1;
+                    $weeklyReport["bloodPressure"]["measurements"]->push([
+                        "date" => $currentDate->format('m/d/y'),
+                        "value" => $bloodPressureByWeek->get("11/19")->first()
+                            ->HP
+                    ]);
+                } else {
+                    $weeklyReport["bloodPressure"]["measurements"]->push([
+                        "date" => $currentDate->format('m/d/y'),
+                        "value" => 0
+                    ]);
+                }
+            }
+        }
+
+        return $weeklyReport;
     }
 }
