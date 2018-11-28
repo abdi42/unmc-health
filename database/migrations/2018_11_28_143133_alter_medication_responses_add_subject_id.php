@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddMedicationResponsesAddSubjectId extends Migration
+class AlterMedicationResponsesAddSubjectId extends Migration
 {
     /**
      * Run the migrations.
@@ -21,6 +21,12 @@ class AddMedicationResponsesAddSubjectId extends Migration
                 ->on('subjects')
                 ->onDelete('cascade');
         });
+
+        foreach (\App\MedicationResponse::all() as $response) {
+            $slot = \App\Medicationslot::findOrFail($response->slot_id);
+            $response->subject_id = $slot->subject;
+            $response->save();
+        }
     }
 
     /**

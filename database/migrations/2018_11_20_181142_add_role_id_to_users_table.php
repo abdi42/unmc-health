@@ -31,12 +31,8 @@ class AddRoleIdToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            if (Schema::hasColumn('role_id')) {
-                $table->dropForeign(['role_id']);
-            }
-            if (Schema::hasColumn('pending_invite')) {
-                $table->dropColumn('pending_invite');
-            }
+            $table->dropForeign(['role_id']);
+            $table->dropColumn('pending_invite');
         });
     }
 }
