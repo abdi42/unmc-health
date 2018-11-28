@@ -28,17 +28,15 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($medications as $medication)
-          @foreach($medication['responses'] as $response)
-            <tr>
-              <th scope="row">
-                {{$medication['medication_name']}}
-              </th>
-              <td>{{ ($response->isTaken) ? "Yes" : "No" }}</td>
-              <td>{{$response->reason}}</td>
-              <td>{{\Carbon\Carbon::parse($response->created_at,'UTC')->format('M d,  h:m a')}}</td>
-            </tr>
-          @endforeach
+        @foreach($medicationResponse as $response)
+          <tr>
+            <th scope="row">
+              {{$response->medication->medication_name}}
+            </th>
+            <td>{{ ($response->isTaken) ? "Yes" : "No" }}</td>
+            <td>{{$response->reason}}</td>
+            <td>{{\Carbon\Carbon::parse($response->created_at,'UTC')->format('M d,  h:m a')}}</td>
+          </tr>
         @endforeach
         </tbody>
       </table>

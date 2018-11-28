@@ -187,18 +187,10 @@ class SubjectsController extends Controller
         ]);
     }
 
-    public function showMedicationResponses($subject, Request $request)
+    public function showMedicationResponses(Subject $subject, Request $request)
     {
-        $subject = Subject::with('medicationslots.medicines.responses')->find(
-            $subject
-        );
-
-        $medications = collect($subject->medicationslots)
-            ->pluck('medicines')
-            ->flatten();
-
         return view('medication_responses.index', [
-            'medications' => $medications,
+            'medicationResponse' => $subject->medicationResponses,
             'subjectId' => $subject->subject
         ]);
     }

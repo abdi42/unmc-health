@@ -89,6 +89,10 @@ class Subject extends Model
 
     public function medicationResponses()
     {
-        return $this->hasMany(Medicationslot::class, 'subject', 'subject');
+        return $this->hasMany(
+            MedicationResponse::class,
+            'subject_id',
+            'subject'
+        );
     }
 }
