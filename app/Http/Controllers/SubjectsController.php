@@ -204,6 +204,7 @@ class SubjectsController extends Controller
             ->subWeek(1)
             ->endOfWeek();
 
+        $enrollmentDate = Carbon::parse($subject->enrollmentdate);
         $disease_states = collect(explode(",", $subject->disease_state));
 
         $weightsByWeek = collect([]);
@@ -277,6 +278,7 @@ class SubjectsController extends Controller
         }
 
         $weeklyReport = [
+            "week" => $enrollmentDate->diffInWeeks(Carbon::now()),
             "hints" => [
                 "expected" => 7,
                 "actual" => 0,
