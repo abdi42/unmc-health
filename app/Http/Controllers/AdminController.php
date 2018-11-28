@@ -61,7 +61,11 @@ class AdminController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $user->update($request->all());
+        $user->name = $request['name'];
+        $user->email = $request['email'];
+        $user->role_id = $request['role'];
+
+        $user->save();
 
         return redirect('admin/')->with(
             'status',

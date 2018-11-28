@@ -46,7 +46,7 @@
             <a class="btn btn-primary" href="{{ action('AdminController@edit', [$user->id]) }}">Edit</a>
           </td>
           <td>
-            @if ($user->hasRole('admin'))
+            @if (auth()->user()->hasRole('admin'))
               <form action="/admin/{{$user->id}}" method="POST">
                 @method('DELETE')
                 @csrf
