@@ -7,11 +7,6 @@
 ])
 
 @section('content')
-  @if (session('status'))
-    <div class="alert alert-success">
-      {{ session('status') }}
-    </div>
-  @endif
 
   <title>Review HINT</title>
   <h2 class="sub-header">HINT {{$content->category->category}} #{{$content->hint_number}}</h2>

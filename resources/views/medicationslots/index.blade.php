@@ -10,21 +10,6 @@
 @section('content')
   <title>Medication Times</title>
 
-  @if (session('status'))
-    <div class="alert alert-success mb-5">
-      {{ session('status') }}
-    </div>
-  @endif
-
-  @if ($errors->any())
-    <div class="alert alert-danger mb-5">
-      <ul>
-        @foreach ($errors->all() as $error)
-          <li>{{ $error }}</li>
-        @endforeach
-      </ul>
-    </div>
-  @endif
 
   <h4 class='sub-header mt-5'>Medication Times</h4>
 

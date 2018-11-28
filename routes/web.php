@@ -21,6 +21,8 @@ Route::get('/welcome', 'WelcomeController@welcome')->name('welcome');
 /* Authentication Routes */
 Auth::routes();
 
+Route::resource('/admin', 'AdminController');
+
 /* Logout Route */
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 

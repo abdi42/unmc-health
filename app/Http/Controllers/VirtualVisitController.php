@@ -61,29 +61,17 @@ class VirtualVisitController extends Controller
     public function update(Request $request, Subject $subject)
     {
         $this->validate($request, [
-            'visit.*.date' => 'required',
-            'visit.*.time' => 'required'
+            'visit.*.date' => 'required'
         ]);
 
-        foreach ($request->input('visit') as $visitData) {
-            if (!array_key_exists('id', $visitData)) {
-                $visit = new VirtualVisit();
-            } else {
-                $visit = VirtualVisit::find($visitData['id']);
-            }
+        dd($request->input('visit'));
 
-            $visit->subject = $subject->subject;
-            $visit->date = $visitData['date'] . ' ' . $visitData['time'];
-            $visit->notes = $visitData['notes'];
-            $visit->save();
-        }
+        VirtualVisit::firstOrCreate($request->input('visit'));
 
         $subject->virtual_visit_url = $request->input('virtual_visit_url');
         $subject->timestamps = false; // disable timestamp update here.
         $subject->save();
 
-        return redirect(
-            '/subjects/' . $subject->subject . '/virtualvisits'
-        )->with('status', 'Saved virtual visits!');
+        return back()->with('status', 'Saved virtual visits!');
     }
 }

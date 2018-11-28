@@ -16,8 +16,14 @@ class iHealth
         $this->baseUrl = "https://api.ihealthlabs.com:8443/openapiv2/";
     }
 
-    function getHealthData($endpoint, $sc, $sv, $access_token = null)
-    {
+    function getHealthData(
+        $endpoint,
+        $sc,
+        $sv,
+        $access_token = null,
+        $fromDate = '',
+        $toDate = ''
+    ) {
         if ($access_token == null) {
             $access_token = getenv('ACCESS_TOKEN');
         }
@@ -31,7 +37,9 @@ class iHealth
                 'redirect_uri' => getenv('REDIRECT_URI'),
                 'access_token' => $access_token,
                 'sc' => $sc,
-                'sv' => $sv
+                'sv' => $sv,
+                'start_time' => $fromDate,
+                'end_time' => $toDate
             ]
         ]);
 

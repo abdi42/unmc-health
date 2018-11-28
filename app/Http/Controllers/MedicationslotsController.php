@@ -64,7 +64,7 @@ class MedicationslotsController extends Controller
 
         return redirect(
             '/subjects/' . $medicationslot->subject . '/virtualvisits/create'
-        );
+        )->with('status', 'Saved medications');
     }
 
     public function show($subject)
@@ -116,7 +116,7 @@ class MedicationslotsController extends Controller
             });
         }
 
-        return redirect('/subjects/' . $medicationslot->subject);
+        return back()->with('status', 'Saved medications');
     }
 
     public function delete($id)
