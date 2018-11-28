@@ -214,60 +214,75 @@ class SubjectsController extends Controller
 
         $disease_states = collect(explode(",", $subject->disease_state));
 
-        $weights = $this->ihealthService->getHealthData(
-            'user/' . $subject->userid . '/weight.json',
-            getenv('SC_WEIGHT'),
-            getenv('SV_WEIGHT'),
-            $subject->access_token,
-            $fromDate->timestamp,
-            $toDate->timestamp
-        );
+        $weightsByWeek = collect([]);
+        $bloodGlucoseByWeek = collect([]);
+        $pulseOxygenByWeek = collect([]);
+        $bloodGlucoseByWeek = collect([]);
 
-        $weightsByWeek = collect($weights->WeightDataList)->groupBy(function (
-            $date
-        ) {
-            return Carbon::parse($date->measurement_time)->format('m/d');
-        });
+        if ($subject->access_token) {
+            $weights = $this->ihealthService->getHealthData(
+                'user/' . $subject->userid . '/weight.json',
+                getenv('SC_WEIGHT'),
+                getenv('SV_WEIGHT'),
+                $subject->access_token,
+                $fromDate->timestamp,
+                $toDate->timestamp
+            );
 
-        $bloodPressure = $this->ihealthService->getHealthData(
-            'user/' . $subject->userid . '/bp.json',
-            getenv('SC_BP'),
-            getenv('SV_BP'),
-            $subject->access_token,
-            $fromDate->timestamp,
-            $toDate->timestamp
-        );
-        $bloodPressureByWeek = collect($bloodPressure->BPDataList)->groupBy(
-            function ($date) {
-                return Carbon::parse($date->measurement_time)->format('m/d');
-            }
-        );
-        $pulseOxygen = $this->ihealthService->getHealthData(
-            'user/' . $subject->userid . '/spo2.json',
-            getenv('SC_SPO2'),
-            getenv('SV_SPO2'),
-            $subject->access_token,
-            $fromDate->timestamp,
-            $toDate->timestamp
-        );
-        $pulseOxygenByWeek = collect($pulseOxygen->BODataList)->groupBy(
-            function ($date) {
-                return Carbon::parse($date->measurement_time)->format('m/d');
-            }
-        );
-        $bloodGlucose = $this->ihealthService->getHealthData(
-            'user/' . $subject->userid . '/glucose.json',
-            getenv('SC_BG'),
-            getenv('SV_BG'),
-            $subject->access_token,
-            $fromDate->timestamp,
-            $toDate->timestamp
-        );
-        $bloodGlucoseByWeek = collect($bloodGlucose->BGDataList)->groupBy(
-            function ($date) {
-                return Carbon::parse($date->measurement_time)->format('m/d');
-            }
-        );
+            $weightsByWeek = collect($weights->WeightDataList)->groupBy(
+                function ($date) {
+                    return Carbon::parse($date->measurement_time)->format(
+                        'm/d'
+                    );
+                }
+            );
+
+            $bloodPressure = $this->ihealthService->getHealthData(
+                'user/' . $subject->userid . '/bp.json',
+                getenv('SC_BP'),
+                getenv('SV_BP'),
+                $subject->access_token,
+                $fromDate->timestamp,
+                $toDate->timestamp
+            );
+            $bloodPressureByWeek = collect($bloodPressure->BPDataList)->groupBy(
+                function ($date) {
+                    return Carbon::parse($date->measurement_time)->format(
+                        'm/d'
+                    );
+                }
+            );
+            $pulseOxygen = $this->ihealthService->getHealthData(
+                'user/' . $subject->userid . '/spo2.json',
+                getenv('SC_SPO2'),
+                getenv('SV_SPO2'),
+                $subject->access_token,
+                $fromDate->timestamp,
+                $toDate->timestamp
+            );
+            $pulseOxygenByWeek = collect($pulseOxygen->BODataList)->groupBy(
+                function ($date) {
+                    return Carbon::parse($date->measurement_time)->format(
+                        'm/d'
+                    );
+                }
+            );
+            $bloodGlucose = $this->ihealthService->getHealthData(
+                'user/' . $subject->userid . '/glucose.json',
+                getenv('SC_BG'),
+                getenv('SV_BG'),
+                $subject->access_token,
+                $fromDate->timestamp,
+                $toDate->timestamp
+            );
+            $bloodGlucoseByWeek = collect($bloodGlucose->BGDataList)->groupBy(
+                function ($date) {
+                    return Carbon::parse($date->measurement_time)->format(
+                        'm/d'
+                    );
+                }
+            );
+        }
 
         $weeklyReport = [
             "hints" => [
