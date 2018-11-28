@@ -29,7 +29,6 @@
     <!-- Sidebar -->
     <div id="sidebar-wrapper" class='sidebar-shadow'>
       <ul class="sidebar-nav">
-
         <li class='text-center sidebar-brand'>
           <div class="clearfix">
             <img class="w-25 p-1 mr-2" src="/img/logo.png" alt="">
@@ -54,13 +53,15 @@
           </a>
         </li>
 
-        <li class="text-center nav-item">
-          <a href="{{ url("/admin") }}">
-            <div class="lin"><i data-feather="settings" class="icon"></i>
-              <br>
-              Settings</div>
-          </a>
-        </li>
+        @if(auth()->user() && auth()->user()->hasRole('admin'))
+          <li class="text-center nav-item">
+            <a href="{{ url("/admin") }}">
+              <div class="lin"><i data-feather="settings" class="icon"></i>
+                <br>
+                Settings</div>
+            </a>
+          </li>
+        @endif
       </ul>
     </div>
     <div id="page-content-wrapper">
@@ -99,6 +100,16 @@
             </li>
           </ul>
         @endauth
+
+        @guest
+          <ul class="breadcrumb p-4 p ml-auto" id="user-nav">
+            <li class="nav-item dropdown pr-5">
+              <a class="nav-link" href="/login">
+                Login
+              </a>
+            </li>
+          </ul>
+        @endguest
       </div>
 
       <div class="container">

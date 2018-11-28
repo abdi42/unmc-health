@@ -4,6 +4,11 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+use App\Notifications\ResetPassword;
+use App\Notifications\SetPassword;
 
 class User extends Authenticatable
 {
@@ -61,5 +66,14 @@ class User extends Authenticatable
     public function hasRole($role)
     {
         return $this->role->name === $role;
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        if ($this->pending_invite == true) {
+            $this->notify(new SetPassword($token, $this->role));
+        } else {
+            $this->notify(new ResetPassword($token, $this->email));
+        }
     }
 }

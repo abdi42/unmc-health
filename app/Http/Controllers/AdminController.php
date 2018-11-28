@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 use App\User;
 use App\Role;
 
 class AdminController extends Controller
 {
+    use SendsPasswordResetEmails;
+
     public function index()
     {
         $users = User::orderBy('id', 'asc')->get();
@@ -45,6 +48,8 @@ class AdminController extends Controller
         $user->password =
             '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm';
         $user->save();
+
+        $this->sendResetLinkEmail($request);
 
         return redirect('admin/')->with(
             'status',
