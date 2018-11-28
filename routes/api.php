@@ -268,7 +268,8 @@ Route::put('api/medications/{subject}', function (
             $medicationResponse->slot_id = $slot_id;
             $medicationResponse->subject_id = $subject->subject;
             $medicationResponse->medication_id = $medicine['id'];
-            $medicationResponse->isTaken = $medicine['isTaken'] ? 1 : 0;
+            $medicationResponse->isTaken =
+                $medicine['isTaken'] === "true" ? 1 : 0;
             $medicationResponse->reason =
                 isset($medicine['reason']) && !empty($medicine['reason'])
                     ? $medicine['reason']
