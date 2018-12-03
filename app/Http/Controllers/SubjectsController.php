@@ -383,8 +383,9 @@ class SubjectsController extends Controller
                     $weeklyReport["weights"]["actual"] += 1;
                     $weeklyReport["weights"]["measurements"]->push([
                         "date" => $currentDate->format('m/d/y'),
-                        "value" => $weightsByWeek->get("11/19")->first()
-                            ->WeightValue
+                        "value" => $weightsByWeek
+                            ->get($currentDate->format('m/d/y'))
+                            ->first()->WeightValue
                     ]);
                 } else {
                     $weeklyReport["weights"]["measurements"]->push([
@@ -401,8 +402,9 @@ class SubjectsController extends Controller
                     $weeklyReport["bloodGlucose"]["actual"] += 1;
                     $weeklyReport["bloodGlucose"]["measurements"]->push([
                         "date" => $currentDate->format('m/d/y'),
-                        "value" => $bloodGlucoseByWeek->get("11/19")->first()
-                            ->BG
+                        "value" => $bloodGlucoseByWeek
+                            ->get($currentDate->format('m/d/y'))
+                            ->first()->BG
                     ]);
                 } else {
                     $weeklyReport["bloodGlucose"]["measurements"]->push([
@@ -419,7 +421,9 @@ class SubjectsController extends Controller
                     $weeklyReport["pulseOxygen"]["actual"] += 1;
                     $weeklyReport["pulseOxygen"]["measurements"]->push([
                         "date" => $currentDate->format('m/d/y'),
-                        "value" => $pulseOxygenByWeek->get("11/19")->first()->BO
+                        "value" => $pulseOxygenByWeek
+                            ->get($currentDate->format('m/d/y'))
+                            ->first()->BO
                     ]);
                 } else {
                     $weeklyReport["pulseOxygen"]["measurements"]->push([
@@ -436,8 +440,9 @@ class SubjectsController extends Controller
                     $weeklyReport["bloodPressure"]["actual"] += 1;
                     $weeklyReport["bloodPressure"]["measurements"]->push([
                         "date" => $currentDate->format('m/d/y'),
-                        "value" => $bloodPressureByWeek->get("11/19")->first()
-                            ->HP
+                        "value" => $bloodPressureByWeek
+                            ->get($currentDate->format('m/d/y'))
+                            ->first()->HP
                     ]);
                 } else {
                     $weeklyReport["bloodPressure"]["measurements"]->push([
