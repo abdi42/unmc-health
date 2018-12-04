@@ -211,6 +211,7 @@ class SubjectsController extends Controller
         $bloodGlucoseByWeek = collect([]);
         $pulseOxygenByWeek = collect([]);
         $bloodGlucoseByWeek = collect([]);
+        $bloodPressureByWeek = collect([]);
 
         if ($subject->access_token) {
             $weights = $this->ihealthService->getHealthData(
